@@ -1,6 +1,10 @@
 [
   {
-    "param1": "value1",
-    "param2": "value2"
+    "personaje": "defensor",
+    "fuerza": 1.0,
+    "agilidad": 0.9,
+    "pericia": 0.7,
+    "resistencia": 1.2,
+    "vida": 1.1
   }
 ]

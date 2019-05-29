@@ -18,6 +18,9 @@ public class Configuracion {
     private Double resistencia;
     private Double vida;
 
+    private String cruce;
+    private Double probabilidadCruceUniforme;
+
     public Configuracion() {
 
         JSONParser parser = new JSONParser();
@@ -33,20 +36,26 @@ public class Configuracion {
             e.printStackTrace();
         }
 
-        for (Object o : jsonArray)
-        {
+        for (Object o : jsonArray) {
             JSONObject configuracion = (JSONObject) o;
 
             this.personaje = (String) configuracion.get("personaje");
 
             if (!personaje.equals("guerrero") && !personaje.equals("arquero") && !personaje.equals("defensor") && !personaje.equals("asesino"))
-                throw new PersonajeIncorrectoExcepcion ("Debe ingresar un personaje valido");
+                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un personaje valido");
 
             this.fuerza = (Double) configuracion.get("fuerza");
             this.agilidad = (Double) configuracion.get("agilidad");
             this.pericia = (Double) configuracion.get("pericia");
             this.resistencia = (Double) configuracion.get("resistencia");
             this.vida = (Double) configuracion.get("vida");
+
+            this.cruce = (String) configuracion.get("cruce");
+
+            if (!cruce.equals("un punto") && !personaje.equals("dos puntos") && !personaje.equals("uniforme") && !personaje.equals("anular"))
+                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un cruce valido");
+
+            this.probabilidadCruceUniforme = (Double) configuracion.get("probabilidad_cruce_uniforme");
         }
     }
 
@@ -98,8 +107,24 @@ public class Configuracion {
         this.vida = vida;
     }
 
-    private class PersonajeIncorrectoExcepcion extends RuntimeException {
-        public PersonajeIncorrectoExcepcion(String msg) {
+    public String getCruce() {
+        return cruce;
+    }
+
+    public void setCruce(final String cruce) {
+        this.cruce = cruce;
+    }
+
+    public Double getProbabilidadCruceUniforme() {
+        return probabilidadCruceUniforme;
+    }
+
+    public void setProbabilidadCruceUniforme(final Double probabilidadCruceUniforme) {
+        this.probabilidadCruceUniforme = probabilidadCruceUniforme;
+    }
+
+    private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
+        public ConfiguracionIncorrectaExcepcion(String msg) {
             super(msg);
         }
     }

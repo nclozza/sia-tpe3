@@ -2,17 +2,12 @@ package com.sia.tp3;
 
 import com.sia.tp3.Mutacion.Gen;
 import com.sia.tp3.Mutacion.InterfazMutacion;
-import com.sia.tp3.cruce.EnDosPuntos;
-import com.sia.tp3.cruce.EnUnPunto;
-import com.sia.tp3.cruce.InterfazCruce;
-import com.sia.tp3.cruce.Uniforme;
+import com.sia.tp3.cruce.*;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
 import com.sia.tp3.seleccion.Elite;
 import com.sia.tp3.seleccion.InterfazSeleccion;
-
-import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
@@ -21,20 +16,7 @@ public class App {
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
-        InterfazCruce cruce = new EnUnPunto(2);
-        switch (configuracion.getMetodoCruce()) {
-            case "en un punto":
-                cruce = new EnUnPunto(2);
-                break;
-
-            case "en dos puntos":
-                cruce = new EnDosPuntos(2, 4);
-                break;
-
-            case "uniforme":
-                cruce = new Uniforme(0.01);
-                break;
-        }
+        InterfazCruce cruce = obtenerCruce(configuracion);
 
         InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
         switch (configuracion.getMetodoReemplazo()) {
@@ -84,5 +66,29 @@ public class App {
             System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
             poblacion.getPersonajes().get(i).imprimirGenes();
         }
+    }
+
+
+    public static InterfazCruce obtenerCruce(Configuracion configuracion){
+
+        InterfazCruce cruce = new EnUnPunto(Math.toIntExact(configuracion.getLocus1()));
+
+        switch (configuracion.getMetodoCruce()) {
+            case "en un punto":
+                break;
+
+            case "en dos puntos":
+                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), Math.toIntExact(configuracion.getLocus2()));
+                break;
+
+            case "uniforme":
+                cruce = new Uniforme(configuracion.getProbabilidadCruceUniforme());
+                break;
+
+            case "anular":
+                cruce = new Anular(Math.toIntExact(configuracion.getLocus1()), Math.toIntExact(configuracion.getSegmento()));
+                break;
+        }
+        return cruce;
     }
 }

@@ -17,37 +17,11 @@ public class App {
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
         InterfazCruce cruce = obtenerCruce(configuracion);
-
-        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
-        switch (configuracion.getMetodoReemplazo()) {
-            case "gen":
-                mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
-                break;
-        }
-
-        InterfazReemplazo reemplazo = new Reemplazo1();
-        switch (configuracion.getMetodoReemplazo()) {
-            case "reemplazo 1":
-                reemplazo = new Reemplazo1();
-                break;
-
-            case "reemplazo 2":
-                reemplazo = new Reemplazo2(configuracion.getCantidadDeReemplazo());
-                break;
-
-            case "reemplazo 3":
-                break;
-        }
-
-        InterfazSeleccion seleccion = new Elite();
-        switch (configuracion.getMetodoReemplazo()) {
-            case "elite":
-                seleccion = new Elite();
-                break;
-        }
+        InterfazMutacion mutacion = obtenerMutacion(configuracion);
+        InterfazReemplazo reemplazo = obtenerReemplazo(configuracion);
+        InterfazSeleccion seleccion = obtenerSeleccion(configuracion);
 
         Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
-
 
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
@@ -59,7 +33,6 @@ public class App {
         while (aux++ < configuracion.getGeneraciones()) {
             poblacion.setPersonajes(motor.correr(poblacion));
         }
-
 
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
@@ -90,5 +63,46 @@ public class App {
                 break;
         }
         return cruce;
+    }
+
+    public static InterfazMutacion obtenerMutacion(Configuracion configuracion){
+
+        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
+
+        switch (configuracion.getMetodoReemplazo()) {
+            case "gen":
+                break;
+        }
+        return mutacion;
+    }
+
+    public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion){
+
+        InterfazReemplazo reemplazo = new Reemplazo1();
+
+        switch (configuracion.getMetodoReemplazo()) {
+            case "reemplazo 1":
+                break;
+
+            case "reemplazo 2":
+                reemplazo = new Reemplazo2(configuracion.getCantidadDeReemplazo());
+                break;
+
+            case "reemplazo 3":
+                break;
+        }
+        return reemplazo;
+    }
+
+    public static InterfazSeleccion obtenerSeleccion(Configuracion configuracion){
+
+        InterfazSeleccion seleccion = new Elite();
+
+        switch (configuracion.getMetodoReemplazo()) {
+            case "elite":
+                break;
+        }
+
+        return seleccion;
     }
 }

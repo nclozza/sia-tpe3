@@ -7,7 +7,10 @@
     "resistencia": 1.2,
     "vida": 1.1,
 
-    "cruce": "uniforme",
-    "probabilidad_cruce_uniforme": 0.5
+    "cruce": "un punto",
+    "probabilidad_cruce_uniforme": 0.5,
+
+    "metodo_corte": "maxima cantidad",
+    "generaciones": 2
   }
 ]

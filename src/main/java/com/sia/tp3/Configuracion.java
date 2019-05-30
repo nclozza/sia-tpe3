@@ -21,6 +21,9 @@ public class Configuracion {
     private String cruce;
     private Double probabilidadCruceUniforme;
 
+    private String metodoCorte;
+    private Long generaciones;
+
     public Configuracion() {
 
         JSONParser parser = new JSONParser();
@@ -52,10 +55,18 @@ public class Configuracion {
 
             this.cruce = (String) configuracion.get("cruce");
 
-            if (!cruce.equals("un punto") && !personaje.equals("dos puntos") && !personaje.equals("uniforme") && !personaje.equals("anular"))
+            if (!cruce.equals("un punto") && !cruce.equals("dos puntos") && !cruce.equals("uniforme") && !cruce.equals(
+                    "anular"))
                 throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un cruce valido");
 
             this.probabilidadCruceUniforme = (Double) configuracion.get("probabilidad_cruce_uniforme");
+
+            this.metodoCorte = (String) configuracion.get("metodo_corte");
+            if (!metodoCorte.equals("maxima cantidad") && !metodoCorte.equals("estructura") && !metodoCorte.equals(
+                    "contenido") && !metodoCorte.equals("entorno a un optimo"))
+                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de corte valido");
+
+            this.generaciones = (Long) configuracion.get("generaciones");
         }
     }
 
@@ -121,6 +132,14 @@ public class Configuracion {
 
     public void setProbabilidadCruceUniforme(final Double probabilidadCruceUniforme) {
         this.probabilidadCruceUniforme = probabilidadCruceUniforme;
+    }
+
+    public String getMetodoCorte() {
+        return metodoCorte;
+    }
+
+    public Long getGeneraciones() {
+        return generaciones;
     }
 
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {

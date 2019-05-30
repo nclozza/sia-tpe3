@@ -7,10 +7,17 @@
     "resistencia": 1.2,
     "vida": 1.1,
 
-    "cruce": "un punto",
+    "metodo_cruce": "un punto",
     "probabilidad_cruce_uniforme": 0.5,
 
     "metodo_corte": "maxima cantidad",
-    "generaciones": 2
+    "generaciones": 2,
+
+    "metodo_seleccion": "elite",
+    "metodo_reemplazo": "reemplazo 1",
+    "cantidad_de_reemplazo": 0,
+
+    "metodo_mutacion": "gen",
+    "probabilidad_de_mutacion": 0.01
   }
 ]

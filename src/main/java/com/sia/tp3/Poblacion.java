@@ -16,7 +16,7 @@ public class Poblacion {
     private ArrayList<Personaje> personajes;
     private Integer cantidadPersonajes;
 
-    private static final String path = "src/main/java/com/sia/tp3/fulldata/";
+    private static final String path = "src/main/java/com/sia/tp3/testdata/";
 
     public Poblacion(String personaje, Multiplicador multiplicador) {
 
@@ -25,7 +25,8 @@ public class Poblacion {
         List<Casco> cascos = leerCascos();
         List<Guante> guantes = leerGuantes();
         List<Pechera> pecheras = leerPecheras();
-        cantidadPersonajes = armas.size();
+        cantidadPersonajes = Math.min(Math.min(Math.min(Math.min(armas.size(), botas.size()), cascos.size()),
+                guantes.size()), pecheras.size());
         personajes = new ArrayList<>();
 
         Iterator iteratorArmas = armas.iterator();
@@ -35,21 +36,10 @@ public class Poblacion {
         Iterator iteratorPecheras = pecheras.iterator();
 
         for (int i = 0; i < cantidadPersonajes; i++) {
-            if ((i % 10000) == 0) {
-                System.out.println("FEDE ASI SE ITERA...");
-            }
             personajes.add(new Personaje(personaje, multiplicador, (Arma) iteratorArmas.next(),
                     (Bota) iteratorBotas.next(), (Casco) iteratorCascos.next(), (Guante) iteratorGuantes.next(),
                     (Pechera) iteratorPecheras.next()));
         }
-
-//        for (int i = 0; i < this.cantidadPersonajes; i++) {
-//            if ((i % 10000) == 0) {
-//                System.out.println("FEDE ASI SE ITERA...");
-//            }
-//            personajes.add(new Personaje(personaje, multiplicador, armas.get(i), botas.get(i), cascos.get(i),
-//                    guantes.get(i), pecheras.get(i)));
-//        }
     }
 
     public ArrayList<Personaje> getPersonajes() {

@@ -18,13 +18,13 @@ public class Motor {
     private InterfazSeleccion seleccion2;
     private int cantidadSeleccion1;
     private int cantidadSeleccion2;
-    private int cantidadReemplazo1;
-    private int cantidadReemplazo2;
+    private int cantidadPoblacionAReemplazar1;
+    private int cantidadPoblacionAReemplazar2;
 
     public Motor(final InterfazCruce cruce, final InterfazMutacion mutacion, final InterfazReemplazo reemplazo1,
                  final InterfazReemplazo reemplazo2, final InterfazSeleccion seleccion1,
                  final InterfazSeleccion seleccion2, final int cantidadSeleccion1, final int cantidadSeleccion2,
-                 final int cantidadReemplazo1, final int cantidadReemplazo2) {
+                 final int cantidadPoblacionAReemplazar1, final int cantidadPoblacionAReemplazar2) {
         this.cruce = cruce;
         this.mutacion = mutacion;
         this.reemplazo1 = reemplazo1;
@@ -33,18 +33,20 @@ public class Motor {
         this.seleccion2 = seleccion2;
         this.cantidadSeleccion1 = cantidadSeleccion1;
         this.cantidadSeleccion2 = cantidadSeleccion2;
-        this.cantidadReemplazo1 = cantidadReemplazo1;
-        this.cantidadReemplazo2 = cantidadReemplazo2;
+        this.cantidadPoblacionAReemplazar1 = cantidadPoblacionAReemplazar1;
+        this.cantidadPoblacionAReemplazar2 = cantidadPoblacionAReemplazar2;
     }
 
     public ArrayList<Personaje> correr(Poblacion poblacion) {
-        ArrayList<Personaje> individuosParaReproduccion = seleccion1.hacer(poblacion.getPersonajes(),
-                cantidadSeleccion1);
 
-        ArrayList<Personaje> individuosParaReproduccion2 = seleccion1.hacer(poblacion.getPersonajes(),
-                cantidadSeleccion2);
+        ArrayList<Personaje> individuosParaReproduccion = new ArrayList<>();
+        ArrayList<Personaje> individuosSeleccionadosParaReproduccion1 = seleccion1.hacer(poblacion.getPersonajes(),
+                reemplazo1.getCantidad());
+        ArrayList<Personaje> individuosSeleccionadosParaReproduccion2 = seleccion1.hacer(poblacion.getPersonajes(),
+                reemplazo2.getCantidad());
 
-        individuosParaReproduccion.addAll(individuosParaReproduccion2);
+        individuosParaReproduccion.addAll(individuosSeleccionadosParaReproduccion1);
+        individuosParaReproduccion.addAll(individuosSeleccionadosParaReproduccion2);
 
         ArrayList<Personaje> individuosRecombinados = recombinarIndividuos(individuosParaReproduccion);
 
@@ -58,11 +60,11 @@ public class Motor {
         ArrayList<Personaje> personajesReemplazo2 = reemplazo2.hacer(poblacion.getPersonajes(),
                 individuosRecombinados);
 
-        for (int i = 0; i < cantidadReemplazo1; i++) {
+        for (int i = 0; i < cantidadPoblacionAReemplazar1; i++) {
             ret.add(personajesReemplazo1.get(i));
         }
 
-        for (int i = 0; i < cantidadReemplazo2; i++) {
+        for (int i = 0; i < cantidadPoblacionAReemplazar2; i++) {
             ret.add(personajesReemplazo2.get(i));
         }
 

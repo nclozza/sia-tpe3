@@ -8,7 +8,5 @@ public interface InterfazReemplazo {
 
     public ArrayList<Personaje> hacer(final ArrayList<Personaje> padres, final ArrayList<Personaje> nuevaGeneracion);
 
-    public ArrayList<Personaje> seleccionarIndividuosParaReproduccion(final ArrayList<Personaje> personajes);
-
     public int getCantidad();
 }

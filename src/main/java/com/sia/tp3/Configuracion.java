@@ -27,6 +27,7 @@ public class Configuracion {
     private String metodoCorte;
     private String metodoMutacion;
     private Double probabilidadDeMutacion;
+    private Integer genAMutar;
     private String metodoSeleccion;
     private String metodoReemplazo;
     private Long cantidadDeReemplazo;
@@ -74,6 +75,12 @@ public class Configuracion {
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
+
+            String genAMutarString = String.valueOf(configuracion.get("gen_a_mutar"));
+            if (genAMutarString == null) {
+                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un gen a mutar valido [0, 5]");
+            }
+            this.genAMutar = Integer.parseInt(genAMutarString);
 
             this.metodoSeleccion = (String) configuracion.get("metodo_seleccion");
 
@@ -187,6 +194,10 @@ public class Configuracion {
         return metodoSeleccion;
     }
 
+    public Integer getGenAMutar() {
+        return genAMutar;
+    }
+
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
         public ConfiguracionIncorrectaExcepcion(String msg) {
             super(msg);
@@ -218,6 +229,9 @@ public class Configuracion {
 
         if (!metodoMutacion.equals("gen") && !metodoMutacion.equals("multigen"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de mutacion valido");
+
+        if (this.genAMutar < 0 || this.genAMutar >= Genes.CANTIDAD_GENES)
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un gen a mutar valido [0, 5]");
 
         if (!metodoSeleccion.equals("elite") && !metodoSeleccion.equals("ruleta")
                 && !metodoSeleccion.equals("universal") && !metodoSeleccion.equals("boltzmann")

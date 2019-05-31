@@ -2,6 +2,7 @@ package com.sia.tp3;
 
 import com.sia.tp3.Mutacion.Gen;
 import com.sia.tp3.Mutacion.InterfazMutacion;
+import com.sia.tp3.Mutacion.MultiGen;
 import com.sia.tp3.cruce.*;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
@@ -23,6 +24,7 @@ public class App {
 
         Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
 
+
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
             System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
@@ -34,6 +36,7 @@ public class App {
             poblacion.setPersonajes(motor.correr(poblacion));
         }
 
+
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
             System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
@@ -42,7 +45,7 @@ public class App {
     }
 
 
-    public static InterfazCruce obtenerCruce(Configuracion configuracion){
+    public static InterfazCruce obtenerCruce(Configuracion configuracion) {
 
         InterfazCruce cruce = new EnUnPunto(Math.toIntExact(configuracion.getLocus1()));
 
@@ -51,7 +54,8 @@ public class App {
                 break;
 
             case "en dos puntos":
-                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), Math.toIntExact(configuracion.getLocus2()));
+                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()),
+                        Math.toIntExact(configuracion.getLocus2()));
                 break;
 
             case "uniforme":
@@ -59,24 +63,30 @@ public class App {
                 break;
 
             case "anular":
-                cruce = new Anular(Math.toIntExact(configuracion.getLocus1()), Math.toIntExact(configuracion.getSegmento()));
+                cruce = new Anular(Math.toIntExact(configuracion.getLocus1()),
+                        Math.toIntExact(configuracion.getSegmento()));
                 break;
         }
         return cruce;
     }
 
-    public static InterfazMutacion obtenerMutacion(Configuracion configuracion){
+    public static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
 
-        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
+        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
 
-        switch (configuracion.getMetodoReemplazo()) {
+        switch (configuracion.getMetodoMutacion()) {
             case "gen":
+                mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
+                break;
+
+            case "multigen":
+                mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
                 break;
         }
         return mutacion;
     }
 
-    public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion){
+    public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion) {
 
         InterfazReemplazo reemplazo = new Reemplazo1();
 
@@ -94,7 +104,7 @@ public class App {
         return reemplazo;
     }
 
-    public static InterfazSeleccion obtenerSeleccion(Configuracion configuracion){
+    public static InterfazSeleccion obtenerSeleccion(Configuracion configuracion) {
 
         InterfazSeleccion seleccion = new Elite();
 

@@ -20,7 +20,8 @@
     "metodo_reemplazo": "reemplazo 1",
     "cantidad_de_reemplazo": 0,
 
-    "metodo_mutacion": "gen",
+    "metodo_mutacion": "multigen",
+    "gen_a_mutar": 2,
     "probabilidad_de_mutacion": 0.01
   }
 ]

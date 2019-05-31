@@ -2,6 +2,7 @@ package com.sia.tp3;
 
 import com.sia.tp3.Mutacion.Gen;
 import com.sia.tp3.Mutacion.InterfazMutacion;
+import com.sia.tp3.Mutacion.MultiGen;
 import com.sia.tp3.cruce.*;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
@@ -18,10 +19,14 @@ public class App {
 
         InterfazCruce cruce = obtenerCruce(configuracion);
 
-        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
-        switch (configuracion.getMetodoReemplazo()) {
+        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
+        switch (configuracion.getMetodoMutacion()) {
             case "gen":
-                mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
+                mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
+                break;
+
+            case "multigen":
+                mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
                 break;
         }
 

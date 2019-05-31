@@ -7,34 +7,30 @@ import java.util.Random;
 
 public class Reemplazo2 implements InterfazReemplazo {
 
-    private long k;
+    private int cantidad;
 
-    public Reemplazo2(final long k) {
-        this.k = k;
-    }
-
-    public long getK() {
-        return k;
+    public Reemplazo2(final int cantidad) {
+        this.cantidad = cantidad;
     }
 
     @Override
     public ArrayList<Personaje> hacer(final ArrayList<Personaje> padres, final ArrayList<Personaje> nuevaGeneracion) {
         // TODO: SOLO PARA DEBUG
-        if (k != nuevaGeneracion.size()) {
+        if (cantidad != nuevaGeneracion.size()) {
             throw new RuntimeException("ERROR EN EL METODO DE REEMPLAZO 2");
         }
 
-        ArrayList<Personaje> kPadres = new ArrayList<>();
+        ArrayList<Personaje> ret = new ArrayList<>();
 
         Random r = new Random();
 
-        for (int i = 0; i < padres.size() - k; i++) {
-            kPadres.add(padres.get(r.nextInt(padres.size())));
+        for (int i = 0; i < padres.size() - cantidad; i++) {
+            ret.add(padres.get(r.nextInt(padres.size())));
         }
 
-        kPadres.addAll(nuevaGeneracion);
+        ret.addAll(nuevaGeneracion);
 
-        return kPadres;
+        return ret;
     }
 
     @Override
@@ -42,10 +38,15 @@ public class Reemplazo2 implements InterfazReemplazo {
         ArrayList<Personaje> ret = new ArrayList<>();
         Random r = new Random();
 
-        for (int i = 0; i < personajes.size() - k; i++) {
+        for (int i = 0; i < personajes.size() - cantidad; i++) {
             ret.add(personajes.get(r.nextInt(personajes.size())));
         }
 
         return ret;
+    }
+
+    @Override
+    public int getCantidad() {
+        return cantidad;
     }
 }

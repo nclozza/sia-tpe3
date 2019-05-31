@@ -1,7 +1,7 @@
 package com.sia.tp3;
 
-import com.sia.tp3.Mutacion.InterfazMutacion;
 import com.sia.tp3.cruce.InterfazCruce;
+import com.sia.tp3.mutacion.InterfazMutacion;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.seleccion.InterfazSeleccion;
 
@@ -24,46 +24,55 @@ public class Motor {
     }
 
     public ArrayList<Personaje> correr(Poblacion poblacion) {
-        ArrayList<Personaje> individuosParaReproduccion =
-                reemplazo.seleccionarIndividuosParaReproduccion(poblacion.getPersonajes());
+        ArrayList<Personaje> individuosParaReproduccion = seleccion.hacer(poblacion.getPersonajes(),
+                reemplazo.getCantidad());
 
         ArrayList<Personaje> individuosRecombinados = recombinarIndividuos(individuosParaReproduccion);
-
+        
         mutacion.hacer(individuosRecombinados);
-
-        // seleccion.hacer(poblacion.getPersonajes(), individuosRecombinados);
 
         //TODO: ACA VENDRIA EVALUAR EL FITNESS DE LOS INDIVIDUOS RECOMBINADOS
 
         return reemplazo.hacer(poblacion.getPersonajes(), individuosRecombinados);
     }
 
-    private ArrayList<Personaje> recombinarIndividuos(ArrayList<Personaje> personajes) {
+    private ArrayList<Personaje> recombinarIndividuos(ArrayList<Personaje> individuosParaReproduccion) {
         ArrayList<Personaje> nuevaGeneracion = new ArrayList<>();
 
         Random r = new Random();
-        r.nextInt(personajes.size());
+
+        boolean par = true;
+        int size = individuosParaReproduccion.size();
+
+        if ((individuosParaReproduccion.size() % 2) != 0) {
+            par = false;
+            size = individuosParaReproduccion.size() + 1;
+        }
 
         int contadorNuevaGeneracion = 0;
+        int individuo1;
+        int individuo2;
+        while (contadorNuevaGeneracion < size) {
 
-        while (contadorNuevaGeneracion < personajes.size()) {
-            nuevaGeneracion.add(personajes.get(r.nextInt(personajes.size())).copy());
+            individuo1 = r.nextInt(individuosParaReproduccion.size());
+            do {
+                individuo2 = r.nextInt(individuosParaReproduccion.size());
+            } while (individuo1 != individuo2);
 
-            nuevaGeneracion.add(personajes.get(r.nextInt(personajes.size())).copy());
+            // Importante hacer la copia, para no pisar los padres originales
+            nuevaGeneracion.add(individuosParaReproduccion.get(individuo1).copy());
+            nuevaGeneracion.add(individuosParaReproduccion.get(individuo2).copy());
 
-            cruce.hacer(nuevaGeneracion.get(contadorNuevaGeneracion), nuevaGeneracion.get(contadorNuevaGeneracion + 1));
+            cruce.hacer(nuevaGeneracion.get(contadorNuevaGeneracion),
+                    nuevaGeneracion.get(contadorNuevaGeneracion + 1));
 
             contadorNuevaGeneracion += 2;
         }
 
-        if ((personajes.size() % 2) != 0) {
-            nuevaGeneracion.remove(personajes.size());
+        if (!par) {
+            nuevaGeneracion.remove(size - 1);
         }
 
         return nuevaGeneracion;
-    }
-
-    public InterfazSeleccion getSeleccion() {
-        return seleccion;
     }
 }

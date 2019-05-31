@@ -19,6 +19,9 @@ public class Configuracion {
     private Double vida;
 
     private String metodoCruce;
+    private Integer locus1;
+    private Integer locus2;
+    private Integer segmento;
     private Double probabilidadCruceUniforme;
 
     private String metodoCorte;
@@ -26,8 +29,8 @@ public class Configuracion {
     private Double probabilidadDeMutacion;
     private String metodoSeleccion;
     private String metodoReemplazo;
-    private Long cantidadDeReemplazo;
-    private Long generaciones;
+    private Integer cantidadDeReemplazo;
+    private Integer generaciones;
 
     public Configuracion() {
 
@@ -59,39 +62,24 @@ public class Configuracion {
             this.vida = (Double) configuracion.get("vida");
 
             this.metodoCruce = (String) configuracion.get("metodo_cruce");
-
-            if (!metodoCruce.equals("un punto") && !metodoCruce.equals("dos puntos") && !metodoCruce.equals("uniforme"
-            ) && !metodoCruce.equals(
-                    "anular"))
-                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodoCruce valido");
-
+            this.locus1 = ((Long) configuracion.get("locus1")).intValue();
+            this.locus2 = ((Long) configuracion.get("locus2")).intValue();
+            this.segmento = ((Long) configuracion.get("segmento")).intValue();
             this.probabilidadCruceUniforme = (Double) configuracion.get("probabilidad_cruce_uniforme");
 
             this.metodoCorte = (String) configuracion.get("metodo_corte");
-            if (!metodoCorte.equals("maxima cantidad") && !metodoCorte.equals("estructura") && !metodoCorte.equals(
-                    "contenido") && !metodoCorte.equals("entorno a un optimo"))
-                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de corte valido");
 
             this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
-            if (!metodoReemplazo.equals("reemplazo 1") && !metodoReemplazo.equals("reemplazo 2") && !metodoReemplazo.equals(
-                    "reemplazo 3"))
-                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de reemplazo valido");
-
-            this.cantidadDeReemplazo = (Long) configuracion.get("cantidad_de_reemplazo");
+            this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
-            if (!metodoMutacion.equals("gen") && !metodoMutacion.equals("multigen"))
-                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de mutacion valido");
-
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
 
             this.metodoSeleccion = (String) configuracion.get("metodo_seleccion");
-            if (!metodoSeleccion.equals("elite") && !metodoSeleccion.equals("ruleta")
-                    && !metodoSeleccion.equals("universal") && !metodoSeleccion.equals("boltzmann")
-                    && !metodoSeleccion.equals("torneos") && !metodoSeleccion.equals("ranking"))
-                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion valido");
 
-            this.generaciones = (Long) configuracion.get("generaciones");
+            this.generaciones = ((Long) configuracion.get("generaciones")).intValue();
+
+            validarConfig();
         }
     }
 
@@ -167,11 +155,11 @@ public class Configuracion {
         return metodoReemplazo;
     }
 
-    public Long getGeneraciones() {
+    public Integer getGeneraciones() {
         return generaciones;
     }
 
-    public Long getCantidadDeReemplazo() {
+    public Integer getCantidadDeReemplazo() {
         return cantidadDeReemplazo;
     }
 
@@ -183,10 +171,57 @@ public class Configuracion {
         return probabilidadDeMutacion;
     }
 
+    public Integer getLocus1() {
+        return locus1;
+    }
+
+    public Integer getLocus2() {
+        return locus2;
+    }
+
+    public Integer getSegmento() {
+        return segmento;
+    }
+
+    public String getMetodoSeleccion() {
+        return metodoSeleccion;
+    }
+
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
         public ConfiguracionIncorrectaExcepcion(String msg) {
             super(msg);
         }
     }
-}
 
+    private void validarConfig(){
+
+        if (!metodoCruce.equals("un punto") && !metodoCruce.equals("dos puntos") && !metodoCruce.equals("uniforme"
+        ) && !metodoCruce.equals("anular"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodoCruce valido");
+
+        if (locus1 < 0 || locus1 >= Genes.CANTIDAD_GENES)
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus1 valido");
+
+        if (locus2 < 0 || locus2 > locus1)
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus2 valido");
+
+        if(segmento < 1 || segmento > Genes.CANTIDAD_GENES/2)
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un segmento valido");
+
+        if (!metodoCorte.equals("maxima cantidad") && !metodoCorte.equals("estructura") && !metodoCorte.equals(
+                "contenido") && !metodoCorte.equals("entorno a un optimo"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de corte valido");
+
+        if (!metodoReemplazo.equals("reemplazo 1") && !metodoReemplazo.equals("reemplazo 2") && !metodoReemplazo.equals(
+                "reemplazo 3"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de reemplazo valido");
+
+        if (!metodoMutacion.equals("gen") && !metodoMutacion.equals("multigen"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de mutacion valido");
+
+        if (!metodoSeleccion.equals("elite") && !metodoSeleccion.equals("ruleta")
+                && !metodoSeleccion.equals("universal") && !metodoSeleccion.equals("boltzmann")
+                && !metodoSeleccion.equals("torneos") && !metodoSeleccion.equals("ranking"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion valido");
+    }
+}

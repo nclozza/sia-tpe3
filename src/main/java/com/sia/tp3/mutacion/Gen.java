@@ -1,4 +1,4 @@
-package com.sia.tp3.Mutacion;
+package com.sia.tp3.mutacion;
 
 import com.sia.tp3.Genes;
 import com.sia.tp3.Personaje;

@@ -1,11 +1,8 @@
 package com.sia.tp3;
 
-import com.sia.tp3.Mutacion.Gen;
-import com.sia.tp3.Mutacion.InterfazMutacion;
-import com.sia.tp3.cruce.EnDosPuntos;
-import com.sia.tp3.cruce.EnUnPunto;
-import com.sia.tp3.cruce.InterfazCruce;
-import com.sia.tp3.cruce.Uniforme;
+import com.sia.tp3.cruce.*;
+import com.sia.tp3.mutacion.Gen;
+import com.sia.tp3.mutacion.InterfazMutacion;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
@@ -21,32 +18,77 @@ public class App {
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
-        InterfazCruce cruce = new EnUnPunto(2);
+        InterfazCruce cruce = obtenerCruce(configuracion);
+        InterfazMutacion mutacion = obtenerMutacion(configuracion);
+        InterfazReemplazo reemplazo = obtenerReemplazo(configuracion);
+        InterfazSeleccion seleccion = obtenerSeleccion(configuracion);
+
+        Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
+
+
+//        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
+//            System.out.println("Personaje nro: " + i);
+//            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
+//            poblacion.getPersonajes().get(i).imprimirGenes();
+//        }
+        ArrayList<Personaje> originales = new ArrayList<>(poblacion.getPersonajes());
+
+        int aux = 0;
+        while (aux++ < configuracion.getGeneraciones()) {
+            poblacion.setPersonajes(motor.correr(poblacion));
+        }
+
+//        for (int i = 0; i < originales.size(); i++) {
+//            System.out.println("Personaje nro: " + i);
+//            System.out.println("Desempenio: " + originales.get(i).getDesempenio());
+//            originales.get(i).imprimirGenes();
+//        }
+//
+//
+//        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
+//            System.out.println("Personaje nro: " + i);
+//            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
+//            poblacion.getPersonajes().get(i).imprimirGenes();
+//        }
+    }
+
+    public static InterfazCruce obtenerCruce(Configuracion configuracion) {
+
+        InterfazCruce cruce = new EnUnPunto(configuracion.getLocus1());
+
         switch (configuracion.getMetodoCruce()) {
-            case "en un punto":
-                cruce = new EnUnPunto(2);
+            case "un punto":
                 break;
-
-            case "en dos puntos":
-                cruce = new EnDosPuntos(2, 4);
+            case "dos puntos":
+                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), configuracion.getLocus2());
                 break;
-
             case "uniforme":
-                cruce = new Uniforme(0.01);
+                cruce = new Uniforme(configuracion.getProbabilidadCruceUniforme());
+                break;
+            case "anular":
+                cruce = new Anular(configuracion.getLocus1(), configuracion.getSegmento());
                 break;
         }
+        return cruce;
+    }
+
+    public static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
 
         InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
+
         switch (configuracion.getMetodoReemplazo()) {
             case "gen":
-                mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
                 break;
         }
+        return mutacion;
+    }
 
-        InterfazReemplazo reemplazo = new Reemplazo1();
+    public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion) {
+
+        InterfazReemplazo reemplazo = new Reemplazo1(configuracion.getCantidadDeReemplazo());
+
         switch (configuracion.getMetodoReemplazo()) {
             case "reemplazo 1":
-                reemplazo = new Reemplazo1();
                 break;
 
             case "reemplazo 2":
@@ -56,33 +98,18 @@ public class App {
             case "reemplazo 3":
                 break;
         }
+        return reemplazo;
+    }
+
+    public static InterfazSeleccion obtenerSeleccion(Configuracion configuracion) {
 
         InterfazSeleccion seleccion = new Elite();
+
         switch (configuracion.getMetodoReemplazo()) {
             case "elite":
-                seleccion = new Elite();
                 break;
         }
 
-        Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
-
-
-        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-            System.out.println("Personaje nro: " + i);
-            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-            poblacion.getPersonajes().get(i).imprimirGenes();
-        }
-
-        int aux = 0;
-        while (aux++ < configuracion.getGeneraciones()) {
-            poblacion.setPersonajes(motor.correr(poblacion));
-        }
-
-
-        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-            System.out.println("Personaje nro: " + i);
-            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-            poblacion.getPersonajes().get(i).imprimirGenes();
-        }
+        return seleccion;
     }
 }

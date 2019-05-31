@@ -3,13 +3,12 @@ package com.sia.tp3;
 import com.sia.tp3.cruce.*;
 import com.sia.tp3.mutacion.Gen;
 import com.sia.tp3.mutacion.InterfazMutacion;
+import com.sia.tp3.mutacion.MultiGen;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
 import com.sia.tp3.seleccion.Elite;
 import com.sia.tp3.seleccion.InterfazSeleccion;
-
-import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
@@ -25,32 +24,25 @@ public class App {
 
         Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
 
-
-//        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-//            System.out.println("Personaje nro: " + i);
-//            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-//            poblacion.getPersonajes().get(i).imprimirGenes();
-//        }
-        ArrayList<Personaje> originales = new ArrayList<>(poblacion.getPersonajes());
+        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
+            System.out.println("Personaje nro: " + i);
+            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
+            poblacion.getPersonajes().get(i).imprimirGenes();
+        }
 
         int aux = 0;
         while (aux++ < configuracion.getGeneraciones()) {
             poblacion.setPersonajes(motor.correr(poblacion));
         }
 
-//        for (int i = 0; i < originales.size(); i++) {
-//            System.out.println("Personaje nro: " + i);
-//            System.out.println("Desempenio: " + originales.get(i).getDesempenio());
-//            originales.get(i).imprimirGenes();
-//        }
-//
-//
-//        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-//            System.out.println("Personaje nro: " + i);
-//            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-//            poblacion.getPersonajes().get(i).imprimirGenes();
-//        }
+
+        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
+            System.out.println("Personaje nro: " + i);
+            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
+            poblacion.getPersonajes().get(i).imprimirGenes();
+        }
     }
+
 
     public static InterfazCruce obtenerCruce(Configuracion configuracion) {
 
@@ -62,6 +54,7 @@ public class App {
             case "dos puntos":
                 cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), configuracion.getLocus2());
                 break;
+
             case "uniforme":
                 cruce = new Uniforme(configuracion.getProbabilidadCruceUniforme());
                 break;
@@ -74,10 +67,14 @@ public class App {
 
     public static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
 
-        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion());
+        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
 
         switch (configuracion.getMetodoReemplazo()) {
             case "gen":
+                break;
+
+            case "multigen":
+                mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
                 break;
         }
         return mutacion;

@@ -16,9 +16,14 @@
     "metodo_corte": "maxima cantidad",
     "generaciones": 1,
 
-    "metodo_seleccion": "elite",
-    "metodo_reemplazo": "reemplazo 1",
-    "cantidad_de_reemplazo": 0,
+    "metodo_seleccion_1": "elite",
+    "metodo_seleccion_2": "elite",
+    "metodo_reemplazo_1": "reemplazo 1",
+    "metodo_reemplazo_2": "reemplazo 1",
+    "cantidad_de_reemplazo_1": 0,
+    "cantidad_de_reemplazo_2": 0,
+    "A": 0.7,
+    "B": 0.1,
 
     "metodo_mutacion": "multigen",
     "gen_a_mutar": 2,

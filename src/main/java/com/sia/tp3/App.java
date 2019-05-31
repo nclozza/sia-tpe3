@@ -17,12 +17,27 @@ public class App {
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
+        int cantidadDeSeleccion1 = new Double(poblacion.getPersonajes().size() * configuracion.getA()).intValue();
+        int cantidadDeSeleccion2 = poblacion.getPersonajes().size() - cantidadDeSeleccion1;
+        int cantidadDeReemplazo1 = new Double(poblacion.getPersonajes().size() * configuracion.getB()).intValue();
+        int cantidadDeReemplazo2 = poblacion.getPersonajes().size() - cantidadDeReemplazo1;
+
+        System.out.println(cantidadDeSeleccion1);
+        System.out.println(cantidadDeSeleccion2);
+        System.out.println(cantidadDeReemplazo1);
+        System.out.println(cantidadDeReemplazo2);
+
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
-        InterfazReemplazo reemplazo = obtenerReemplazo(configuracion);
-        InterfazSeleccion seleccion = obtenerSeleccion(configuracion);
+        InterfazReemplazo reemplazo1 = obtenerReemplazo(configuracion.getMetodoReemplazo1(),
+                configuracion.getCantidadDeReemplazo1());
+        InterfazReemplazo reemplazo2 = obtenerReemplazo(configuracion.getMetodoReemplazo2(),
+                configuracion.getCantidadDeReemplazo2());
+        InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1());
+        InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2());
 
-        Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
+        Motor motor = new Motor(cruce, mutacion, reemplazo1, reemplazo2, seleccion1, seleccion2, cantidadDeSeleccion1
+                , cantidadDeSeleccion2, cantidadDeReemplazo1, cantidadDeReemplazo2);
 
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
@@ -69,7 +84,7 @@ public class App {
 
         InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
 
-        switch (configuracion.getMetodoReemplazo()) {
+        switch (configuracion.getMetodoReemplazo1()) {
             case "gen":
                 break;
 
@@ -80,16 +95,16 @@ public class App {
         return mutacion;
     }
 
-    public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion) {
+    public static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, int cantidadDeReemplazo) {
 
-        InterfazReemplazo reemplazo = new Reemplazo1(configuracion.getCantidadDeReemplazo());
+        InterfazReemplazo reemplazo = new Reemplazo1(cantidadDeReemplazo);
 
-        switch (configuracion.getMetodoReemplazo()) {
+        switch (metodoReemplazo) {
             case "reemplazo 1":
                 break;
 
             case "reemplazo 2":
-                reemplazo = new Reemplazo2(configuracion.getCantidadDeReemplazo());
+                reemplazo = new Reemplazo2(cantidadDeReemplazo);
                 break;
 
             case "reemplazo 3":
@@ -98,11 +113,11 @@ public class App {
         return reemplazo;
     }
 
-    public static InterfazSeleccion obtenerSeleccion(Configuracion configuracion) {
+    public static InterfazSeleccion obtenerSeleccion(String metodoSeleccion) {
 
         InterfazSeleccion seleccion = new Elite();
 
-        switch (configuracion.getMetodoReemplazo()) {
+        switch (metodoSeleccion) {
             case "elite":
                 break;
         }

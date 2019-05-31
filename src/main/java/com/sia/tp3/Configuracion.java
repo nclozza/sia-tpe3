@@ -28,10 +28,17 @@ public class Configuracion {
     private String metodoMutacion;
     private Double probabilidadDeMutacion;
     private Integer genAMutar;
-    private String metodoSeleccion;
-    private String metodoReemplazo;
-    private Integer cantidadDeReemplazo;
+    private String metodoSeleccion1;
+    private String metodoSeleccion2;
+    private String metodoReemplazo1;
+    private String metodoReemplazo2;
+    private Integer cantidadDeReemplazo1;
+    private Integer cantidadDeReemplazo2;
+    private Double A;
+    private Double B;
+
     private Integer generaciones;
+
 
     public Configuracion() {
 
@@ -70,16 +77,23 @@ public class Configuracion {
 
             this.metodoCorte = (String) configuracion.get("metodo_corte");
 
-            this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
-            this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
+            this.metodoReemplazo1 = (String) configuracion.get("metodo_reemplazo_1");
+            this.metodoReemplazo2 = (String) configuracion.get("metodo_reemplazo_2");
+
+            this.cantidadDeReemplazo1 = ((Long) configuracion.get("cantidad_de_reemplazo_1")).intValue();
+            this.cantidadDeReemplazo2 = ((Long) configuracion.get("cantidad_de_reemplazo_2")).intValue();
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
             this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
 
-            this.metodoSeleccion = (String) configuracion.get("metodo_seleccion");
+            this.metodoSeleccion1 = (String) configuracion.get("metodo_seleccion_1");
+            this.metodoSeleccion2 = (String) configuracion.get("metodo_seleccion_2");
 
             this.generaciones = ((Long) configuracion.get("generaciones")).intValue();
+
+            this.A = (Double) configuracion.get("A");
+            this.B = (Double) configuracion.get("B");
 
             validarConfig();
         }
@@ -153,16 +167,16 @@ public class Configuracion {
         return metodoCorte;
     }
 
-    public String getMetodoReemplazo() {
-        return metodoReemplazo;
+    public String getMetodoReemplazo1() {
+        return metodoReemplazo1;
     }
 
     public Integer getGeneraciones() {
         return generaciones;
     }
 
-    public Integer getCantidadDeReemplazo() {
-        return cantidadDeReemplazo;
+    public Integer getCantidadDeReemplazo1() {
+        return cantidadDeReemplazo1;
     }
 
     public String getMetodoMutacion() {
@@ -185,12 +199,32 @@ public class Configuracion {
         return segmento;
     }
 
-    public String getMetodoSeleccion() {
-        return metodoSeleccion;
+    public String getMetodoSeleccion1() {
+        return metodoSeleccion1;
     }
 
     public Integer getGenAMutar() {
         return genAMutar;
+    }
+
+    public Double getA() {
+        return A;
+    }
+
+    public Double getB() {
+        return B;
+    }
+
+    public String getMetodoSeleccion2() {
+        return metodoSeleccion2;
+    }
+
+    public String getMetodoReemplazo2() {
+        return metodoReemplazo2;
+    }
+
+    public Integer getCantidadDeReemplazo2() {
+        return cantidadDeReemplazo2;
     }
 
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
@@ -199,7 +233,7 @@ public class Configuracion {
         }
     }
 
-    private void validarConfig(){
+    private void validarConfig() {
 
         if (!metodoCruce.equals("un punto") && !metodoCruce.equals("dos puntos") && !metodoCruce.equals("uniforme"
         ) && !metodoCruce.equals("anular"))
@@ -211,14 +245,14 @@ public class Configuracion {
         if (locus2 < 0 || locus2 > locus1)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus2 valido");
 
-        if(segmento < 1 || segmento > Genes.CANTIDAD_GENES/2)
+        if (segmento < 1 || segmento > Genes.CANTIDAD_GENES / 2)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un segmento valido");
 
         if (!metodoCorte.equals("maxima cantidad") && !metodoCorte.equals("estructura") && !metodoCorte.equals(
                 "contenido") && !metodoCorte.equals("entorno a un optimo"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de corte valido");
 
-        if (!metodoReemplazo.equals("reemplazo 1") && !metodoReemplazo.equals("reemplazo 2") && !metodoReemplazo.equals(
+        if (!metodoReemplazo1.equals("reemplazo 1") && !metodoReemplazo1.equals("reemplazo 2") && !metodoReemplazo1.equals(
                 "reemplazo 3"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de reemplazo valido");
 
@@ -228,9 +262,9 @@ public class Configuracion {
         if (this.genAMutar < 0 || this.genAMutar >= Genes.CANTIDAD_GENES)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un gen a mutar valido [0, 5]");
 
-        if (!metodoSeleccion.equals("elite") && !metodoSeleccion.equals("ruleta")
-                && !metodoSeleccion.equals("universal") && !metodoSeleccion.equals("boltzmann")
-                && !metodoSeleccion.equals("torneos") && !metodoSeleccion.equals("ranking"))
+        if (!metodoSeleccion1.equals("elite") && !metodoSeleccion1.equals("ruleta")
+                && !metodoSeleccion1.equals("universal") && !metodoSeleccion1.equals("boltzmann")
+                && !metodoSeleccion1.equals("torneos") && !metodoSeleccion1.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion valido");
     }
 }

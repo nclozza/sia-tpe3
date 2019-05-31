@@ -18,38 +18,9 @@ public class App {
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
         InterfazCruce cruce = obtenerCruce(configuracion);
-
-        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
-        switch (configuracion.getMetodoMutacion()) {
-            case "gen":
-                mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
-                break;
-
-            case "multigen":
-                mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
-                break;
-        }
-
-        InterfazReemplazo reemplazo = new Reemplazo1();
-        switch (configuracion.getMetodoReemplazo()) {
-            case "reemplazo 1":
-                reemplazo = new Reemplazo1();
-                break;
-
-            case "reemplazo 2":
-                reemplazo = new Reemplazo2(configuracion.getCantidadDeReemplazo());
-                break;
-
-            case "reemplazo 3":
-                break;
-        }
-
-        InterfazSeleccion seleccion = new Elite();
-        switch (configuracion.getMetodoReemplazo()) {
-            case "elite":
-                seleccion = new Elite();
-                break;
-        }
+        InterfazMutacion mutacion = obtenerMutacion(configuracion);
+        InterfazReemplazo reemplazo = obtenerReemplazo(configuracion);
+        InterfazSeleccion seleccion = obtenerSeleccion(configuracion);
 
         Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
 
@@ -74,7 +45,7 @@ public class App {
     }
 
 
-    public static InterfazCruce obtenerCruce(Configuracion configuracion){
+    public static InterfazCruce obtenerCruce(Configuracion configuracion) {
 
         InterfazCruce cruce = new EnUnPunto(Math.toIntExact(configuracion.getLocus1()));
 
@@ -83,7 +54,8 @@ public class App {
                 break;
 
             case "en dos puntos":
-                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), Math.toIntExact(configuracion.getLocus2()));
+                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()),
+                        Math.toIntExact(configuracion.getLocus2()));
                 break;
 
             case "uniforme":
@@ -91,9 +63,56 @@ public class App {
                 break;
 
             case "anular":
-                cruce = new Anular(Math.toIntExact(configuracion.getLocus1()), Math.toIntExact(configuracion.getSegmento()));
+                cruce = new Anular(Math.toIntExact(configuracion.getLocus1()),
+                        Math.toIntExact(configuracion.getSegmento()));
                 break;
         }
         return cruce;
+    }
+
+    public static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
+
+        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
+
+        switch (configuracion.getMetodoMutacion()) {
+            case "gen":
+                mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
+                break;
+
+            case "multigen":
+                mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
+                break;
+        }
+        return mutacion;
+    }
+
+    public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion) {
+
+        InterfazReemplazo reemplazo = new Reemplazo1();
+
+        switch (configuracion.getMetodoReemplazo()) {
+            case "reemplazo 1":
+                break;
+
+            case "reemplazo 2":
+                reemplazo = new Reemplazo2(configuracion.getCantidadDeReemplazo());
+                break;
+
+            case "reemplazo 3":
+                break;
+        }
+        return reemplazo;
+    }
+
+    public static InterfazSeleccion obtenerSeleccion(Configuracion configuracion) {
+
+        InterfazSeleccion seleccion = new Elite();
+
+        switch (configuracion.getMetodoReemplazo()) {
+            case "elite":
+                break;
+        }
+
+        return seleccion;
     }
 }

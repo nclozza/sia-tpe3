@@ -1,21 +1,26 @@
-package com.sia.tp3.Mutacion;
+package com.sia.tp3.mutacion;
 
-import com.sia.tp3.Genes;
 import com.sia.tp3.Personaje;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MultiGen implements InterfazMutacion {
+public class Gen implements InterfazMutacion {
 
     private double probabilidadDeMutacion;
+    private int genAMutar;
 
-    public MultiGen(final double probabilidadDeMutacion) {
+    public Gen(final double probabilidadDeMutacion, final int genAMutar) {
         this.probabilidadDeMutacion = probabilidadDeMutacion;
+        this.genAMutar = genAMutar;
     }
 
     public double getProbabilidadDeMutacion() {
         return probabilidadDeMutacion;
+    }
+
+    public int getGenAMutar() {
+        return genAMutar;
     }
 
     @Override
@@ -23,10 +28,8 @@ public class MultiGen implements InterfazMutacion {
         Random r = new Random();
 
         for (final Personaje personaje : personajes) {
-            for (int i = 0; i < Genes.CANTIDAD_GENES; i++) {
-                if (probabilidadDeMutacion >= (1.0) * r.nextDouble()) {
-                    personaje.getGenes()[i] = personajes.get(r.nextInt(personajes.size())).getGenes()[i];
-                }
+            if (probabilidadDeMutacion >= (1.0) * r.nextDouble()) {
+                personaje.getGenes()[genAMutar] = personajes.get(r.nextInt(personajes.size())).getGenes()[genAMutar];
             }
         }
     }

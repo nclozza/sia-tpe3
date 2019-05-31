@@ -30,6 +30,8 @@ public class EnDosPuntos implements InterfazCruce {
             } else {
                 cambiar(personaje1.getGenes()[i], personaje2.getGenes()[i], 1);
             }
+
+            System.out.println();
         }
 
         personaje1.recalcularDesempenio();

@@ -9,16 +9,15 @@ import java.util.PriorityQueue;
 public class Elite implements InterfazSeleccion {
 
     @Override
-    public ArrayList<Personaje> hacer(final ArrayList<Personaje> padres, ArrayList<Personaje> nuevaGeneracion) {
+    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, final int cantidad) {
         ArrayList<Personaje> ret = new ArrayList<>();
 
         PriorityQueue<Personaje> priorityQueue =
                 new PriorityQueue<>(Comparator.comparingDouble(Personaje::getDesempenio));
 
-        priorityQueue.addAll(padres);
-        priorityQueue.addAll(nuevaGeneracion);
+        priorityQueue.addAll(personajes);
 
-        for (int i = 0; i < padres.size(); i++) {
+        for (int i = 0; i < personajes.size(); i++) {
             ret.add(priorityQueue.poll());
         }
 

@@ -19,9 +19,9 @@ public class Configuracion {
     private Double vida;
 
     private String metodoCruce;
-    private Long locus1;
-    private Long locus2;
-    private Long segmento;
+    private Integer locus1;
+    private Integer locus2;
+    private Integer segmento;
     private Double probabilidadCruceUniforme;
 
     private String metodoCorte;
@@ -30,8 +30,8 @@ public class Configuracion {
     private Integer genAMutar;
     private String metodoSeleccion;
     private String metodoReemplazo;
-    private Long cantidadDeReemplazo;
-    private Long generaciones;
+    private Integer cantidadDeReemplazo;
+    private Integer generaciones;
 
     public Configuracion() {
 
@@ -63,28 +63,23 @@ public class Configuracion {
             this.vida = (Double) configuracion.get("vida");
 
             this.metodoCruce = (String) configuracion.get("metodo_cruce");
-            this.locus1 = (Long) configuracion.get("locus1");
-            this.locus2 = (Long) configuracion.get("locus2");
-            this.segmento = (Long) configuracion.get("segmento");
+            this.locus1 = ((Long) configuracion.get("locus1")).intValue();
+            this.locus2 = ((Long) configuracion.get("locus2")).intValue();
+            this.segmento = ((Long) configuracion.get("segmento")).intValue();
             this.probabilidadCruceUniforme = (Double) configuracion.get("probabilidad_cruce_uniforme");
 
             this.metodoCorte = (String) configuracion.get("metodo_corte");
 
             this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
-            this.cantidadDeReemplazo = (Long) configuracion.get("cantidad_de_reemplazo");
+            this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
+            this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
-
-            String genAMutarString = String.valueOf(configuracion.get("gen_a_mutar"));
-            if (genAMutarString == null) {
-                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un gen a mutar valido [0, 5]");
-            }
-            this.genAMutar = Integer.parseInt(genAMutarString);
 
             this.metodoSeleccion = (String) configuracion.get("metodo_seleccion");
 
-            this.generaciones = (Long) configuracion.get("generaciones");
+            this.generaciones = ((Long) configuracion.get("generaciones")).intValue();
 
             validarConfig();
         }
@@ -162,11 +157,11 @@ public class Configuracion {
         return metodoReemplazo;
     }
 
-    public Long getGeneraciones() {
+    public Integer getGeneraciones() {
         return generaciones;
     }
 
-    public Long getCantidadDeReemplazo() {
+    public Integer getCantidadDeReemplazo() {
         return cantidadDeReemplazo;
     }
 
@@ -178,15 +173,15 @@ public class Configuracion {
         return probabilidadDeMutacion;
     }
 
-    public Long getLocus1() {
+    public Integer getLocus1() {
         return locus1;
     }
 
-    public Long getLocus2() {
+    public Integer getLocus2() {
         return locus2;
     }
 
-    public Long getSegmento() {
+    public Integer getSegmento() {
         return segmento;
     }
 

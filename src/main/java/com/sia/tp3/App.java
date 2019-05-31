@@ -1,9 +1,9 @@
 package com.sia.tp3;
 
-import com.sia.tp3.Mutacion.Gen;
-import com.sia.tp3.Mutacion.InterfazMutacion;
-import com.sia.tp3.Mutacion.MultiGen;
 import com.sia.tp3.cruce.*;
+import com.sia.tp3.mutacion.Gen;
+import com.sia.tp3.mutacion.InterfazMutacion;
+import com.sia.tp3.mutacion.MultiGen;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
@@ -23,7 +23,6 @@ public class App {
         InterfazSeleccion seleccion = obtenerSeleccion(configuracion);
 
         Motor motor = new Motor(cruce, mutacion, reemplazo, seleccion);
-
 
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
@@ -47,24 +46,20 @@ public class App {
 
     public static InterfazCruce obtenerCruce(Configuracion configuracion) {
 
-        InterfazCruce cruce = new EnUnPunto(Math.toIntExact(configuracion.getLocus1()));
+        InterfazCruce cruce = new EnUnPunto(configuracion.getLocus1());
 
         switch (configuracion.getMetodoCruce()) {
-            case "en un punto":
+            case "un punto":
                 break;
-
-            case "en dos puntos":
-                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()),
-                        Math.toIntExact(configuracion.getLocus2()));
+            case "dos puntos":
+                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), configuracion.getLocus2());
                 break;
 
             case "uniforme":
                 cruce = new Uniforme(configuracion.getProbabilidadCruceUniforme());
                 break;
-
             case "anular":
-                cruce = new Anular(Math.toIntExact(configuracion.getLocus1()),
-                        Math.toIntExact(configuracion.getSegmento()));
+                cruce = new Anular(configuracion.getLocus1(), configuracion.getSegmento());
                 break;
         }
         return cruce;
@@ -74,9 +69,8 @@ public class App {
 
         InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
 
-        switch (configuracion.getMetodoMutacion()) {
+        switch (configuracion.getMetodoReemplazo()) {
             case "gen":
-                mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
                 break;
 
             case "multigen":
@@ -88,7 +82,7 @@ public class App {
 
     public static InterfazReemplazo obtenerReemplazo(Configuracion configuracion) {
 
-        InterfazReemplazo reemplazo = new Reemplazo1();
+        InterfazReemplazo reemplazo = new Reemplazo1(configuracion.getCantidadDeReemplazo());
 
         switch (configuracion.getMetodoReemplazo()) {
             case "reemplazo 1":

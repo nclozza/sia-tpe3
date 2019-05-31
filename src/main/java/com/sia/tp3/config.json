@@ -8,13 +8,13 @@
     "vida": 1.1,
 
     "metodo_cruce": "un punto",
-    "locus1": 5,
-    "locus2": 5,
+    "locus1": 2,
+    "locus2": 2,
     "segmento": 1,
     "probabilidad_cruce_uniforme": 0.5,
 
     "metodo_corte": "maxima cantidad",
-    "generaciones": 2,
+    "generaciones": 1,
 
     "metodo_seleccion": "elite",
     "metodo_reemplazo": "reemplazo 1",

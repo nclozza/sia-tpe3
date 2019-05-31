@@ -3,7 +3,6 @@ package com.sia.tp3.seleccion;
 import com.sia.tp3.Personaje;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Elite implements InterfazSeleccion {
@@ -13,11 +12,12 @@ public class Elite implements InterfazSeleccion {
         ArrayList<Personaje> ret = new ArrayList<>();
 
         PriorityQueue<Personaje> priorityQueue =
-                new PriorityQueue<>(Comparator.comparingDouble(Personaje::getDesempenio));
+                new PriorityQueue<>((personaje1, personaje2) -> Double.compare(personaje2.getDesempenio(),
+                        personaje1.getDesempenio()));
 
         priorityQueue.addAll(personajes);
 
-        for (int i = 0; i < personajes.size(); i++) {
+        for (int i = 0; i < cantidad; i++) {
             ret.add(priorityQueue.poll());
         }
 

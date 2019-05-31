@@ -19,13 +19,8 @@ public class App {
 
         int cantidadDeSeleccion1 = new Double(poblacion.getPersonajes().size() * configuracion.getA()).intValue();
         int cantidadDeSeleccion2 = poblacion.getPersonajes().size() - cantidadDeSeleccion1;
-        int cantidadDeReemplazo1 = new Double(poblacion.getPersonajes().size() * configuracion.getB()).intValue();
-        int cantidadDeReemplazo2 = poblacion.getPersonajes().size() - cantidadDeReemplazo1;
-
-        System.out.println(cantidadDeSeleccion1);
-        System.out.println(cantidadDeSeleccion2);
-        System.out.println(cantidadDeReemplazo1);
-        System.out.println(cantidadDeReemplazo2);
+        int cantidadPoblacionReemplazo1 = new Double(poblacion.getPersonajes().size() * configuracion.getB()).intValue();
+        int cantidadPoblacionReemplazo2 = poblacion.getPersonajes().size() - cantidadPoblacionReemplazo1;
 
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
@@ -37,7 +32,7 @@ public class App {
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2());
 
         Motor motor = new Motor(cruce, mutacion, reemplazo1, reemplazo2, seleccion1, seleccion2, cantidadDeSeleccion1
-                , cantidadDeSeleccion2, cantidadDeReemplazo1, cantidadDeReemplazo2);
+                , cantidadDeSeleccion2, cantidadPoblacionReemplazo1, cantidadPoblacionReemplazo2);
 
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);

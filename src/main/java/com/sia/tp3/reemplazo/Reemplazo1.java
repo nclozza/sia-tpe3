@@ -18,11 +18,6 @@ public class Reemplazo1 implements InterfazReemplazo {
     }
 
     @Override
-    public ArrayList<Personaje> seleccionarIndividuosParaReproduccion(final ArrayList<Personaje> personajes) {
-        return new ArrayList<>(personajes);
-    }
-
-    @Override
     public int getCantidad() {
         return cantidad;
     }

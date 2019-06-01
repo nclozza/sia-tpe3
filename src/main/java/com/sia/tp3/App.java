@@ -18,22 +18,25 @@ public class App {
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
-        int cantidadDeSeleccion1 = new Double(poblacion.getPersonajes().size() * configuracion.getA()).intValue();
-        int cantidadDeSeleccion2 = poblacion.getPersonajes().size() - cantidadDeSeleccion1;
-        int cantidadPoblacionAReemplazar1 = new Double(poblacion.getPersonajes().size() * configuracion.getB()).intValue();
-        int cantidadPoblacionAReemplazar2 = poblacion.getPersonajes().size() - cantidadPoblacionAReemplazar1;
+        double modificadorA = configuracion.getA();
+        double modificadorB = configuracion.getB();
 
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
-        InterfazReemplazo reemplazo1 = obtenerReemplazo(configuracion.getMetodoReemplazo1(),
-                configuracion.getCantidadDeReemplazo1(), poblacion.getPersonajes().size());
-        InterfazReemplazo reemplazo2 = obtenerReemplazo(configuracion.getMetodoReemplazo2(),
-                configuracion.getCantidadDeReemplazo2(), poblacion.getPersonajes().size());
         InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1());
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2());
 
-        Motor motor = new Motor(cruce, mutacion, reemplazo1, reemplazo2, seleccion1, seleccion2, cantidadDeSeleccion1
-                , cantidadDeSeleccion2, cantidadPoblacionAReemplazar1, cantidadPoblacionAReemplazar2);
+
+        InterfazReemplazo reemplazo1 = obtenerReemplazo(configuracion.getMetodoReemplazo1(), modificadorA,
+                configuracion.getCantidadDeReemplazo1(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
+                cruce, mutacion);
+
+        InterfazReemplazo reemplazo2 = obtenerReemplazo(configuracion.getMetodoReemplazo2(), modificadorA,
+                configuracion.getCantidadDeReemplazo1(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
+                cruce, mutacion);
+
+
+        Motor motor = new Motor(reemplazo1, reemplazo2, modificadorB);
 
         for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
             System.out.println("Personaje nro: " + i);
@@ -41,6 +44,8 @@ public class App {
             poblacion.getPersonajes().get(i).imprimirGenes();
         }
 
+        // ACA VA LA CONDICION DE CORTE, TENDRIA QUE IR ADENTRO DEL MOTOR
+        // YA QUE EL MOTOR POR AHORA ESTA HACIENDO UNA SOLA PASADA
         int aux = 0;
         while (aux++ < configuracion.getGeneraciones()) {
             poblacion.setPersonajes(motor.correr(poblacion));
@@ -91,21 +96,23 @@ public class App {
         return mutacion;
     }
 
-    public static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, int cantidadDeReemplazo,
-                                                     int cantidadPoblacion) {
+    public static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificador, final int k,
+                                                     final int poblacionTotal, final InterfazSeleccion seleccion1,
+                                                     final InterfazSeleccion seleccion2, final InterfazCruce cruce,
+                                                     final InterfazMutacion mutacion) {
 
-        InterfazReemplazo reemplazo = new Reemplazo1(cantidadPoblacion);
+        InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, cruce, mutacion);
 
         switch (metodoReemplazo) {
             case "reemplazo 1":
                 break;
 
             case "reemplazo 2":
-                reemplazo = new Reemplazo2(cantidadDeReemplazo);
+                reemplazo = new Reemplazo2(seleccion1, seleccion2, cruce, mutacion);
                 break;
 
             case "reemplazo 3":
-                reemplazo = new Reemplazo3(cantidadDeReemplazo);
+                reemplazo = new Reemplazo3(modificador, k, poblacionTotal, seleccion1, seleccion2, cruce, mutacion);
                 break;
         }
         return reemplazo;

@@ -1,40 +1,24 @@
 package com.sia.tp3.reemplazo;
 
 import com.sia.tp3.Personaje;
+import com.sia.tp3.cruce.InterfazCruce;
+import com.sia.tp3.mutacion.InterfazMutacion;
+import com.sia.tp3.seleccion.InterfazSeleccion;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class Reemplazo2 implements InterfazReemplazo {
+public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
 
-    private int cantidad;
+    private InterfazMutacion mutacion;
 
-    public Reemplazo2(final int cantidad) {
-        this.cantidad = cantidad;
+    public Reemplazo2(final InterfazSeleccion seleccion1, final InterfazSeleccion seleccion2,
+                      final InterfazCruce cruce, final InterfazMutacion mutacion) {
+        super(seleccion1, seleccion2, cruce);
+        this.mutacion = mutacion;
     }
 
     @Override
-    public ArrayList<Personaje> hacer(final ArrayList<Personaje> padres, final ArrayList<Personaje> nuevaGeneracion) {
-        // TODO: SOLO PARA DEBUG
-        if (cantidad != nuevaGeneracion.size()) {
-            throw new RuntimeException("ERROR EN EL METODO DE REEMPLAZO 2");
-        }
-
-        ArrayList<Personaje> ret = new ArrayList<>();
-
-        Random r = new Random();
-
-        for (int i = 0; i < padres.size() - cantidad; i++) {
-            ret.add(padres.get(r.nextInt(padres.size())));
-        }
-
-        ret.addAll(nuevaGeneracion);
-
-        return ret;
-    }
-
-    @Override
-    public int getCantidad() {
-        return cantidad;
+    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes) {
+        return null;
     }
 }

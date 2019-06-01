@@ -40,6 +40,8 @@ public class Reemplazo3 extends Reemplazo implements InterfazReemplazo {
         ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
         mutacion.hacer(individuosCruzados);
 
+        recalcularTodosLosDesempenios(individuosCruzados);
+
         Random r = new Random();
         cantidadSeleccion1 = new Double((personajes.size() - k) * modificadorA).intValue();
         cantidadSeleccion2 = (personajes.size() - k) - cantidadSeleccion1;

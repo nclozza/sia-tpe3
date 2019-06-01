@@ -56,7 +56,7 @@ public class Reemplazo {
             individuo1 = r.nextInt(individuosParaCruzar.size());
             do {
                 individuo2 = r.nextInt(individuosParaCruzar.size());
-            } while (individuo1 != individuo2);
+            } while (individuo1 == individuo2);
 
             // Importante hacer la copia, para no pisar los padres originales
             nuevaGeneracion.add(individuosParaCruzar.get(individuo1).copy());

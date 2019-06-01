@@ -32,7 +32,7 @@ public class App {
                 cruce, mutacion);
 
         InterfazReemplazo reemplazo2 = obtenerReemplazo(configuracion.getMetodoReemplazo2(), modificadorA,
-                configuracion.getCantidadDeReemplazo1(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
+                configuracion.getCantidadDeReemplazo2(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
                 cruce, mutacion);
 
 
@@ -96,23 +96,24 @@ public class App {
         return mutacion;
     }
 
-    public static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificador, final int k,
+    public static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificadorA, final int k,
                                                      final int poblacionTotal, final InterfazSeleccion seleccion1,
                                                      final InterfazSeleccion seleccion2, final InterfazCruce cruce,
                                                      final InterfazMutacion mutacion) {
 
-        InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, cruce, mutacion);
+        InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, cruce, modificadorA, poblacionTotal,
+                mutacion);
 
         switch (metodoReemplazo) {
             case "reemplazo 1":
                 break;
 
             case "reemplazo 2":
-                reemplazo = new Reemplazo2(seleccion1, seleccion2, cruce, mutacion);
+                reemplazo = new Reemplazo2(seleccion1, seleccion2, cruce, modificadorA, k, mutacion);
                 break;
 
             case "reemplazo 3":
-                reemplazo = new Reemplazo3(modificador, k, poblacionTotal, seleccion1, seleccion2, cruce, mutacion);
+                reemplazo = new Reemplazo3(seleccion1, seleccion2, cruce, modificadorA, k, mutacion);
                 break;
         }
         return reemplazo;

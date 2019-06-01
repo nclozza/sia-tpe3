@@ -33,6 +33,8 @@ public class Reemplazo1 extends Reemplazo implements InterfazReemplazo {
         ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
         mutacion.hacer(individuosCruzados);
 
+        recalcularTodosLosDesempenios(individuosCruzados);
+
         // SOLO PARA DEBUGGEAR
         if (individuosCruzados.size() != k) {
             throw new RuntimeException("1 - ERROR EN REEMPLAZO 1");

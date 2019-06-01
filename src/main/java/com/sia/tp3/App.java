@@ -1,5 +1,7 @@
 package com.sia.tp3;
 
+import com.sia.tp3.corte.InterfazCorte;
+import com.sia.tp3.corte.MaximaCantidadDeGeneraciones;
 import com.sia.tp3.cruce.*;
 import com.sia.tp3.mutacion.Gen;
 import com.sia.tp3.mutacion.InterfazMutacion;
@@ -11,12 +13,14 @@ import com.sia.tp3.reemplazo.Reemplazo3;
 import com.sia.tp3.seleccion.Elite;
 import com.sia.tp3.seleccion.InterfazSeleccion;
 
+import java.util.ArrayList;
+
 public class App {
     public static void main(String[] args) {
         Configuracion configuracion = new Configuracion();
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
-        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
+        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, 0);
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();
@@ -25,7 +29,7 @@ public class App {
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
         InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1());
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2());
-
+        InterfazCorte corte = obtenerCorte(configuracion);
 
         InterfazReemplazo reemplazo1 = obtenerReemplazo(configuracion.getMetodoReemplazo1(), modificadorA,
                 configuracion.getCantidadDeReemplazo1(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
@@ -36,31 +40,80 @@ public class App {
                 cruce, mutacion);
 
 
-        Motor motor = new Motor(reemplazo1, reemplazo2, modificadorB);
+        Motor motor = new Motor(reemplazo1, reemplazo2, modificadorB, corte);
 
-        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-            System.out.println("Personaje nro: " + i);
-            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-            poblacion.getPersonajes().get(i).imprimirGenes();
+//        System.out.println("GENERACION N: " + poblacion.getNumeroDeGeneracion());
+//        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
+//            System.out.println("Personaje nro: " + i);
+//            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
+//            poblacion.getPersonajes().get(i).imprimirGenes();
+//        }
+
+        motor.correr(poblacion);
+
+        double desempenio = 0;
+        for (Personaje personaje : poblacion.getPersonajes()) {
+            if (personaje.getDesempenio() > desempenio) {
+                desempenio = personaje.getDesempenio();
+            }
         }
 
-        // ACA VA LA CONDICION DE CORTE, TENDRIA QUE IR ADENTRO DEL MOTOR
-        // YA QUE EL MOTOR POR AHORA ESTA HACIENDO UNA SOLA PASADA
-        int aux = 0;
-        while (aux++ < configuracion.getGeneraciones()) {
-            poblacion.setPersonajes(motor.correr(poblacion));
-        }
+        System.out.println("MEJOR DESEMPENIO: " + desempenio);
 
 
-        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-            System.out.println("Personaje nro: " + i);
-            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-            poblacion.getPersonajes().get(i).imprimirGenes();
+
+//        ArrayList<Personaje> original = new ArrayList<>();
+//
+//        for (Personaje personaje : poblacion.getPersonajes()) {
+//            original.add(personaje.copy());
+//        }
+//
+//        for (int i = 0; i < 5; i++) {
+//
+//            ArrayList<Personaje> aux = new ArrayList<>();
+//            for (Personaje personaje : original) {
+//                aux.add(personaje.copy());
+//            }
+//
+//            poblacion.setPersonajes(aux);
+//            poblacion.resetNumeroDeGeneracion();
+//            motor.correr(poblacion);
+//
+//            double desempenio = 0;
+//            for (Personaje personaje : poblacion.getPersonajes()) {
+//                if (personaje.getDesempenio() > desempenio) {
+//                    desempenio = personaje.getDesempenio();
+//                }
+//            }
+//
+//            System.out.println("MEJOR DESEMPENIO: " + desempenio);
+//        }
+
+    }
+
+    private static InterfazCorte obtenerCorte(Configuracion configuracion) {
+
+        InterfazCorte corte = new MaximaCantidadDeGeneraciones(configuracion.getGeneraciones());
+
+        switch (configuracion.getMetodoCorte()) {
+            case "maxima cantidad":
+                break;
+
+            case "estructura":
+                break;
+
+            case "contenido":
+                break;
+
+            case "entorno a un optimo":
+                break;
         }
+
+        return corte;
     }
 
 
-    public static InterfazCruce obtenerCruce(Configuracion configuracion) {
+    private static InterfazCruce obtenerCruce(Configuracion configuracion) {
 
         InterfazCruce cruce = new EnUnPunto(configuracion.getLocus1());
 
@@ -78,10 +131,11 @@ public class App {
                 cruce = new Anular(configuracion.getLocus1(), configuracion.getSegmento());
                 break;
         }
+
         return cruce;
     }
 
-    public static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
+    private static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
 
         InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
 
@@ -93,13 +147,14 @@ public class App {
                 mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
                 break;
         }
+
         return mutacion;
     }
 
-    public static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificadorA, final int k,
-                                                     final int poblacionTotal, final InterfazSeleccion seleccion1,
-                                                     final InterfazSeleccion seleccion2, final InterfazCruce cruce,
-                                                     final InterfazMutacion mutacion) {
+    private static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificadorA, final int k,
+                                                      final int poblacionTotal, final InterfazSeleccion seleccion1,
+                                                      final InterfazSeleccion seleccion2, final InterfazCruce cruce,
+                                                      final InterfazMutacion mutacion) {
 
         InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, cruce, modificadorA, poblacionTotal,
                 mutacion);
@@ -116,10 +171,11 @@ public class App {
                 reemplazo = new Reemplazo3(seleccion1, seleccion2, cruce, modificadorA, k, mutacion);
                 break;
         }
+
         return reemplazo;
     }
 
-    public static InterfazSeleccion obtenerSeleccion(String metodoSeleccion) {
+    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion) {
 
         InterfazSeleccion seleccion = new Elite();
 

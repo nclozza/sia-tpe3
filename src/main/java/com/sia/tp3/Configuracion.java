@@ -242,7 +242,7 @@ public class Configuracion {
         if (locus1 < 0 || locus1 >= Genes.CANTIDAD_GENES)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus1 valido");
 
-        if (locus2 < 0 || locus2 > locus1)
+        if (locus2 < 0 || locus2 < locus1)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus2 valido");
 
         if (segmento < 1 || segmento > Genes.CANTIDAD_GENES / 2)

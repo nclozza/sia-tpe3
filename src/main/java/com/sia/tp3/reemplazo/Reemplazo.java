@@ -74,4 +74,11 @@ public class Reemplazo {
 
         return nuevaGeneracion;
     }
+
+    public void recalcularTodosLosDesempenios(ArrayList<Personaje> personajes) {
+
+        for (Personaje personaje : personajes) {
+            personaje.recalcularDesempenio();
+        }
+    }
 }

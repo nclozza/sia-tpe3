@@ -3,7 +3,6 @@ package com.sia.tp3;
 import com.sia.tp3.items.*;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +14,12 @@ public class Poblacion {
 
     private ArrayList<Personaje> personajes;
     private Integer cantidadPersonajes;
+    private int numeroDeGeneracion;
 
     private static final String path = "src/main/java/com/sia/tp3/testdata/";
 
-    public Poblacion(String personaje, Multiplicador multiplicador) {
+    public Poblacion(String personaje, Multiplicador multiplicador, final int numeroDeGeneracion) {
+        this.numeroDeGeneracion = numeroDeGeneracion;
 
         List<Arma> armas = leerArmas();
         List<Bota> botas = leerBotas();
@@ -155,5 +156,17 @@ public class Poblacion {
             e.printStackTrace();
         }
         return pecheras;
+    }
+
+    public int getNumeroDeGeneracion() {
+        return numeroDeGeneracion;
+    }
+
+    public void resetNumeroDeGeneracion() {
+        numeroDeGeneracion = 0;
+    }
+
+    public void aumentarGeneracion() {
+        numeroDeGeneracion++;
     }
 }

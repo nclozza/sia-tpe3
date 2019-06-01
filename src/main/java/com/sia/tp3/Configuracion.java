@@ -266,6 +266,17 @@ public class Configuracion {
                 && !metodoSeleccion1.equals("universal") && !metodoSeleccion1.equals("boltzmann")
                 && !metodoSeleccion1.equals("torneos") && !metodoSeleccion1.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion valido");
+
+        if (metodoReemplazo1.equals("reemplazo 2") || metodoReemplazo1.equals("reemplazo 3")) {
+            if (cantidadDeReemplazo1 <= 1)
+                throw new ConfiguracionIncorrectaExcepcion("La cantidad de reemplazo1 no puede ser menor o igual a 1 " +
+                        "si se utilizan los métodos de reemplazo2 o reemplazo3");
+        }
+        if (metodoReemplazo2.equals("reemplazo 2") || metodoReemplazo2.equals("reemplazo 3")) {
+            if (cantidadDeReemplazo2 <= 1)
+                throw new ConfiguracionIncorrectaExcepcion("La cantidad de reemplazo2 no puede ser menor o igual a 1 " +
+                        "si se utilizan los métodos de reemplazo2 o reemplazo3");
+        }
     }
 }
 

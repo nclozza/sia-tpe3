@@ -18,10 +18,10 @@
 
     "metodo_seleccion_1": "elite",
     "metodo_seleccion_2": "elite",
-    "metodo_reemplazo_1": "reemplazo 2",
-    "metodo_reemplazo_2": "reemplazo 3",
-    "cantidad_de_reemplazo_1": 5,
-    "cantidad_de_reemplazo_2": 7,
+    "metodo_seleccion_3": "elite",
+    "metodo_seleccion_4": "elite",
+    "metodo_reemplazo": "reemplazo 1",
+    "cantidad_de_reemplazo": 5,
     "A": 1.0,
     "B": 1.0,
 

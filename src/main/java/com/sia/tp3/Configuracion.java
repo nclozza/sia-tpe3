@@ -30,10 +30,10 @@ public class Configuracion {
     private Integer genAMutar;
     private String metodoSeleccion1;
     private String metodoSeleccion2;
-    private String metodoReemplazo1;
-    private String metodoReemplazo2;
-    private Integer cantidadDeReemplazo1;
-    private Integer cantidadDeReemplazo2;
+    private String metodoSeleccion3;
+    private String metodoSeleccion4;
+    private String metodoReemplazo;
+    private Integer cantidadDeReemplazo;
     private Double A;
     private Double B;
 
@@ -77,11 +77,9 @@ public class Configuracion {
 
             this.metodoCorte = (String) configuracion.get("metodo_corte");
 
-            this.metodoReemplazo1 = (String) configuracion.get("metodo_reemplazo_1");
-            this.metodoReemplazo2 = (String) configuracion.get("metodo_reemplazo_2");
+            this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
 
-            this.cantidadDeReemplazo1 = ((Long) configuracion.get("cantidad_de_reemplazo_1")).intValue();
-            this.cantidadDeReemplazo2 = ((Long) configuracion.get("cantidad_de_reemplazo_2")).intValue();
+            this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
             this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
@@ -89,6 +87,8 @@ public class Configuracion {
 
             this.metodoSeleccion1 = (String) configuracion.get("metodo_seleccion_1");
             this.metodoSeleccion2 = (String) configuracion.get("metodo_seleccion_2");
+            this.metodoSeleccion3 = (String) configuracion.get("metodo_seleccion_3");
+            this.metodoSeleccion4 = (String) configuracion.get("metodo_seleccion_4");
 
             this.generaciones = ((Long) configuracion.get("generaciones")).intValue();
 
@@ -167,16 +167,16 @@ public class Configuracion {
         return metodoCorte;
     }
 
-    public String getMetodoReemplazo1() {
-        return metodoReemplazo1;
+    public String getMetodoReemplazo() {
+        return metodoReemplazo;
     }
 
     public Integer getGeneraciones() {
         return generaciones;
     }
 
-    public Integer getCantidadDeReemplazo1() {
-        return cantidadDeReemplazo1;
+    public Integer getCantidadDeReemplazo() {
+        return cantidadDeReemplazo;
     }
 
     public String getMetodoMutacion() {
@@ -203,6 +203,18 @@ public class Configuracion {
         return metodoSeleccion1;
     }
 
+    public String getMetodoSeleccion2() {
+        return metodoSeleccion2;
+    }
+
+    public String getMetodoSeleccion3() {
+        return metodoSeleccion3;
+    }
+
+    public String getMetodoSeleccion4() {
+        return metodoSeleccion4;
+    }
+
     public Integer getGenAMutar() {
         return genAMutar;
     }
@@ -213,18 +225,6 @@ public class Configuracion {
 
     public Double getB() {
         return B;
-    }
-
-    public String getMetodoSeleccion2() {
-        return metodoSeleccion2;
-    }
-
-    public String getMetodoReemplazo2() {
-        return metodoReemplazo2;
-    }
-
-    public Integer getCantidadDeReemplazo2() {
-        return cantidadDeReemplazo2;
     }
 
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
@@ -252,7 +252,7 @@ public class Configuracion {
                 "contenido") && !metodoCorte.equals("entorno a un optimo"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de corte valido");
 
-        if (!metodoReemplazo1.equals("reemplazo 1") && !metodoReemplazo1.equals("reemplazo 2") && !metodoReemplazo1.equals(
+        if (!metodoReemplazo.equals("reemplazo 1") && !metodoReemplazo.equals("reemplazo 2") && !metodoReemplazo.equals(
                 "reemplazo 3"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de reemplazo valido");
 
@@ -265,16 +265,26 @@ public class Configuracion {
         if (!metodoSeleccion1.equals("elite") && !metodoSeleccion1.equals("ruleta")
                 && !metodoSeleccion1.equals("universal") && !metodoSeleccion1.equals("boltzmann")
                 && !metodoSeleccion1.equals("torneos") && !metodoSeleccion1.equals("ranking"))
-            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion valido");
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 1 valido");
 
-        if (metodoReemplazo1.equals("reemplazo 2") || metodoReemplazo1.equals("reemplazo 3")) {
-            if (cantidadDeReemplazo1 <= 1)
+        if (!metodoSeleccion2.equals("elite") && !metodoSeleccion2.equals("ruleta")
+                && !metodoSeleccion2.equals("universal") && !metodoSeleccion2.equals("boltzmann")
+                && !metodoSeleccion2.equals("torneos") && !metodoSeleccion2.equals("ranking"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 2 valido");
+
+        if (!metodoSeleccion3.equals("elite") && !metodoSeleccion3.equals("ruleta")
+                && !metodoSeleccion3.equals("universal") && !metodoSeleccion3.equals("boltzmann")
+                && !metodoSeleccion3.equals("torneos") && !metodoSeleccion3.equals("ranking"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 3 valido");
+
+        if (!metodoSeleccion4.equals("elite") && !metodoSeleccion4.equals("ruleta")
+                && !metodoSeleccion4.equals("universal") && !metodoSeleccion4.equals("boltzmann")
+                && !metodoSeleccion4.equals("torneos") && !metodoSeleccion4.equals("ranking"))
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 4 valido");
+
+        if (metodoReemplazo.equals("reemplazo 2") || metodoReemplazo.equals("reemplazo 3")) {
+            if (cantidadDeReemplazo <= 1)
                 throw new ConfiguracionIncorrectaExcepcion("La cantidad de reemplazo1 no puede ser menor o igual a 1 " +
-                        "si se utilizan los métodos de reemplazo2 o reemplazo3");
-        }
-        if (metodoReemplazo2.equals("reemplazo 2") || metodoReemplazo2.equals("reemplazo 3")) {
-            if (cantidadDeReemplazo2 <= 1)
-                throw new ConfiguracionIncorrectaExcepcion("La cantidad de reemplazo2 no puede ser menor o igual a 1 " +
                         "si se utilizan los métodos de reemplazo2 o reemplazo3");
         }
     }

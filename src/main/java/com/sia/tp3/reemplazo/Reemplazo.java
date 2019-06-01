@@ -11,21 +11,42 @@ public class Reemplazo {
 
     public InterfazSeleccion seleccion1;
     public InterfazSeleccion seleccion2;
+    public InterfazSeleccion seleccion3;
+    public InterfazSeleccion seleccion4;
     public InterfazCruce cruce;
 
     public Reemplazo(final InterfazSeleccion seleccion1, final InterfazSeleccion seleccion2,
+                     final InterfazSeleccion seleccion3, final InterfazSeleccion seleccion4,
                      final InterfazCruce cruce) {
         this.seleccion1 = seleccion1;
         this.seleccion2 = seleccion2;
+        this.seleccion3 = seleccion3;
+        this.seleccion4 = seleccion4;
         this.cruce = cruce;
     }
 
-    public ArrayList<Personaje> seleccionar(final ArrayList<Personaje> personajes, final int cantidadSeleccion1,
+    public ArrayList<Personaje> seleccionarPadres(final ArrayList<Personaje> personajes, final int cantidadSeleccion1,
                                             final int cantidadSeleccion2) {
 
         ArrayList<Personaje> individuosSeleccionados1 = seleccion1.hacer(personajes,
                 cantidadSeleccion1);
         ArrayList<Personaje> individuosSeleccionados2 = seleccion2.hacer(personajes,
+                cantidadSeleccion2);
+
+        ArrayList<Personaje> ret = new ArrayList<>();
+        ret.addAll(individuosSeleccionados1);
+        ret.addAll(individuosSeleccionados2);
+
+        return ret;
+    }
+
+    public ArrayList<Personaje> seleccionarNuevaGeneracion(final ArrayList<Personaje> personajes,
+                                                     final int cantidadSeleccion1,
+                                            final int cantidadSeleccion2) {
+
+        ArrayList<Personaje> individuosSeleccionados1 = seleccion3.hacer(personajes,
+                cantidadSeleccion1);
+        ArrayList<Personaje> individuosSeleccionados2 = seleccion4.hacer(personajes,
                 cantidadSeleccion2);
 
         ArrayList<Personaje> ret = new ArrayList<>();

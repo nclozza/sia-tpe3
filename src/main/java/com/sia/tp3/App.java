@@ -13,8 +13,6 @@ import com.sia.tp3.reemplazo.Reemplazo3;
 import com.sia.tp3.seleccion.Elite;
 import com.sia.tp3.seleccion.InterfazSeleccion;
 
-import java.util.ArrayList;
-
 public class App {
     public static void main(String[] args) {
         Configuracion configuracion = new Configuracion();
@@ -29,18 +27,15 @@ public class App {
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
         InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1());
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2());
+        InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3());
+        InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4());
         InterfazCorte corte = obtenerCorte(configuracion);
 
-        InterfazReemplazo reemplazo1 = obtenerReemplazo(configuracion.getMetodoReemplazo1(), modificadorA,
-                configuracion.getCantidadDeReemplazo1(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
-                cruce, mutacion);
+        InterfazReemplazo reemplazo = obtenerReemplazo(configuracion.getMetodoReemplazo(), modificadorA, modificadorB,
+                configuracion.getCantidadDeReemplazo(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
+                seleccion3, seleccion4, cruce, mutacion);
 
-        InterfazReemplazo reemplazo2 = obtenerReemplazo(configuracion.getMetodoReemplazo2(), modificadorA,
-                configuracion.getCantidadDeReemplazo2(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
-                cruce, mutacion);
-
-
-        Motor motor = new Motor(reemplazo1, reemplazo2, modificadorB, corte);
+        Motor motor = new Motor(reemplazo, corte);
 
 //        System.out.println("GENERACION N: " + poblacion.getNumeroDeGeneracion());
 //        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
@@ -59,7 +54,6 @@ public class App {
         }
 
         System.out.println("MEJOR DESEMPENIO: " + desempenio);
-
 
 
 //        ArrayList<Personaje> original = new ArrayList<>();
@@ -139,7 +133,7 @@ public class App {
 
         InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
 
-        switch (configuracion.getMetodoReemplazo1()) {
+        switch (configuracion.getMetodoReemplazo()) {
             case "gen":
                 break;
 
@@ -151,24 +145,29 @@ public class App {
         return mutacion;
     }
 
-    private static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificadorA, final int k,
+    private static InterfazReemplazo obtenerReemplazo(String metodoReemplazo, final double modificadorA,
+                                                      final double modificadorB, final int k,
                                                       final int poblacionTotal, final InterfazSeleccion seleccion1,
-                                                      final InterfazSeleccion seleccion2, final InterfazCruce cruce,
+                                                      final InterfazSeleccion seleccion2,
+                                                      final InterfazSeleccion seleccion3,
+                                                      final InterfazSeleccion seleccion4, final InterfazCruce cruce,
                                                       final InterfazMutacion mutacion) {
 
-        InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, cruce, modificadorA, poblacionTotal,
-                mutacion);
+        InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, seleccion3, seleccion4, cruce,
+                modificadorA, modificadorB, poblacionTotal, mutacion);
 
         switch (metodoReemplazo) {
             case "reemplazo 1":
                 break;
 
             case "reemplazo 2":
-                reemplazo = new Reemplazo2(seleccion1, seleccion2, cruce, modificadorA, k, mutacion);
+                reemplazo = new Reemplazo2(seleccion1, seleccion2, seleccion3, seleccion4, cruce, modificadorA,
+                        modificadorB, k, mutacion);
                 break;
 
             case "reemplazo 3":
-                reemplazo = new Reemplazo3(seleccion1, seleccion2, cruce, modificadorA, k, mutacion);
+                reemplazo = new Reemplazo3(seleccion1, seleccion2, seleccion3, seleccion4, cruce, modificadorA,
+                        modificadorB, k, mutacion);
                 break;
         }
 

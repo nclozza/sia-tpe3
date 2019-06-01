@@ -10,14 +10,17 @@ import java.util.ArrayList;
 public class Reemplazo1 extends Reemplazo implements InterfazReemplazo {
 
     private double modificadorA;
+    private double modificadorB;
     private int k;
     private InterfazMutacion mutacion;
 
     public Reemplazo1(final InterfazSeleccion seleccion1, final InterfazSeleccion seleccion2,
-                      final InterfazCruce cruce, final double modificadorA, final int k,
+                      final InterfazSeleccion seleccion3, final InterfazSeleccion seleccion4,
+                      final InterfazCruce cruce, final double modificadorA, final double modificadorB, final int k,
                       final InterfazMutacion mutacion) {
-        super(seleccion1, seleccion2, cruce);
+        super(seleccion1, seleccion2, seleccion3, seleccion4, cruce);
         this.modificadorA = modificadorA;
+        this.modificadorB = modificadorB;
         this.k = k;
         this.mutacion = mutacion;
     }
@@ -28,7 +31,8 @@ public class Reemplazo1 extends Reemplazo implements InterfazReemplazo {
         int cantidadSeleccion1 = new Double(k * modificadorA).intValue();
         int cantidadSeleccion2 = k - cantidadSeleccion1;
 
-        ArrayList<Personaje> individuosParaCruzar = seleccionar(personajes, cantidadSeleccion1, cantidadSeleccion2);
+        ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
+                cantidadSeleccion2);
 
         ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
         mutacion.hacer(individuosCruzados);
@@ -40,10 +44,10 @@ public class Reemplazo1 extends Reemplazo implements InterfazReemplazo {
             throw new RuntimeException("1 - ERROR EN REEMPLAZO 1");
         }
 
-        cantidadSeleccion1 = new Double(k * modificadorA).intValue();
+        cantidadSeleccion1 = new Double(k * modificadorB).intValue();
         cantidadSeleccion2 = k - cantidadSeleccion1;
 
-        ArrayList<Personaje> ret = new ArrayList<>(seleccionar(individuosCruzados, cantidadSeleccion1,
+        ArrayList<Personaje> ret = new ArrayList<>(seleccionarNuevaGeneracion(individuosCruzados, cantidadSeleccion1,
                 cantidadSeleccion2));
 
         // SOLO PARA DEBUGGEAR

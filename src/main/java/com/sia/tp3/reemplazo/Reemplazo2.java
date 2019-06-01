@@ -10,14 +10,17 @@ import java.util.ArrayList;
 public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
 
     private double modificadorA;
+    private double modificadorB;
     private int k;
     private InterfazMutacion mutacion;
 
     public Reemplazo2(final InterfazSeleccion seleccion1, final InterfazSeleccion seleccion2,
-                      final InterfazCruce cruce, final double modificadorA, final int k,
+                      final InterfazSeleccion seleccion3, final InterfazSeleccion seleccion4,
+                      final InterfazCruce cruce, final double modificadorA, final double modificadorB, final int k,
                       final InterfazMutacion mutacion) {
-        super(seleccion1, seleccion2, cruce);
+        super(seleccion1, seleccion2, seleccion3, seleccion4, cruce);
         this.modificadorA = modificadorA;
+        this.modificadorB = modificadorB;
         this.k = k;
         this.mutacion = mutacion;
     }
@@ -28,7 +31,8 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
         int cantidadSeleccion1 = new Double(k * modificadorA).intValue();
         int cantidadSeleccion2 = k - cantidadSeleccion1;
 
-        ArrayList<Personaje> individuosParaCruzar = seleccionar(personajes, cantidadSeleccion1, cantidadSeleccion2);
+        ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
+                cantidadSeleccion2);
 
         // SOLO PARA DEBUGGEAR
         if (individuosParaCruzar.size() != k) {
@@ -45,10 +49,11 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
             throw new RuntimeException("2 - ERROR EN REEMPLAZO 2");
         }
 
-        cantidadSeleccion1 = new Double((personajes.size() - k) * modificadorA).intValue();
+        cantidadSeleccion1 = new Double((personajes.size() - k) * modificadorB).intValue();
         cantidadSeleccion2 = (personajes.size() - k) - cantidadSeleccion1;
 
-        ArrayList<Personaje> padresSeleccionados = seleccionar(personajes, cantidadSeleccion1, cantidadSeleccion2);
+        ArrayList<Personaje> padresSeleccionados = seleccionarNuevaGeneracion(personajes, cantidadSeleccion1,
+                cantidadSeleccion2);
         ArrayList<Personaje> ret = new ArrayList<>(padresSeleccionados);
 
         // SOLO PARA DEBUGGEAR
@@ -56,9 +61,9 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
             throw new RuntimeException("3 - ERROR EN REEMPLAZO 2");
         }
 
-        cantidadSeleccion1 = new Double(k * modificadorA).intValue();
+        cantidadSeleccion1 = new Double(k * modificadorB).intValue();
         cantidadSeleccion2 = k - cantidadSeleccion1;
-        ret.addAll(seleccionar(individuosCruzados, cantidadSeleccion1, cantidadSeleccion2));
+        ret.addAll(seleccionarNuevaGeneracion(individuosCruzados, cantidadSeleccion1, cantidadSeleccion2));
 
         // SOLO PARA DEBUGGEAR
         if (ret.size() != personajes.size()) {

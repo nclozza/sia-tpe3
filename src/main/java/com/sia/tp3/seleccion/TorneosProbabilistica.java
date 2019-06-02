@@ -1,12 +1,14 @@
 package com.sia.tp3.seleccion;
 
 import com.sia.tp3.Personaje;
-import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class TorneosDeterministica implements  InterfazSeleccion {
+public class TorneosProbabilistica implements InterfazSeleccion{
 
+    private final static Double PROBABILIDAD = 0.75;
 
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
@@ -15,11 +17,13 @@ public class TorneosDeterministica implements  InterfazSeleccion {
         int ciclos = 3;
         cantidad = 6;
 
+        //TODO: PREGUNTAR SI SE USAN TODOS LOS PERSONAJES O SE AGARRA UNA CIERTA CANTIDAD COMO EN LA DETERMINISTICA
         ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(personajes, cantidad);
         ArrayList<Personaje> ret = seleccionarGanadores(personajesSeleccionados, ciclos);
 
         return ret;
     }
+
 
     private ArrayList<Personaje> seleccionarPersonajes(ArrayList<Personaje>personajes, int cantidad){
 
@@ -50,9 +54,11 @@ public class TorneosDeterministica implements  InterfazSeleccion {
         Integer aleatorio;
         Personaje p1, p2;
         ArrayList<Personaje> ret = new ArrayList<>();
+        Random random = new Random();
 
         while(ciclos != 0){
 
+            Double r = (1.0) * random.nextDouble();
             aleatorio = ThreadLocalRandom.current().nextInt(0, personajesSeleccionados.size());
             p1 = personajesSeleccionados.get(aleatorio);
 
@@ -63,11 +69,21 @@ public class TorneosDeterministica implements  InterfazSeleccion {
                 }
             } while (true);
 
-            if (p1.getDesempenio() >  p2.getDesempenio()){
-                if ( !ret.contains(p1))
-                    ret.add(p1);
-            } else if (!ret.contains(p2))
-                ret.add(p2);
+            if (r < PROBABILIDAD){
+
+                if (p1.getDesempenio() >  p2.getDesempenio()){
+                    if ( !ret.contains(p1))
+                        ret.add(p1);
+                } else if (!ret.contains(p2))
+                    ret.add(p2);
+            } else {
+
+                if (p1.getDesempenio() <  p2.getDesempenio()){
+                    if ( !ret.contains(p1))
+                        ret.add(p1);
+                } else if (!ret.contains(p2))
+                    ret.add(p2);
+            }
 
             ciclos--;
         }

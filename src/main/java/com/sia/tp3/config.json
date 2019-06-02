@@ -16,7 +16,7 @@
     "metodo_corte": "maxima cantidad",
     "generaciones": 2,
 
-    "metodo_seleccion_1": "universal",
+    "metodo_seleccion_1": "torneos probabilistica",
     "metodo_seleccion_2": "elite",
     "metodo_seleccion_3": "elite",
     "metodo_seleccion_4": "elite",

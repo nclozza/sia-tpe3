@@ -192,6 +192,10 @@ public class App {
             case "torneos deterministica":
                 seleccion = new TorneosDeterministica();
                 break;
+
+            case "torneos probabilistica":
+                seleccion = new TorneosProbabilistica();
+                break;
         }
 
         return seleccion;

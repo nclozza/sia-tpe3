@@ -1,11 +1,12 @@
 package com.sia.tp3.seleccion;
 
 import com.sia.tp3.Personaje;
+
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-public class Ruleta implements InterfazSeleccion {
+public class Universal implements InterfazSeleccion {
 
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
@@ -15,32 +16,30 @@ public class Ruleta implements InterfazSeleccion {
 
         PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);
 
-        if (personajes.get(0).getDesempenioAcumulado() == 0.0) {
+        if (personajes.get(0).getDesempenioAcumulado() == 0.0){
             calcularDesempenioRelativoYAcumulado(personajes, sumaDesempenio(personajes));
         }
 
         ArrayList<Personaje> ret = seleccionarPersonajes(personajes, numerosAleatorios);
 
-        return  ret;
+        return ret;
     }
 
     private PriorityQueue<Double> generarAleatorios(int cantidad){
 
         PriorityQueue<Double> numeroAleatorios= new PriorityQueue<>(Double::compare);
         Random r = new Random();
-        Double aleatorio;
+        Double aleatorio = (1.0) * r.nextDouble();
+        int i = 0;
+        Double aleatorioInsertar;
+        int cantidadAux = cantidad;
 
-        while (cantidad != 0){
+        while (cantidadAux != 0){
 
-            do{
-                aleatorio = (1.0) * r.nextDouble();
-                if (!numeroAleatorios.contains(aleatorio)){
-                    numeroAleatorios.add(aleatorio);
-                    break;
-                }
-            } while (true);
-
-            cantidad--;
+            aleatorioInsertar = (aleatorio + i) / cantidad;
+            numeroAleatorios.add(aleatorioInsertar);
+            i++;
+            cantidadAux--;
         }
 
         return numeroAleatorios;
@@ -76,7 +75,7 @@ public class Ruleta implements InterfazSeleccion {
         while(!numerosAleatorios.isEmpty()){
 
             aleatorio = numerosAleatorios.remove();
-
+            System.out.println(aleatorio);
             for (; i< personajes.size(); i++){
 
                 if (personajes.get(i).getDesempenioAcumulado() > aleatorio){
@@ -88,4 +87,5 @@ public class Ruleta implements InterfazSeleccion {
         }
         return ret;
     }
+
 }

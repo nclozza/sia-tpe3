@@ -10,10 +10,7 @@ import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
 import com.sia.tp3.reemplazo.Reemplazo3;
-import com.sia.tp3.seleccion.Elite;
-import com.sia.tp3.seleccion.InterfazSeleccion;
-import com.sia.tp3.seleccion.Ruleta;
-import com.sia.tp3.seleccion.TorneosDeterministica;
+import com.sia.tp3.seleccion.*;
 
 public class App {
     public static void main(String[] args) {
@@ -186,6 +183,10 @@ public class App {
 
             case "ruleta":
                 seleccion = new Ruleta();
+                break;
+
+            case "universal":
+                seleccion = new Universal();
                 break;
 
             case "torneos deterministica":

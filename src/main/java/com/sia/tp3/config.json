@@ -16,12 +16,12 @@
     "metodo_corte": "maxima cantidad",
     "generaciones": 2,
 
-    "metodo_seleccion_1": "elite",
+    "metodo_seleccion_1": "torneos deterministica",
     "metodo_seleccion_2": "elite",
     "metodo_seleccion_3": "elite",
     "metodo_seleccion_4": "elite",
     "metodo_reemplazo": "reemplazo 1",
-    "cantidad_de_reemplazo": 5,
+    "cantidad_de_reemplazo": 3,
     "A": 1.0,
     "B": 1.0,
 

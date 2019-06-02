@@ -78,7 +78,6 @@ public class Configuracion {
             this.metodoCorte = (String) configuracion.get("metodo_corte");
 
             this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
-
             this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
@@ -264,22 +263,22 @@ public class Configuracion {
 
         if (!metodoSeleccion1.equals("elite") && !metodoSeleccion1.equals("ruleta")
                 && !metodoSeleccion1.equals("universal") && !metodoSeleccion1.equals("boltzmann")
-                && !metodoSeleccion1.equals("torneos") && !metodoSeleccion1.equals("ranking"))
+                && !metodoSeleccion1.equals("torneos deterministica") && !metodoSeleccion1.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 1 valido");
 
         if (!metodoSeleccion2.equals("elite") && !metodoSeleccion2.equals("ruleta")
                 && !metodoSeleccion2.equals("universal") && !metodoSeleccion2.equals("boltzmann")
-                && !metodoSeleccion2.equals("torneos") && !metodoSeleccion2.equals("ranking"))
+                && !metodoSeleccion2.equals("torneos deterministica") && !metodoSeleccion2.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 2 valido");
 
         if (!metodoSeleccion3.equals("elite") && !metodoSeleccion3.equals("ruleta")
                 && !metodoSeleccion3.equals("universal") && !metodoSeleccion3.equals("boltzmann")
-                && !metodoSeleccion3.equals("torneos") && !metodoSeleccion3.equals("ranking"))
+                && !metodoSeleccion3.equals("torneos deterministica") && !metodoSeleccion3.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 3 valido");
 
         if (!metodoSeleccion4.equals("elite") && !metodoSeleccion4.equals("ruleta")
                 && !metodoSeleccion4.equals("universal") && !metodoSeleccion4.equals("boltzmann")
-                && !metodoSeleccion4.equals("torneos") && !metodoSeleccion4.equals("ranking"))
+                && !metodoSeleccion4.equals("torneos deterministica") && !metodoSeleccion4.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 4 valido");
 
         if (metodoReemplazo.equals("reemplazo 2") || metodoReemplazo.equals("reemplazo 3")) {

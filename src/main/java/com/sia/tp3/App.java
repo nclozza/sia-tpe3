@@ -12,6 +12,8 @@ import com.sia.tp3.reemplazo.Reemplazo2;
 import com.sia.tp3.reemplazo.Reemplazo3;
 import com.sia.tp3.seleccion.Elite;
 import com.sia.tp3.seleccion.InterfazSeleccion;
+import com.sia.tp3.seleccion.Ruleta;
+import com.sia.tp3.seleccion.TorneosDeterministica;
 
 public class App {
     public static void main(String[] args) {
@@ -180,6 +182,14 @@ public class App {
 
         switch (metodoSeleccion) {
             case "elite":
+                break;
+
+            case "ruleta":
+                seleccion = new Ruleta();
+                break;
+
+            case "torneos deterministica":
+                seleccion = new TorneosDeterministica();
                 break;
         }
 

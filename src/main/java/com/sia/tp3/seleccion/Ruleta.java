@@ -1,34 +1,88 @@
 package com.sia.tp3.seleccion;
 
-import com.sia.tp3.Genes;
 import com.sia.tp3.Personaje;
-
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class Ruleta implements InterfazSeleccion {
-
-
+    
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
 
-        ArrayList<Double> numeroAleatorios = generarAleatorios(cantidad);
-        ArrayList<Personaje> ret = new ArrayList<>();
+        //TODO: Verificar si estos parametros van en el .config
+        cantidad = 3;
 
-        //TODO: No implementado
+        PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);
+        calcularDesempenioRelativoYAcumulado(personajes, sumaDesempenio(personajes));
 
-        return  null;
+        ArrayList<Personaje> ret = seleccionarPersonajes(personajes, numerosAleatorios);
+
+        return  ret;
     }
 
-    public ArrayList<Double> generarAleatorios(int cantidad){
+    private PriorityQueue<Double> generarAleatorios(int cantidad){
 
-        ArrayList<Double> numeroAleatorios = new ArrayList<>();
+        PriorityQueue<Double> numeroAleatorios= new PriorityQueue<>(Double::compare);
         Random r = new Random();
+        Double aleatorio;
 
         while (cantidad != 0){
-            numeroAleatorios.add((1.0) * r.nextDouble());
+
+            do{
+                aleatorio = (1.0) * r.nextDouble();
+                if (!numeroAleatorios.contains(aleatorio)){
+                    numeroAleatorios.add(aleatorio);
+                    break;
+                }
+            } while (true);
+
             cantidad--;
         }
+
         return numeroAleatorios;
+    }
+
+    private Double sumaDesempenio(ArrayList<Personaje> personajes){
+
+        Double suma = 0.0;
+
+        for(Personaje p : personajes){
+            suma += p.getDesempenio();
+        }
+
+        return suma;
+    }
+
+    private void calcularDesempenioRelativoYAcumulado(ArrayList<Personaje> personajes, Double sumaDesempenioTotal){
+
+        Double acumulado = 0.0;
+        for(Personaje p : personajes){
+            p.setDesempenioRelativo(p.getDesempenio()/sumaDesempenioTotal);
+            acumulado += p.getDesempenioRelativo();
+            p.setDesempenioAcumulado(acumulado);
+        }
+    }
+
+    private ArrayList<Personaje> seleccionarPersonajes(ArrayList<Personaje> personajes, PriorityQueue<Double> numerosAleatorios){
+
+        ArrayList<Personaje> ret = new ArrayList<>();
+        Double aleatorio;
+        int i = 0;
+
+        while(!numerosAleatorios.isEmpty()){
+
+            aleatorio = numerosAleatorios.remove();
+            System.out.println(aleatorio);
+            for (; i< personajes.size(); i++){
+
+                if (personajes.get(i).getDesempenioAcumulado() > aleatorio){
+
+                    ret.add(personajes.get(i));
+                    break;
+                }
+            }
+        }
+        return ret;
     }
 }

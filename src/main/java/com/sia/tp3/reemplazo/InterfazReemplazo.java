@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface InterfazReemplazo {
 
-    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes);
+    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, int numeroDeGeneracion);
 
 }

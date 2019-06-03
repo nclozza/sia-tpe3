@@ -11,8 +11,7 @@ import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
 import com.sia.tp3.reemplazo.Reemplazo3;
-import com.sia.tp3.seleccion.Elite;
-import com.sia.tp3.seleccion.InterfazSeleccion;
+import com.sia.tp3.seleccion.*;
 
 public class App {
     public static void main(String[] args) {
@@ -26,10 +25,10 @@ public class App {
 
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
-        InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1());
-        InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2());
-        InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3());
-        InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4());
+        InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
+        InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann());
+        InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann());
+        InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann());
         InterfazCorte corte = obtenerCorte(configuracion);
 
         InterfazReemplazo reemplazo = obtenerReemplazo(configuracion.getMetodoReemplazo(), modificadorA, modificadorB,
@@ -177,12 +176,32 @@ public class App {
         return reemplazo;
     }
 
-    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion) {
+    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion, Integer cantidadDePersonajesTorneos, Boolean usaBoltzmann) {
 
-        InterfazSeleccion seleccion = new Elite();
+        InterfazSeleccion seleccion = new Elite(usaBoltzmann);
 
         switch (metodoSeleccion) {
             case "elite":
+                break;
+
+            case "ruleta":
+                seleccion = new Ruleta(usaBoltzmann);
+                break;
+
+            case "universal":
+                seleccion = new Universal(usaBoltzmann);
+                break;
+
+            case "torneos deterministica":
+                seleccion = new TorneosDeterministica(cantidadDePersonajesTorneos, usaBoltzmann);
+                break;
+
+            case "torneos probabilistica":
+                seleccion = new TorneosProbabilistica(cantidadDePersonajesTorneos, usaBoltzmann);
+                break;
+
+            case "ranking":
+                seleccion = new Ranking(usaBoltzmann);
                 break;
         }
 

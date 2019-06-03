@@ -7,11 +7,14 @@ import java.util.Random;
 
 public class Ruleta implements InterfazSeleccion {
 
+    private boolean usaBoltzmann;
+
+    public Ruleta(boolean usaBoltzmann) {
+        this.usaBoltzmann = usaBoltzmann;
+    }
+
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
-
-        //TODO: Verificar si estos parametros van en el .config
-        cantidad = 3;
 
         PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);
 

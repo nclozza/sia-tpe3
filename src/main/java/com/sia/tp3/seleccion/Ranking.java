@@ -6,11 +6,14 @@ import java.util.*;
 
 public class Ranking implements InterfazSeleccion {
 
+    private boolean usaBoltzmann;
+
+    public Ranking(boolean usaBoltzmann) {
+        this.usaBoltzmann = usaBoltzmann;
+    }
+
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
-
-        //TODO: Verificar si estos parametros van en el .config
-        cantidad = 3;
 
         ordenarPersonajes(personajes);
         PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);

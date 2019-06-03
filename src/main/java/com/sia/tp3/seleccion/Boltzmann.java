@@ -5,13 +5,9 @@ import com.sia.tp3.reemplazo.InterfazReemplazo;
 
 import java.util.ArrayList;
 
-public class Boltzmann implements InterfazSeleccion {
+public class Boltzmann {
 
-    @Override
-    public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
-
-        //TODO: Verificar si estos parametros van en el .config
-        Integer generacion = 3;
+    public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int generacion) {
 
         Double temperatura = temperatura(Double.valueOf(generacion));
         Double promedio = calcularPromedio(personajes, temperatura);

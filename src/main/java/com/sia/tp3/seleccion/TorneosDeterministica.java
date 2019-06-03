@@ -7,16 +7,23 @@ import java.util.ArrayList;
 
 public class TorneosDeterministica implements  InterfazSeleccion {
 
+    private int cantidadDePersonajes;
+    private boolean usaBoltzmann;
+
+    public TorneosDeterministica(int cantidadDePersonajes, boolean usaBoltzmann) {
+        this.cantidadDePersonajes = cantidadDePersonajes;
+        this.usaBoltzmann = usaBoltzmann;
+    }
+
+    public int getCantidadDePersonajes() {
+        return cantidadDePersonajes;
+    }
 
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
 
-        //TODO: Verificar si estos parametros van en el .config
-        int ciclos = 3;
-        cantidad = 6;
-
-        ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(personajes, cantidad);
-        ArrayList<Personaje> ret = seleccionarGanadores(personajesSeleccionados, ciclos);
+        ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(personajes, cantidadDePersonajes);
+        ArrayList<Personaje> ret = seleccionarGanadores(personajesSeleccionados, cantidad);
 
         return ret;
     }

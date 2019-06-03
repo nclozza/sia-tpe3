@@ -29,11 +29,16 @@ public class Configuracion {
     private Double probabilidadDeMutacion;
     private Integer genAMutar;
     private String metodoSeleccion1;
+    private Boolean seleccion1UsaBoltzmann;
     private String metodoSeleccion2;
+    private Boolean seleccion2UsaBoltzmann;
     private String metodoSeleccion3;
+    private Boolean seleccion3UsaBoltzmann;
     private String metodoSeleccion4;
+    private Boolean seleccion4UsaBoltzmann;
     private String metodoReemplazo;
     private Integer cantidadDeReemplazo;
+    private Integer cantidadDePersonajesTorneos;
     private Double A;
     private Double B;
 
@@ -77,17 +82,22 @@ public class Configuracion {
 
             this.metodoCorte = (String) configuracion.get("metodo_corte");
 
+            this.metodoSeleccion1 = (String) configuracion.get("metodo_seleccion_1");
+            this.seleccion1UsaBoltzmann = (Boolean) configuracion.get("seleccion1_usa_boltzman");
+            this.metodoSeleccion2 = (String) configuracion.get("metodo_seleccion_2");
+            this.seleccion2UsaBoltzmann = (Boolean) configuracion.get("seleccion2_usa_boltzman");
+            this.metodoSeleccion3 = (String) configuracion.get("metodo_seleccion_3");
+            this.seleccion3UsaBoltzmann = (Boolean) configuracion.get("seleccion3_usa_boltzman");
+            this.metodoSeleccion4 = (String) configuracion.get("metodo_seleccion_4");
+            this.seleccion4UsaBoltzmann = (Boolean) configuracion.get("seleccion4_usa_boltzman");
+
             this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
             this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
+            this.cantidadDePersonajesTorneos = ((Long) configuracion.get("cantidad_de_personajes_torneos")).intValue();
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
             this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
-
-            this.metodoSeleccion1 = (String) configuracion.get("metodo_seleccion_1");
-            this.metodoSeleccion2 = (String) configuracion.get("metodo_seleccion_2");
-            this.metodoSeleccion3 = (String) configuracion.get("metodo_seleccion_3");
-            this.metodoSeleccion4 = (String) configuracion.get("metodo_seleccion_4");
 
             this.generaciones = ((Long) configuracion.get("generaciones")).intValue();
 
@@ -226,6 +236,26 @@ public class Configuracion {
         return B;
     }
 
+    public Integer getCantidadDePersonajesTorneos() {
+        return cantidadDePersonajesTorneos;
+    }
+
+    public Boolean getSeleccion1UsaBoltzmann() {
+        return seleccion1UsaBoltzmann;
+    }
+
+    public Boolean getSeleccion2UsaBoltzmann() {
+        return seleccion2UsaBoltzmann;
+    }
+
+    public Boolean getSeleccion3UsaBoltzmann() {
+        return seleccion3UsaBoltzmann;
+    }
+
+    public Boolean getSeleccion4UsaBoltzmann() {
+        return seleccion4UsaBoltzmann;
+    }
+
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
         public ConfiguracionIncorrectaExcepcion(String msg) {
             super(msg);
@@ -262,25 +292,25 @@ public class Configuracion {
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un gen a mutar valido [0, 5]");
 
         if (!metodoSeleccion1.equals("elite") && !metodoSeleccion1.equals("ruleta")
-                && !metodoSeleccion1.equals("universal") && !metodoSeleccion1.equals("boltzmann")
+                && !metodoSeleccion1.equals("universal")
                 && !metodoSeleccion1.equals("torneos deterministica") && !metodoSeleccion1.equals("torneos probabilistica")
                 && !metodoSeleccion1.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 1 valido");
 
         if (!metodoSeleccion2.equals("elite") && !metodoSeleccion2.equals("ruleta")
-                && !metodoSeleccion2.equals("universal") && !metodoSeleccion2.equals("boltzmann")
+                && !metodoSeleccion2.equals("universal")
                 && !metodoSeleccion2.equals("torneos deterministica") && !metodoSeleccion2.equals("torneos probabilistica")
                 && !metodoSeleccion2.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 2 valido");
 
         if (!metodoSeleccion3.equals("elite") && !metodoSeleccion3.equals("ruleta")
-                && !metodoSeleccion3.equals("universal") && !metodoSeleccion3.equals("boltzmann")
+                && !metodoSeleccion3.equals("universal")
                 && !metodoSeleccion3.equals("torneos deterministica") && !metodoSeleccion3.equals("torneos probabilistica")
                 && !metodoSeleccion3.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 3 valido");
 
         if (!metodoSeleccion4.equals("elite") && !metodoSeleccion4.equals("ruleta")
-                && !metodoSeleccion4.equals("universal") && !metodoSeleccion4.equals("boltzmann")
+                && !metodoSeleccion4.equals("universal")
                 && !metodoSeleccion4.equals("torneos deterministica") && !metodoSeleccion4.equals("torneos probabilistica")
                 && !metodoSeleccion4.equals("ranking"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de seleccion 4 valido");

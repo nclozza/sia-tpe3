@@ -8,11 +8,14 @@ import java.util.Random;
 
 public class Universal implements InterfazSeleccion {
 
+    private boolean usaBoltzmann;
+
+    public Universal(boolean usaBoltzmann) {
+        this.usaBoltzmann = usaBoltzmann;
+    }
+
     @Override
     public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int cantidad) {
-
-        //TODO: Verificar si estos parametros van en el .config
-        cantidad = 3;
 
         PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);
 

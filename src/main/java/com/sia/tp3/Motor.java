@@ -20,13 +20,8 @@ public class Motor {
         while (!corte.evaluar(poblacion)) {
 
             poblacion.setPersonajes(nuevaGeneracion(poblacion));
-
-//            System.out.println("GENERACION N: " + poblacion.getNumeroDeGeneracion());
-//            for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-//                System.out.println("Personaje nro: " + i);
-//                System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-//                poblacion.getPersonajes().get(i).imprimirGenes();
-//            }
+            poblacion.aumentarGeneracion();
+            poblacion.agregarMejorDesempenio();
         }
     }
 
@@ -39,7 +34,6 @@ public class Motor {
             throw new RuntimeException("1 - ERROR EN MOTOR");
         }
 
-        poblacion.aumentarGeneracion();
         return nuevaGeneracion;
     }
 }

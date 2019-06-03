@@ -15,11 +15,13 @@ public class Poblacion {
     private ArrayList<Personaje> personajes;
     private Integer cantidadPersonajes;
     private int numeroDeGeneracion;
+    private double mejorDesempenio;
+    private ArrayList<Double> mejoresDesempenios;
 
     private static final String path = "src/main/java/com/sia/tp3/testdata/";
 
-    public Poblacion(String personaje, Multiplicador multiplicador, final int numeroDeGeneracion) {
-        this.numeroDeGeneracion = numeroDeGeneracion;
+    public Poblacion(String personaje, Multiplicador multiplicador) {
+        this.numeroDeGeneracion = 1;
 
         List<Arma> armas = leerArmas();
         List<Bota> botas = leerBotas();
@@ -41,6 +43,10 @@ public class Poblacion {
                     (Bota) iteratorBotas.next(), (Casco) iteratorCascos.next(), (Guante) iteratorGuantes.next(),
                     (Pechera) iteratorPecheras.next()));
         }
+
+        recalcularMejorDesempenio();
+        mejoresDesempenios = new ArrayList<>();
+        mejoresDesempenios.add(mejorDesempenio);
     }
 
     public ArrayList<Personaje> getPersonajes() {
@@ -168,5 +174,29 @@ public class Poblacion {
 
     public void aumentarGeneracion() {
         numeroDeGeneracion++;
+    }
+
+    public double getMejorDesempenio() {
+        return mejorDesempenio;
+    }
+
+    public void recalcularMejorDesempenio() {
+        double mejorDesempenio = 0;
+        for (Personaje personaje : personajes) {
+            if (personaje.getDesempenio() > mejorDesempenio) {
+                mejorDesempenio = personaje.getDesempenio();
+            }
+        }
+
+        this.mejorDesempenio = mejorDesempenio;
+    }
+
+    public ArrayList<Double> getMejoresDesempenios() {
+        return mejoresDesempenios;
+    }
+
+    public void agregarMejorDesempenio() {
+        recalcularMejorDesempenio();
+        mejoresDesempenios.add(mejorDesempenio);
     }
 }

@@ -1,5 +1,6 @@
 package com.sia.tp3;
 
+import com.sia.tp3.corte.Contenido;
 import com.sia.tp3.corte.InterfazCorte;
 import com.sia.tp3.corte.MaximaCantidadDeGeneraciones;
 import com.sia.tp3.cruce.*;
@@ -18,7 +19,7 @@ public class App {
         Configuracion configuracion = new Configuracion();
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
-        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, 0);
+        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();
@@ -43,7 +44,7 @@ public class App {
 //            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
 //            poblacion.getPersonajes().get(i).imprimirGenes();
 //        }
-
+        
         motor.correr(poblacion);
 
         double desempenio = 0;
@@ -54,6 +55,7 @@ public class App {
         }
 
         System.out.println("MEJOR DESEMPENIO: " + desempenio);
+        System.out.println("CANTIDAD DE GENERACIONES: " + (poblacion.getNumeroDeGeneracion()));
 
 
 //        ArrayList<Personaje> original = new ArrayList<>();
@@ -97,6 +99,7 @@ public class App {
                 break;
 
             case "contenido":
+                corte = new Contenido(10);
                 break;
 
             case "entorno a un optimo":

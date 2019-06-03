@@ -72,16 +72,14 @@ public class TorneosProbabilistica implements InterfazSeleccion{
             if (r < PROBABILIDAD){
 
                 if (p1.getDesempenio() >  p2.getDesempenio()){
-                    if ( !ret.contains(p1))
-                        ret.add(p1);
-                } else if (!ret.contains(p2))
+                    ret.add(p1);
+                } else
                     ret.add(p2);
             } else {
 
                 if (p1.getDesempenio() <  p2.getDesempenio()){
-                    if ( !ret.contains(p1))
-                        ret.add(p1);
-                } else if (!ret.contains(p2))
+                    ret.add(p1);
+                } else
                     ret.add(p2);
             }
 

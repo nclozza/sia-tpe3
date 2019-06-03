@@ -64,9 +64,8 @@ public class TorneosDeterministica implements  InterfazSeleccion {
             } while (true);
 
             if (p1.getDesempenio() >  p2.getDesempenio()){
-                if ( !ret.contains(p1))
-                    ret.add(p1);
-            } else if (!ret.contains(p2))
+                ret.add(p1);
+            } else
                 ret.add(p2);
 
             ciclos--;

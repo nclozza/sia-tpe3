@@ -20,26 +20,22 @@ public class Motor {
         while (!corte.evaluar(poblacion)) {
 
             poblacion.setPersonajes(nuevaGeneracion(poblacion));
-
-//            System.out.println("GENERACION N: " + poblacion.getNumeroDeGeneracion());
-//            for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-//                System.out.println("Personaje nro: " + i);
-//                System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-//                poblacion.getPersonajes().get(i).imprimirGenes();
-//            }
+            poblacion.aumentarGeneracion();
+            poblacion.aniadirTodosLosPersonajesAHashSet();
+            poblacion.agregarMejorDesempenio();
         }
     }
 
     private ArrayList<Personaje> nuevaGeneracion(Poblacion poblacion) {
 
-        ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes(), poblacion.getNumeroDeGeneracion());
+        ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes(),
+                poblacion.getNumeroDeGeneracion());
 
         // SOLO PARA DEBUGGEAR
         if (nuevaGeneracion.size() != poblacion.getPersonajes().size()) {
             throw new RuntimeException("1 - ERROR EN MOTOR");
         }
 
-        poblacion.aumentarGeneracion();
         return nuevaGeneracion;
     }
 }

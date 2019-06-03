@@ -1,11 +1,8 @@
 package com.sia.tp3;
 
-import com.sia.tp3.corte.InterfazCorte;
-import com.sia.tp3.corte.MaximaCantidadDeGeneraciones;
+import com.sia.tp3.corte.*;
 import com.sia.tp3.cruce.*;
-import com.sia.tp3.mutacion.Gen;
-import com.sia.tp3.mutacion.InterfazMutacion;
-import com.sia.tp3.mutacion.MultiGen;
+import com.sia.tp3.mutacion.*;
 import com.sia.tp3.reemplazo.InterfazReemplazo;
 import com.sia.tp3.reemplazo.Reemplazo1;
 import com.sia.tp3.reemplazo.Reemplazo2;
@@ -17,17 +14,21 @@ public class App {
         Configuracion configuracion = new Configuracion();
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
-        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, 0);
+        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();
 
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion);
-        InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
-        InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann());
-        InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann());
-        InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4(), configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann());
+        InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1(),
+                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
+        InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2(),
+                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann());
+        InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3(),
+                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann());
+        InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4(),
+                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann());
         InterfazCorte corte = obtenerCorte(configuracion);
 
         InterfazReemplazo reemplazo = obtenerReemplazo(configuracion.getMetodoReemplazo(), modificadorA, modificadorB,
@@ -53,6 +54,7 @@ public class App {
         }
 
         System.out.println("MEJOR DESEMPENIO: " + desempenio);
+        System.out.println("CANTIDAD DE GENERACIONES: " + (poblacion.getNumeroDeGeneracion()));
 
 
 //        ArrayList<Personaje> original = new ArrayList<>();
@@ -93,12 +95,15 @@ public class App {
                 break;
 
             case "estructura":
+                corte = new Estructura(configuracion.getGeneracionesAVerificar(), configuracion.getPorcentaje());
                 break;
 
             case "contenido":
+                corte = new Contenido(configuracion.getGeneracionesAVerificar());
                 break;
 
-            case "entorno a un optimo":
+            case "optimo":
+                corte = new Optimo(configuracion.getOptimo());
                 break;
         }
 
@@ -130,14 +135,20 @@ public class App {
 
     private static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
 
-        InterfazMutacion mutacion = new Gen(configuracion.getProbabilidadDeMutacion(), configuracion.getGenAMutar());
+        InterfazProbabilidad probabilidad = new MutacionUniforme(configuracion.getProbabilidadDeMutacion());
+
+        if (!configuracion.getMutacionUniforme()) {
+            probabilidad = new MutacionNoUniforme();
+        }
+
+        InterfazMutacion mutacion = new Gen(probabilidad, configuracion.getGenAMutar());
 
         switch (configuracion.getMetodoReemplazo()) {
             case "gen":
                 break;
 
             case "multigen":
-                mutacion = new MultiGen(configuracion.getProbabilidadDeMutacion());
+                mutacion = new MultiGen(probabilidad);
                 break;
         }
 
@@ -173,7 +184,8 @@ public class App {
         return reemplazo;
     }
 
-    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion, Integer cantidadDePersonajesTorneos, Boolean usaBoltzmann) {
+    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion, Integer cantidadDePersonajesTorneos,
+                                                      Boolean usaBoltzmann) {
 
         InterfazSeleccion seleccion = new Elite(usaBoltzmann);
 

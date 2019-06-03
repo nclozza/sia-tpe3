@@ -13,7 +13,11 @@
     "segmento": 1,
     "probabilidad_cruce_uniforme": 0.5,
 
-    "metodo_corte": "maxima cantidad",
+    "metodo_corte": "estructura",
+    "optimo": 15.1,
+    "generaciones_a_verificar": 2,
+    "porcentaje": 1.0,
+    "mutacion_uniforme": false,
     "generaciones": 2,
 
     "metodo_seleccion_1": "elite",

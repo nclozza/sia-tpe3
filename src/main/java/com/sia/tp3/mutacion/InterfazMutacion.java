@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface InterfazMutacion {
 
-    public void hacer(ArrayList<Personaje> personajes);
+    public void hacer(final ArrayList<Personaje> personajes, final int numeroDeGeneracion);
 }

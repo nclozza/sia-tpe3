@@ -17,7 +17,6 @@ public class TorneosProbabilistica implements InterfazSeleccion{
         int ciclos = 3;
         cantidad = 6;
 
-        //TODO: PREGUNTAR SI SE USAN TODOS LOS PERSONAJES O SE AGARRA UNA CIERTA CANTIDAD COMO EN LA DETERMINISTICA
         ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(personajes, cantidad);
         ArrayList<Personaje> ret = seleccionarGanadores(personajesSeleccionados, ciclos);
 

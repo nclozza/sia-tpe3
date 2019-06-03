@@ -189,12 +189,20 @@ public class App {
                 seleccion = new Universal();
                 break;
 
+            case "boltzmann":
+                seleccion = new Boltzmann();
+                break;
+
             case "torneos deterministica":
                 seleccion = new TorneosDeterministica();
                 break;
 
             case "torneos probabilistica":
                 seleccion = new TorneosProbabilistica();
+                break;
+
+            case "ranking":
+                seleccion = new Ranking();
                 break;
         }
 

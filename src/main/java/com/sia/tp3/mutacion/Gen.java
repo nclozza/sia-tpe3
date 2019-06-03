@@ -7,16 +7,12 @@ import java.util.Random;
 
 public class Gen implements InterfazMutacion {
 
-    private double probabilidadDeMutacion;
+    private InterfazProbabilidad probabilidadDeMutacion;
     private int genAMutar;
 
-    public Gen(final double probabilidadDeMutacion, final int genAMutar) {
+    public Gen(final InterfazProbabilidad probabilidadDeMutacion, final int genAMutar) {
         this.probabilidadDeMutacion = probabilidadDeMutacion;
         this.genAMutar = genAMutar;
-    }
-
-    public double getProbabilidadDeMutacion() {
-        return probabilidadDeMutacion;
     }
 
     public int getGenAMutar() {
@@ -24,11 +20,11 @@ public class Gen implements InterfazMutacion {
     }
 
     @Override
-    public void hacer(final ArrayList<Personaje> personajes) {
+    public void hacer(final ArrayList<Personaje> personajes, final int numeroDeGeneracion) {
         Random r = new Random();
 
         for (final Personaje personaje : personajes) {
-            if (probabilidadDeMutacion >= (1.0) * r.nextDouble()) {
+            if (probabilidadDeMutacion.obtenerProbabilidad(numeroDeGeneracion) >= (1.0) * r.nextDouble()) {
                 personaje.getGenes()[genAMutar] = personajes.get(r.nextInt(personajes.size())).getGenes()[genAMutar];
             }
         }

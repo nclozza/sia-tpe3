@@ -35,7 +35,7 @@ public class Reemplazo1 extends Reemplazo implements InterfazReemplazo {
                 cantidadSeleccion2, numeroDeGeneracion);
 
         ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
-        mutacion.hacer(individuosCruzados);
+        mutacion.hacer(individuosCruzados, numeroDeGeneracion);
 
         recalcularTodosLosDesempenios(individuosCruzados);
 

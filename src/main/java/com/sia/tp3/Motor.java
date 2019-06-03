@@ -21,13 +21,15 @@ public class Motor {
 
             poblacion.setPersonajes(nuevaGeneracion(poblacion));
             poblacion.aumentarGeneracion();
+            poblacion.aniadirTodosLosPersonajesAHashSet();
             poblacion.agregarMejorDesempenio();
         }
     }
 
     private ArrayList<Personaje> nuevaGeneracion(Poblacion poblacion) {
 
-        ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes(), poblacion.getNumeroDeGeneracion());
+        ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes(),
+                poblacion.getNumeroDeGeneracion());
 
         // SOLO PARA DEBUGGEAR
         if (nuevaGeneracion.size() != poblacion.getPersonajes().size()) {

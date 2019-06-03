@@ -5,10 +5,7 @@ import com.sia.tp3.items.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Poblacion {
 
@@ -17,6 +14,7 @@ public class Poblacion {
     private int numeroDeGeneracion;
     private double mejorDesempenio;
     private ArrayList<Double> mejoresDesempenios;
+    private ArrayList<HashSet<String>> arrayHashsPersonajes;
 
     private static final String path = "src/main/java/com/sia/tp3/testdata/";
 
@@ -31,6 +29,8 @@ public class Poblacion {
         cantidadPersonajes = Math.min(Math.min(Math.min(Math.min(armas.size(), botas.size()), cascos.size()),
                 guantes.size()), pecheras.size());
         personajes = new ArrayList<>();
+        arrayHashsPersonajes = new ArrayList<>();
+        arrayHashsPersonajes.add(new HashSet<>());
 
         Iterator iteratorArmas = armas.iterator();
         Iterator iteratorBotas = botas.iterator();
@@ -38,10 +38,14 @@ public class Poblacion {
         Iterator iteratorGuantes = guantes.iterator();
         Iterator iteratorPecheras = pecheras.iterator();
 
+        Personaje aux;
         for (int i = 0; i < cantidadPersonajes; i++) {
-            personajes.add(new Personaje(personaje, multiplicador, (Arma) iteratorArmas.next(),
+            aux = new Personaje(personaje, multiplicador, (Arma) iteratorArmas.next(),
                     (Bota) iteratorBotas.next(), (Casco) iteratorCascos.next(), (Guante) iteratorGuantes.next(),
-                    (Pechera) iteratorPecheras.next()));
+                    (Pechera) iteratorPecheras.next());
+
+            personajes.add(aux);
+            arrayHashsPersonajes.get(0).add(aux.toHash());
         }
 
         recalcularMejorDesempenio();
@@ -198,5 +202,20 @@ public class Poblacion {
     public void agregarMejorDesempenio() {
         recalcularMejorDesempenio();
         mejoresDesempenios.add(mejorDesempenio);
+    }
+
+    public ArrayList<HashSet<String>> getArrayHashsPersonajes() {
+        return arrayHashsPersonajes;
+    }
+
+    public HashSet<String> getHashSetGeneracionActual() {
+        return arrayHashsPersonajes.get(numeroDeGeneracion - 1);
+    }
+
+    public void aniadirTodosLosPersonajesAHashSet() {
+        arrayHashsPersonajes.add(new HashSet<>());
+        for (Personaje personaje : personajes) {
+            arrayHashsPersonajes.get(numeroDeGeneracion - 1).add(personaje.toHash());
+        }
     }
 }

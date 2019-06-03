@@ -8,23 +8,19 @@ import java.util.Random;
 
 public class MultiGen implements InterfazMutacion {
 
-    private double probabilidadDeMutacion;
+    private InterfazProbabilidad probabilidadDeMutacion;
 
-    public MultiGen(final double probabilidadDeMutacion) {
+    public MultiGen(final InterfazProbabilidad probabilidadDeMutacion) {
         this.probabilidadDeMutacion = probabilidadDeMutacion;
     }
 
-    public double getProbabilidadDeMutacion() {
-        return probabilidadDeMutacion;
-    }
-
     @Override
-    public void hacer(final ArrayList<Personaje> personajes) {
+    public void hacer(final ArrayList<Personaje> personajes, final int numeroDeGeneracion) {
         Random r = new Random();
 
         for (final Personaje personaje : personajes) {
             for (int i = 0; i < Genes.CANTIDAD_GENES; i++) {
-                if (probabilidadDeMutacion >= (1.0) * r.nextDouble()) {
+                if (probabilidadDeMutacion.obtenerProbabilidad(numeroDeGeneracion) >= (1.0) * r.nextDouble()) {
                     personaje.getGenes()[i] = personajes.get(r.nextInt(personajes.size())).getGenes()[i];
                 }
             }

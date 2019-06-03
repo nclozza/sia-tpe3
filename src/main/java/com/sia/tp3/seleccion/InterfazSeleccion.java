@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface InterfazSeleccion {
 
-    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, final int cantidad);
+    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, final int cantidad, final int numeroDeGeneracion);
 }

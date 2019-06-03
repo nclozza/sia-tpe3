@@ -75,14 +75,16 @@ public class Universal implements InterfazSeleccion {
         while(!numerosAleatorios.isEmpty()){
 
             aleatorio = numerosAleatorios.remove();
-            System.out.println(aleatorio);
-            for (; i< personajes.size(); i++){
+
+            while (i< personajes.size()){
 
                 if (personajes.get(i).getDesempenioAcumulado() > aleatorio){
 
                     ret.add(personajes.get(i));
                     break;
                 }
+                else
+                    i++;
             }
         }
         return ret;

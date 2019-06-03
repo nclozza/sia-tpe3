@@ -34,6 +34,7 @@ public class Ruleta implements InterfazSeleccion {
 
             do{
                 aleatorio = (1.0) * r.nextDouble();
+
                 if (!numeroAleatorios.contains(aleatorio)){
                     numeroAleatorios.add(aleatorio);
                     break;
@@ -77,13 +78,15 @@ public class Ruleta implements InterfazSeleccion {
 
             aleatorio = numerosAleatorios.remove();
 
-            for (; i< personajes.size(); i++){
+            while (i< personajes.size()){
 
                 if (personajes.get(i).getDesempenioAcumulado() > aleatorio){
 
                     ret.add(personajes.get(i));
                     break;
                 }
+                else
+                    i++;
             }
         }
         return ret;

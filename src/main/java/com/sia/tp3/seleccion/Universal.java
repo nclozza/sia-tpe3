@@ -16,7 +16,7 @@ public class Universal implements InterfazSeleccion {
 
         PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);
 
-        if (personajes.get(0).getDesempenioAcumulado() == 0.0){
+        if (personajes.get(0).getDesempenioRelativo() == 0.0){
             calcularDesempenioRelativoYAcumulado(personajes, sumaDesempenio(personajes));
         }
 

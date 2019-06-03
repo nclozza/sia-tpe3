@@ -1,43 +1,43 @@
 package com.sia.tp3.seleccion;
 
 import com.sia.tp3.Personaje;
-import com.sia.tp3.reemplazo.InterfazReemplazo;
 
 import java.util.ArrayList;
 
 public class Boltzmann {
 
-    public ArrayList<Personaje> hacer(ArrayList<Personaje> personajes, int generacion) {
+    public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, final int generacion) {
 
-        Double temperatura = temperatura(Double.valueOf(generacion));
-        Double promedio = calcularPromedio(personajes, temperatura);
+        double temperatura = temperatura((double) generacion);
+        double promedio = calcularPromedio(personajes, temperatura);
 
         recalcularDesempenio(personajes, temperatura, promedio);
 
         return personajes;
     }
 
-    private Double calcularPromedio(ArrayList<Personaje> personajes, Double temperatura){
+    private double calcularPromedio(final ArrayList<Personaje> personajes, final double temperatura) {
 
-        Double suma = 0.0;
+        double suma = 0.0;
 
-        for(Personaje p : personajes){
-            suma += Math.exp(p.getDesempenio()/temperatura);
+        for (Personaje p : personajes) {
+            suma += Math.exp(p.getDesempenio() / temperatura);
         }
 
-        return suma/personajes.size();
+        return suma / personajes.size();
     }
 
-    private Double temperatura (Double generacion){
-        return 1/generacion;
+    private double temperatura(final double generacion) {
+        return 1 / generacion;
     }
 
-    private void recalcularDesempenio(ArrayList<Personaje> personajes, Double temperatura,Double promedio){
+    private void recalcularDesempenio(final ArrayList<Personaje> personajes, final double temperatura,
+                                      final double promedio) {
 
-        Double func;
-        for (Personaje p: personajes){
+        double func;
+        for (Personaje p : personajes) {
 
-            func = Math.exp(p.getDesempenio()/temperatura) / promedio;
+            func = Math.exp(p.getDesempenio() / temperatura) / promedio;
             p.setDesempenio(func);
         }
     }

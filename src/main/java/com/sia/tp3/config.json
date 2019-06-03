@@ -16,8 +16,8 @@
     "metodo_corte": "maxima cantidad",
     "generaciones": 2,
 
-    "metodo_seleccion_1": "ranking",
-    "seleccion1_usa_boltzman": false,
+    "metodo_seleccion_1": "elite",
+    "seleccion1_usa_boltzman": true,
     "metodo_seleccion_2": "elite",
     "seleccion2_usa_boltzman": false,
     "metodo_seleccion_3": "elite",

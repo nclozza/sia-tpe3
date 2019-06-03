@@ -26,12 +26,12 @@ public class Reemplazo {
     }
 
     public ArrayList<Personaje> seleccionarPadres(final ArrayList<Personaje> personajes, final int cantidadSeleccion1,
-                                            final int cantidadSeleccion2) {
+                                                  final int cantidadSeleccion2, final int numeroDeGeneracion) {
 
         ArrayList<Personaje> individuosSeleccionados1 = seleccion1.hacer(personajes,
-                cantidadSeleccion1);
+                cantidadSeleccion1, numeroDeGeneracion);
         ArrayList<Personaje> individuosSeleccionados2 = seleccion2.hacer(personajes,
-                cantidadSeleccion2);
+                cantidadSeleccion2, numeroDeGeneracion);
 
         ArrayList<Personaje> ret = new ArrayList<>();
         ret.addAll(individuosSeleccionados1);
@@ -41,13 +41,13 @@ public class Reemplazo {
     }
 
     public ArrayList<Personaje> seleccionarNuevaGeneracion(final ArrayList<Personaje> personajes,
-                                                     final int cantidadSeleccion1,
-                                            final int cantidadSeleccion2) {
+                                                           final int cantidadSeleccion1, final int cantidadSeleccion2
+            , final int numeroDeGeneracion) {
 
         ArrayList<Personaje> individuosSeleccionados1 = seleccion3.hacer(personajes,
-                cantidadSeleccion1);
+                cantidadSeleccion1, numeroDeGeneracion);
         ArrayList<Personaje> individuosSeleccionados2 = seleccion4.hacer(personajes,
-                cantidadSeleccion2);
+                cantidadSeleccion2, numeroDeGeneracion);
 
         ArrayList<Personaje> ret = new ArrayList<>();
         ret.addAll(individuosSeleccionados1);

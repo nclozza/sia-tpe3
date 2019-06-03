@@ -32,7 +32,7 @@ public class Motor {
 
     private ArrayList<Personaje> nuevaGeneracion(Poblacion poblacion) {
 
-        ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes());
+        ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes(), poblacion.getNumeroDeGeneracion());
 
         // SOLO PARA DEBUGGEAR
         if (nuevaGeneracion.size() != poblacion.getPersonajes().size()) {

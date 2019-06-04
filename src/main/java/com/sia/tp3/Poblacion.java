@@ -9,6 +9,7 @@ import java.util.*;
 
 public class Poblacion {
 
+    private String path;
     private ArrayList<Personaje> personajes;
     private Integer cantidadPersonajes;
     private int numeroDeGeneracion;
@@ -16,12 +17,12 @@ public class Poblacion {
     private double peorDesempenio;
     private double desempenioPromedio;
     private ArrayList<Double> mejoresDesempenios;
-    private ArrayList<HashSet<String>> arrayHashsPersonajes;
+    private HashSet<String> hashSetPersonajes;
 
-    private static final String path = "src/main/java/com/sia/tp3/fulldata/";
-
-    public Poblacion(String personaje, Multiplicador multiplicador) {
+    public Poblacion(String personaje, Multiplicador multiplicador, final String path) {
         this.numeroDeGeneracion = 1;
+
+        this.path = path;
 
         List<Arma> armas = leerArmas();
         List<Bota> botas = leerBotas();
@@ -31,8 +32,7 @@ public class Poblacion {
         cantidadPersonajes = Math.min(Math.min(Math.min(Math.min(armas.size(), botas.size()), cascos.size()),
                 guantes.size()), pecheras.size());
         personajes = new ArrayList<>();
-        arrayHashsPersonajes = new ArrayList<>();
-        arrayHashsPersonajes.add(new HashSet<>());
+        hashSetPersonajes = new HashSet<>();
 
         Iterator iteratorArmas = armas.iterator();
         Iterator iteratorBotas = botas.iterator();
@@ -47,7 +47,7 @@ public class Poblacion {
                     (Pechera) iteratorPecheras.next());
 
             personajes.add(aux);
-            arrayHashsPersonajes.get(0).add(aux.toHash());
+            hashSetPersonajes.add(aux.toHash());
         }
 
         recalcularDesempenios();
@@ -218,18 +218,14 @@ public class Poblacion {
         mejoresDesempenios.add(mejorDesempenio);
     }
 
-    public ArrayList<HashSet<String>> getArrayHashsPersonajes() {
-        return arrayHashsPersonajes;
+    public HashSet<String> getHashSetPersonajes() {
+        return hashSetPersonajes;
     }
 
-    public HashSet<String> getHashSetGeneracionActual() {
-        return arrayHashsPersonajes.get(numeroDeGeneracion - 1);
-    }
-
-    public void aniadirTodosLosPersonajesAHashSet() {
-        arrayHashsPersonajes.add(new HashSet<>());
+    public void aniadirTodosLosPersonajesAlHashSet() {
+        hashSetPersonajes = new HashSet<>();
         for (Personaje personaje : personajes) {
-            arrayHashsPersonajes.get(numeroDeGeneracion - 1).add(personaje.toHash());
+            hashSetPersonajes.add(personaje.toHash());
         }
     }
 

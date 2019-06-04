@@ -39,21 +39,11 @@ public class Reemplazo1 extends Reemplazo implements InterfazReemplazo {
 
         recalcularTodosLosDesempenios(individuosCruzados);
 
-        // SOLO PARA DEBUGGEAR
-        if (individuosCruzados.size() != k) {
-            throw new RuntimeException("1 - ERROR EN REEMPLAZO 1");
-        }
-
         cantidadSeleccion1 = new Double(k * modificadorB).intValue();
         cantidadSeleccion2 = k - cantidadSeleccion1;
 
         ArrayList<Personaje> ret = new ArrayList<>(seleccionarNuevaGeneracion(individuosCruzados, cantidadSeleccion1,
                 cantidadSeleccion2, numeroDeGeneracion));
-
-        // SOLO PARA DEBUGGEAR
-        if (ret.size() != personajes.size()) {
-            throw new RuntimeException("2 - ERROR EN REEMPLAZO 1");
-        }
 
         return ret;
     }

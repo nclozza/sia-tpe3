@@ -34,20 +34,10 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
         ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
                 cantidadSeleccion2, numeroDeGeneracion);
 
-        // SOLO PARA DEBUGGEAR
-        if (individuosParaCruzar.size() != k) {
-            throw new RuntimeException("1 - ERROR EN REEMPLAZO 2");
-        }
-
         ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
         mutacion.hacer(individuosCruzados, numeroDeGeneracion);
 
         recalcularTodosLosDesempenios(individuosCruzados);
-
-        // SOLO PARA DEBUGGEAR
-        if (individuosCruzados.size() != k) {
-            throw new RuntimeException("2 - ERROR EN REEMPLAZO 2");
-        }
 
         cantidadSeleccion1 = new Double((personajes.size() - k) * modificadorB).intValue();
         cantidadSeleccion2 = (personajes.size() - k) - cantidadSeleccion1;
@@ -56,19 +46,9 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
                 cantidadSeleccion2, numeroDeGeneracion);
         ArrayList<Personaje> ret = new ArrayList<>(padresSeleccionados);
 
-        // SOLO PARA DEBUGGEAR
-        if (ret.size() != (personajes.size() - k)) {
-            throw new RuntimeException("3 - ERROR EN REEMPLAZO 2");
-        }
-
         cantidadSeleccion1 = new Double(k * modificadorB).intValue();
         cantidadSeleccion2 = k - cantidadSeleccion1;
         ret.addAll(seleccionarNuevaGeneracion(individuosCruzados, cantidadSeleccion1, cantidadSeleccion2, numeroDeGeneracion));
-
-        // SOLO PARA DEBUGGEAR
-        if (ret.size() != personajes.size()) {
-            throw new RuntimeException("4 - ERROR EN REEMPLAZO 2");
-        }
 
         return ret;
     }

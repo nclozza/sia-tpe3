@@ -35,6 +35,9 @@ public class Anular implements InterfazCruce{
             }
             contador --;
         }
+
+        personaje1.recalcularDesempenio();
+        personaje2.recalcularDesempenio();
     }
 
     private static void cambiar(final double[] gen1, final double[] gen2, final int largoGen) {

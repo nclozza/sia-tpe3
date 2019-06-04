@@ -11,6 +11,8 @@ import java.io.IOException;
 
 public class Configuracion {
 
+    private String path;
+    private Boolean generarGraficos;
     private String personaje;
     private Double fuerza;
     private Double agilidad;
@@ -32,6 +34,7 @@ public class Configuracion {
     private Double probabilidadDeMutacion;
     private Integer genAMutar;
     private Boolean mutacionUniforme;
+    private Double baseExponencialMutacionNoUniforme;
     private String metodoSeleccion1;
     private Boolean seleccion1UsaBoltzmann;
     private String metodoSeleccion2;
@@ -67,10 +70,14 @@ public class Configuracion {
         for (Object o : jsonArray) {
             JSONObject configuracion = (JSONObject) o;
 
+            this.generarGraficos = (Boolean) configuracion.get("generar_graficos");
+            this.path = (String) configuracion.get("datos");
             this.personaje = (String) configuracion.get("personaje");
 
-            if (!personaje.equals("guerrero") && !personaje.equals("arquero") && !personaje.equals("defensor") && !personaje.equals("asesino"))
+            if (!personaje.equals("guerrero") && !personaje.equals("arquero") && !personaje.equals("defensor") && !personaje.equals("asesino")) {
                 throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un personaje valido");
+            }
+
 
             this.fuerza = (Double) configuracion.get("fuerza");
             this.agilidad = (Double) configuracion.get("agilidad");
@@ -106,7 +113,8 @@ public class Configuracion {
             this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
             this.mutacionUniforme = (Boolean) configuracion.get("mutacion_uniforme");
-
+            this.baseExponencialMutacionNoUniforme = (Double) configuracion.get(
+                    "base_exponencial_mutacion_no_uniforme");
 
             this.generaciones = ((Long) configuracion.get("generaciones")).intValue();
 
@@ -281,6 +289,18 @@ public class Configuracion {
         return mutacionUniforme;
     }
 
+    public Double getBaseExponencialMutacionNoUniforme() {
+        return baseExponencialMutacionNoUniforme;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public Boolean getGenerarGraficos() {
+        return generarGraficos;
+    }
+
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
         public ConfiguracionIncorrectaExcepcion(String msg) {
             super(msg);
@@ -348,6 +368,11 @@ public class Configuracion {
             if (cantidadDeReemplazo <= 1)
                 throw new ConfiguracionIncorrectaExcepcion("La cantidad de reemplazo1 no puede ser menor o igual a 1 " +
                         "si se utilizan los métodos de reemplazo2 o reemplazo3");
+        }
+
+        if (!getMutacionUniforme()) {
+            if (baseExponencialMutacionNoUniforme < 0 || baseExponencialMutacionNoUniforme > 1)
+                throw new ConfiguracionIncorrectaExcepcion("Debe ingresar una base válida, comprendida entre [0, 1]");
         }
     }
 }

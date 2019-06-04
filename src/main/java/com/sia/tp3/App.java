@@ -16,7 +16,7 @@ public class App {
         Configuracion configuracion = new Configuracion();
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
-        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador);
+        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, configuracion.getPath());
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();
@@ -39,13 +39,12 @@ public class App {
 
         Motor motor = new Motor(reemplazo, corte);
 
+        // Con la misma data cargada corremos el motor varias veces
         ArrayList<Personaje> original = new ArrayList<>();
-
         for (Personaje personaje : poblacion.getPersonajes()) {
             original.add(personaje.copy());
         }
-
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 5; i++) {
 
             ArrayList<Personaje> aux = new ArrayList<>();
             for (Personaje personaje : original) {
@@ -54,11 +53,12 @@ public class App {
 
             poblacion.setPersonajes(aux);
             poblacion.resetNumeroDeGeneracion();
-            motor.correr(poblacion, true);
+            motor.correr(poblacion, configuracion.getGenerarGraficos());
 
             System.out.println("MEJOR DESEMPENIO: " + poblacion.getMejorDesempenio());
             System.out.println("PEOR DESEMPENIO: " + poblacion.getPeorDesempenio());
             System.out.println("DESEMPENIO PROMEDIO: " + poblacion.getDesempenioPromedio());
+            System.out.println("NÚMERO DE GENERACIÓN: " + poblacion.getNumeroDeGeneracion());
             System.out.println();
         }
     }
@@ -72,7 +72,7 @@ public class App {
                 break;
 
             case "estructura":
-                corte = new Estructura(configuracion.getGeneracionesAVerificar(), configuracion.getPorcentaje());
+                corte = new Estructura(configuracion.getPorcentaje());
                 break;
 
             case "contenido":
@@ -115,7 +115,7 @@ public class App {
         InterfazProbabilidad probabilidad = new MutacionUniforme(configuracion.getProbabilidadDeMutacion());
 
         if (!configuracion.getMutacionUniforme()) {
-            probabilidad = new MutacionNoUniforme();
+            probabilidad = new MutacionNoUniforme(configuracion.getBaseExponencialMutacionNoUniforme());
         }
 
         InterfazMutacion mutacion = new Gen(probabilidad, configuracion.getGenAMutar());

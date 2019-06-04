@@ -6,7 +6,6 @@ import com.sia.tp3.mutacion.InterfazMutacion;
 import com.sia.tp3.seleccion.InterfazSeleccion;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Reemplazo3 extends Reemplazo implements InterfazReemplazo {
 
@@ -36,11 +35,6 @@ public class Reemplazo3 extends Reemplazo implements InterfazReemplazo {
         ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
                 cantidadSeleccion2, numeroDeGeneracion);
 
-        // SOLO PARA DEBUGGEAR
-        if (individuosParaCruzar.size() != k) {
-            throw new RuntimeException("1 - ERROR EN REEMPLAZO 3");
-        }
-
         ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
         mutacion.hacer(individuosCruzados, numeroDeGeneracion);
 
@@ -57,11 +51,6 @@ public class Reemplazo3 extends Reemplazo implements InterfazReemplazo {
         cantidadSeleccion2 = k - cantidadSeleccion1;
         individuosCruzados.addAll(personajes);
         ret.addAll(seleccionarNuevaGeneracion(individuosCruzados, cantidadSeleccion1, cantidadSeleccion2, numeroDeGeneracion));
-
-        // SOLO PARA DEBUGGEAR
-        if (ret.size() != personajes.size()) {
-            throw new RuntimeException("2 - ERROR EN REEMPLAZO 3");
-        }
 
         return ret;
     }

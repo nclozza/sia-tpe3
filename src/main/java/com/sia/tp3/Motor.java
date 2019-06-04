@@ -29,7 +29,7 @@ public class Motor {
             ArrayList<Personaje> nuevaGeneracion = nuevaGeneracion(poblacion);
             poblacion.setPersonajes(nuevaGeneracion);
             poblacion.aumentarGeneracion();
-            poblacion.aniadirTodosLosPersonajesAHashSet();
+            poblacion.aniadirTodosLosPersonajesAlHashSet();
             poblacion.agregarMejorDesempenio();
 
             mejoresDesempenios.add(new Punto2D(poblacion.getNumeroDeGeneracion(), poblacion.getMejorDesempenio()));
@@ -48,11 +48,6 @@ public class Motor {
 
         ArrayList<Personaje> nuevaGeneracion = reemplazo.hacer(poblacion.getPersonajes(),
                 poblacion.getNumeroDeGeneracion());
-
-        // SOLO PARA DEBUGGEAR
-        if (nuevaGeneracion.size() != poblacion.getPersonajes().size()) {
-            throw new RuntimeException("1 - ERROR EN MOTOR");
-        }
 
         return nuevaGeneracion;
     }

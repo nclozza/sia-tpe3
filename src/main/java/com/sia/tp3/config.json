@@ -7,7 +7,8 @@
     "resistencia": 1.2,
     "vida": 1.1,
 
-
+    "datos": "src/main/java/com/sia/tp3/testdata/",
+    "generar_graficos": false,
     "metodo_cruce": "dos puntos",
     "locus1": 1,
     "locus2": 3,
@@ -19,7 +20,7 @@
     "generaciones_a_verificar": 2,
     "porcentaje": 0.5,
     "mutacion_uniforme": true,
-    "generaciones": 5,
+    "generaciones": 100,
 
     "metodo_seleccion_1": "elite",
     "seleccion1_usa_boltzman": true,

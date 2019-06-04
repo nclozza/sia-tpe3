@@ -19,7 +19,3 @@ public class Genes {
     public static final int CANTIDAD_GENES = 6;
     public static final int CANTIDAD_CARACTERISTICAS = 6;
 }
-
-
-// 0 0 0 0 0 | 0 0 0 0 0 | 0 0 0 0 0 | 0 0 0 0 0 | 0 0 0 0 0 | 0
-//   ARMA       BOTA          CASCO       GUANTE     PECHERA      ALTURA

@@ -5,6 +5,8 @@ import com.sia.tp3.cruce.InterfazCruce;
 import com.sia.tp3.seleccion.InterfazSeleccion;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 
 public class Reemplazo {
@@ -28,25 +30,26 @@ public class Reemplazo {
     public ArrayList<Personaje> seleccionarPadres(final ArrayList<Personaje> personajes, final int cantidadSeleccion1,
                                                   final int cantidadSeleccion2, final int numeroDeGeneracion) {
 
-        ArrayList<Personaje> individuosSeleccionados1 = seleccion1.hacer(personajes,
-                cantidadSeleccion1, numeroDeGeneracion);
-        ArrayList<Personaje> individuosSeleccionados2 = seleccion2.hacer(personajes,
-                cantidadSeleccion2, numeroDeGeneracion);
-
-        ArrayList<Personaje> ret = new ArrayList<>();
-        ret.addAll(individuosSeleccionados1);
-        ret.addAll(individuosSeleccionados2);
-
-        return ret;
+        return seleccionar(personajes, cantidadSeleccion1, cantidadSeleccion2, numeroDeGeneracion, seleccion1,
+                seleccion2);
     }
 
     public ArrayList<Personaje> seleccionarNuevaGeneracion(final ArrayList<Personaje> personajes,
-                                                           final int cantidadSeleccion1, final int cantidadSeleccion2
-            , final int numeroDeGeneracion) {
+                                                           final int cantidadSeleccion3, final int cantidadSeleccion4,
+                                                           final int numeroDeGeneracion) {
 
-        ArrayList<Personaje> individuosSeleccionados1 = seleccion3.hacer(personajes,
+        return seleccionar(personajes, cantidadSeleccion3, cantidadSeleccion4, numeroDeGeneracion, seleccion3,
+                seleccion4);
+    }
+
+    private ArrayList<Personaje> seleccionar(final ArrayList<Personaje> personajes, final int cantidadSeleccion1,
+                                             final int cantidadSeleccion2, final int numeroDeGeneracion,
+                                             final InterfazSeleccion seleccion1,
+                                             final InterfazSeleccion seleccion2) {
+
+        ArrayList<Personaje> individuosSeleccionados1 = seleccion1.hacer(personajes,
                 cantidadSeleccion1, numeroDeGeneracion);
-        ArrayList<Personaje> individuosSeleccionados2 = seleccion4.hacer(personajes,
+        ArrayList<Personaje> individuosSeleccionados2 = seleccion2.hacer(personajes,
                 cantidadSeleccion2, numeroDeGeneracion);
 
         ArrayList<Personaje> ret = new ArrayList<>();
@@ -72,12 +75,19 @@ public class Reemplazo {
         int contadorNuevaGeneracion = 0;
         int individuo1;
         int individuo2;
+        HashSet<Integer> parejas = new HashSet<>();
         while (contadorNuevaGeneracion < size) {
 
-            individuo1 = r.nextInt(individuosParaCruzar.size());
             do {
+                individuo1 = r.nextInt(individuosParaCruzar.size());
                 individuo2 = r.nextInt(individuosParaCruzar.size());
-            } while (individuo1 == individuo2);
+
+                if (!parejas.contains(Objects.hash(individuo1, individuo2))
+                        && !parejas.contains(Objects.hash(individuo2, individuo1))) {
+                    parejas.add(Objects.hash(individuo1, individuo2));
+                    break;
+                }
+            } while (true);
 
             // Importante hacer la copia, para no pisar los padres originales
             nuevaGeneracion.add(individuosParaCruzar.get(individuo1).copy());

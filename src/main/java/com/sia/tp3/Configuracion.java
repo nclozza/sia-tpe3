@@ -13,6 +13,7 @@ public class Configuracion {
 
     private String path;
     private Boolean generarGraficos;
+    private Integer poblacion;
     private String personaje;
     private Double fuerza;
     private Double agilidad;
@@ -72,6 +73,7 @@ public class Configuracion {
 
             this.generarGraficos = (Boolean) configuracion.get("generar_graficos");
             this.path = (String) configuracion.get("datos");
+            this.poblacion = ((Long) configuracion.get("poblacion")).intValue();
             this.personaje = (String) configuracion.get("personaje");
 
             if (!personaje.equals("guerrero") && !personaje.equals("arquero") && !personaje.equals("defensor") && !personaje.equals("asesino")) {
@@ -299,6 +301,10 @@ public class Configuracion {
 
     public Boolean getGenerarGraficos() {
         return generarGraficos;
+    }
+
+    public Integer getPoblacion() {
+        return poblacion;
     }
 
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {

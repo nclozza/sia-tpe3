@@ -18,33 +18,33 @@ public class Poblacion {
     private double desempenioPromedio;
     private ArrayList<Double> mejoresDesempenios;
     private HashSet<String> hashSetPersonajes;
+    private List<Arma> armas;
+    private List<Bota> botas;
+    private List<Casco> cascos;
+    private List<Guante> guantes;
+    private List<Pechera> pecheras;
 
-    public Poblacion(String personaje, Multiplicador multiplicador, final String path) {
+    public Poblacion(String personaje, Multiplicador multiplicador, final String path, final int cantidadDePoblacion) {
         this.numeroDeGeneracion = 1;
 
         this.path = path;
 
-        List<Arma> armas = leerArmas();
-        List<Bota> botas = leerBotas();
-        List<Casco> cascos = leerCascos();
-        List<Guante> guantes = leerGuantes();
-        List<Pechera> pecheras = leerPecheras();
-        cantidadPersonajes = Math.min(Math.min(Math.min(Math.min(armas.size(), botas.size()), cascos.size()),
-                guantes.size()), pecheras.size());
+        armas = leerArmas();
+        botas = leerBotas();
+        cascos = leerCascos();
+        guantes = leerGuantes();
+        pecheras = leerPecheras();
+        cantidadPersonajes = cantidadDePoblacion;
         personajes = new ArrayList<>();
         hashSetPersonajes = new HashSet<>();
 
-        Iterator iteratorArmas = armas.iterator();
-        Iterator iteratorBotas = botas.iterator();
-        Iterator iteratorCascos = cascos.iterator();
-        Iterator iteratorGuantes = guantes.iterator();
-        Iterator iteratorPecheras = pecheras.iterator();
+        Random r = new Random(System.currentTimeMillis());
 
         Personaje aux;
         for (int i = 0; i < cantidadPersonajes; i++) {
-            aux = new Personaje(personaje, multiplicador, (Arma) iteratorArmas.next(),
-                    (Bota) iteratorBotas.next(), (Casco) iteratorCascos.next(), (Guante) iteratorGuantes.next(),
-                    (Pechera) iteratorPecheras.next());
+            aux = new Personaje(personaje, multiplicador, armas.get(r.nextInt(armas.size())),
+                    botas.get(r.nextInt(botas.size())), cascos.get(r.nextInt(cascos.size())),
+                    guantes.get(r.nextInt(guantes.size())), pecheras.get(r.nextInt(pecheras.size())));
 
             personajes.add(aux);
             hashSetPersonajes.add(aux.toHash());
@@ -65,8 +65,8 @@ public class Poblacion {
         this.personajes = personajes;
     }
 
-    public List<Arma> leerArmas() {
-        List<Arma> armas = new LinkedList<>();
+    public ArrayList<Arma> leerArmas() {
+        ArrayList<Arma> armas = new ArrayList<>();
         this.cantidadPersonajes = 0;
         try {
             BufferedReader buffer = new BufferedReader(new FileReader(path + "armas.tsv"));
@@ -88,8 +88,8 @@ public class Poblacion {
         return armas;
     }
 
-    public List<Bota> leerBotas() {
-        List<Bota> botas = new LinkedList<>();
+    public ArrayList<Bota> leerBotas() {
+        ArrayList<Bota> botas = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader(path + "botas.tsv"));
             String line;
@@ -109,8 +109,8 @@ public class Poblacion {
         return botas;
     }
 
-    public List<Casco> leerCascos() {
-        List<Casco> cascos = new LinkedList<>();
+    public ArrayList<Casco> leerCascos() {
+        ArrayList<Casco> cascos = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader(path + "cascos.tsv"));
             String line;
@@ -130,8 +130,8 @@ public class Poblacion {
         return cascos;
     }
 
-    public List<Guante> leerGuantes() {
-        List<Guante> guantes = new LinkedList<>();
+    public ArrayList<Guante> leerGuantes() {
+        ArrayList<Guante> guantes = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader(path + "guantes.tsv"));
             String line;
@@ -151,8 +151,8 @@ public class Poblacion {
         return guantes;
     }
 
-    public List<Pechera> leerPecheras() {
-        List<Pechera> pecheras = new LinkedList<>();
+    public ArrayList<Pechera> leerPecheras() {
+        ArrayList<Pechera> pecheras = new ArrayList<>();
         try {
             BufferedReader buffer = new BufferedReader(new FileReader(path + "pecheras.tsv"));
             String line;
@@ -235,5 +235,25 @@ public class Poblacion {
 
     public double getDesempenioPromedio() {
         return desempenioPromedio;
+    }
+
+    public List<Arma> getArmas() {
+        return armas;
+    }
+
+    public List<Bota> getBotas() {
+        return botas;
+    }
+
+    public List<Casco> getCascos() {
+        return cascos;
+    }
+
+    public List<Guante> getGuantes() {
+        return guantes;
+    }
+
+    public List<Pechera> getPecheras() {
+        return pecheras;
     }
 }

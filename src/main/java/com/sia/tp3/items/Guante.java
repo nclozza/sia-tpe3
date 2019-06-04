@@ -1,5 +1,7 @@
 package com.sia.tp3.items;
 
+import com.sia.tp3.Genes;
+
 public class Guante {
 
     private int id;
@@ -43,4 +45,15 @@ public class Guante {
         return vida;
     }
 
+    public double[] toGen() {
+        double[] ret = new double[Genes.CANTIDAD_GENES];
+        ret[0] = fuerza;
+        ret[1] = agilidad;
+        ret[2] = pericia;
+        ret[3] = resistencia;
+        ret[4] = vida;
+        ret[5] = id;
+
+        return ret;
+    }
 }

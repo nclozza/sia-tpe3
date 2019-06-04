@@ -1,6 +1,8 @@
 package com.sia.tp3.mutacion;
 
+import com.sia.tp3.Genes;
 import com.sia.tp3.Personaje;
+import com.sia.tp3.Poblacion;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,10 +11,12 @@ public class Gen implements InterfazMutacion {
 
     private InterfazProbabilidad probabilidadDeMutacion;
     private int genAMutar;
+    private Poblacion poblacion;
 
-    public Gen(final InterfazProbabilidad probabilidadDeMutacion, final int genAMutar) {
+    public Gen(final InterfazProbabilidad probabilidadDeMutacion, final int genAMutar, Poblacion poblacion) {
         this.probabilidadDeMutacion = probabilidadDeMutacion;
         this.genAMutar = genAMutar;
+        this.poblacion = poblacion;
     }
 
     public int getGenAMutar() {
@@ -25,8 +29,42 @@ public class Gen implements InterfazMutacion {
 
         for (final Personaje personaje : personajes) {
             if (probabilidadDeMutacion.obtenerProbabilidad(numeroDeGeneracion) >= (1.0) * r.nextDouble()) {
-                personaje.getGenes()[genAMutar] = personajes.get(r.nextInt(personajes.size())).getGenes()[genAMutar];
+                switch (genAMutar) {
+                    case Genes.ARMA:
+                        mutarGen(personaje.getGenes()[genAMutar],
+                                poblacion.getArmas().get(r.nextInt(poblacion.getArmas().size())).toGen());
+                        break;
+
+                    case Genes.BOTA:
+                        mutarGen(personaje.getGenes()[genAMutar],
+                                poblacion.getBotas().get(r.nextInt(poblacion.getBotas().size())).toGen());
+                        break;
+
+                    case Genes.CASCO:
+                        mutarGen(personaje.getGenes()[genAMutar],
+                                poblacion.getCascos().get(r.nextInt(poblacion.getCascos().size())).toGen());
+                        break;
+
+                    case Genes.GUANTE:
+                        mutarGen(personaje.getGenes()[genAMutar],
+                                poblacion.getGuantes().get(r.nextInt(poblacion.getGuantes().size())).toGen());
+                        break;
+
+                    case Genes.PECHERA:
+                        mutarGen(personaje.getGenes()[genAMutar],
+                                poblacion.getPecheras().get(r.nextInt(poblacion.getPecheras().size())).toGen());
+                        break;
+
+                    case Genes.ALTURA:
+                        personaje.getGenes()[genAMutar][0] = 1.3 + (2.0 - 1.3) * r.nextDouble();
+                        break;
+
+                }
             }
         }
+    }
+
+    private void mutarGen(final double[] genOriginal, final double[] genNuevo) {
+        System.arraycopy(genNuevo, 0, genOriginal, 0, Genes.CANTIDAD_CARACTERISTICAS);
     }
 }

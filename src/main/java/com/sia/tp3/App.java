@@ -16,13 +16,14 @@ public class App {
         Configuracion configuracion = new Configuracion();
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
-        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, configuracion.getPath());
+        Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, configuracion.getPath(),
+                configuracion.getPoblacion());
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();
 
         InterfazCruce cruce = obtenerCruce(configuracion);
-        InterfazMutacion mutacion = obtenerMutacion(configuracion);
+        InterfazMutacion mutacion = obtenerMutacion(configuracion, poblacion);
         InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1(),
                 configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2(),
@@ -110,7 +111,7 @@ public class App {
         return cruce;
     }
 
-    private static InterfazMutacion obtenerMutacion(Configuracion configuracion) {
+    private static InterfazMutacion obtenerMutacion(Configuracion configuracion, Poblacion poblacion) {
 
         InterfazProbabilidad probabilidad = new MutacionUniforme(configuracion.getProbabilidadDeMutacion());
 
@@ -118,14 +119,14 @@ public class App {
             probabilidad = new MutacionNoUniforme(configuracion.getBaseExponencialMutacionNoUniforme());
         }
 
-        InterfazMutacion mutacion = new Gen(probabilidad, configuracion.getGenAMutar());
+        InterfazMutacion mutacion = new Gen(probabilidad, configuracion.getGenAMutar(), poblacion);
 
         switch (configuracion.getMetodoReemplazo()) {
             case "gen":
                 break;
 
             case "multigen":
-                mutacion = new MultiGen(probabilidad);
+                mutacion = new MultiGen(probabilidad, poblacion);
                 break;
         }
 

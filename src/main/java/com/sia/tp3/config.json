@@ -8,7 +8,8 @@
     "vida": 1.1,
 
     "datos": "src/main/java/com/sia/tp3/fulldata/",
-    "generar_graficos": false,
+    "generar_graficos": true,
+    "poblacion": 500,
     "metodo_cruce": "dos puntos",
     "locus1": 0,
     "locus2": 4,
@@ -19,8 +20,7 @@
     "optimo": 15.1,
     "generaciones_a_verificar": 2,
     "porcentaje": 0.1,
-    "mutacion_uniforme": true,
-    "generaciones": 10,
+    "generaciones": 10000,
 
     "metodo_seleccion_1": "elite",
     "seleccion1_usa_boltzman": false,
@@ -38,6 +38,8 @@
 
     "metodo_mutacion": "multigen",
     "gen_a_mutar": 2,
-    "probabilidad_de_mutacion": 0.0
+    "probabilidad_de_mutacion": 0.5,
+    "mutacion_uniforme": true,
+    "base_exponencial_mutacion_no_uniforme": 0.5
   }
 ]

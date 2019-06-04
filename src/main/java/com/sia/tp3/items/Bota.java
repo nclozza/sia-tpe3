@@ -2,13 +2,16 @@ package com.sia.tp3.items;
 
 public class Bota {
 
-    private Double fuerza;
-    private Double agilidad;
-    private Double pericia;
-    private Double resistencia;
-    private Double vida;
+    private int id;
+    private double fuerza;
+    private double agilidad;
+    private double pericia;
+    private double resistencia;
+    private double vida;
 
-    public Bota(Double fuerza, Double agilidad, Double pericia, Double resistencia, Double vida) {
+    public Bota(final int id, final double fuerza, final double agilidad, final double pericia,
+                final double resistencia, final double vida) {
+        this.id = id;
         this.fuerza = fuerza;
         this.agilidad = agilidad;
         this.pericia = pericia;
@@ -16,43 +19,28 @@ public class Bota {
         this.vida = vida;
     }
 
-    public Double getFuerza() {
+    public int getId() {
+        return id;
+    }
+
+    public double getFuerza() {
         return fuerza;
     }
 
-    public void setFuerza(Double fuerza) {
-        this.fuerza = fuerza;
-    }
-
-    public Double getAgilidad() {
+    public double getAgilidad() {
         return agilidad;
     }
 
-    public void setAgilidad(Double agilidad) {
-        this.agilidad = agilidad;
-    }
-
-    public Double getPericia() {
+    public double getPericia() {
         return pericia;
     }
 
-    public void setPericia(Double pericia) {
-        this.pericia = pericia;
-    }
-
-    public Double getResistencia() {
+    public double getResistencia() {
         return resistencia;
     }
 
-    public void setResistencia(Double resistencia) {
-        this.resistencia = resistencia;
-    }
-
-    public Double getVida() {
+    public double getVida() {
         return vida;
     }
 
-    public void setVida(Double vida) {
-        this.vida = vida;
-    }
 }

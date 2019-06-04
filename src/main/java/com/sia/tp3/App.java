@@ -9,6 +9,8 @@ import com.sia.tp3.reemplazo.Reemplazo2;
 import com.sia.tp3.reemplazo.Reemplazo3;
 import com.sia.tp3.seleccion.*;
 
+import java.util.ArrayList;
+
 public class App {
     public static void main(String[] args) {
         Configuracion configuracion = new Configuracion();
@@ -37,52 +39,28 @@ public class App {
 
         Motor motor = new Motor(reemplazo, corte);
 
-//        System.out.println("GENERACION N: " + poblacion.getNumeroDeGeneracion());
-//        for (int i = 0; i < poblacion.getPersonajes().size(); i++) {
-//            System.out.println("Personaje nro: " + i);
-//            System.out.println("Desempenio: " + poblacion.getPersonajes().get(i).getDesempenio());
-//            poblacion.getPersonajes().get(i).imprimirGenes();
-//        }
+        ArrayList<Personaje> original = new ArrayList<>();
 
-        motor.correr(poblacion);
-
-        double desempenio = 0;
         for (Personaje personaje : poblacion.getPersonajes()) {
-            if (personaje.getDesempenio() > desempenio) {
-                desempenio = personaje.getDesempenio();
-            }
+            original.add(personaje.copy());
         }
 
-        System.out.println("MEJOR DESEMPENIO: " + desempenio);
-        System.out.println("CANTIDAD DE GENERACIONES: " + (poblacion.getNumeroDeGeneracion()));
+        for (int i = 0; i < 5; i++) {
 
+            ArrayList<Personaje> aux = new ArrayList<>();
+            for (Personaje personaje : original) {
+                aux.add(personaje.copy());
+            }
 
-//        ArrayList<Personaje> original = new ArrayList<>();
-//
-//        for (Personaje personaje : poblacion.getPersonajes()) {
-//            original.add(personaje.copy());
-//        }
-//
-//        for (int i = 0; i < 5; i++) {
-//
-//            ArrayList<Personaje> aux = new ArrayList<>();
-//            for (Personaje personaje : original) {
-//                aux.add(personaje.copy());
-//            }
-//
-//            poblacion.setPersonajes(aux);
-//            poblacion.resetNumeroDeGeneracion();
-//            motor.correr(poblacion);
-//
-//            double desempenio = 0;
-//            for (Personaje personaje : poblacion.getPersonajes()) {
-//                if (personaje.getDesempenio() > desempenio) {
-//                    desempenio = personaje.getDesempenio();
-//                }
-//            }
-//
-//            System.out.println("MEJOR DESEMPENIO: " + desempenio);
-//        }
+            poblacion.setPersonajes(aux);
+            poblacion.resetNumeroDeGeneracion();
+            motor.correr(poblacion);
+
+            System.out.println("MEJOR DESEMPENIO: " + poblacion.getMejorDesempenio());
+            System.out.println("PEOR DESEMPENIO: " + poblacion.getPeorDesempenio());
+            System.out.println("DESEMPENIO PROMEDIO: " + poblacion.getDesempenioPromedio());
+            System.out.println();
+        }
 
     }
 

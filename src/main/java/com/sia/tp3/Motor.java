@@ -19,7 +19,8 @@ public class Motor {
 
         while (!corte.evaluar(poblacion)) {
 
-            poblacion.setPersonajes(nuevaGeneracion(poblacion));
+            ArrayList<Personaje> nuevaGeneracion = nuevaGeneracion(poblacion);
+            poblacion.setPersonajes(nuevaGeneracion);
             poblacion.aumentarGeneracion();
             poblacion.aniadirTodosLosPersonajesAHashSet();
             poblacion.agregarMejorDesempenio();

@@ -13,6 +13,8 @@ public class Poblacion {
     private Integer cantidadPersonajes;
     private int numeroDeGeneracion;
     private double mejorDesempenio;
+    private double peorDesempenio;
+    private double desempenioPromedio;
     private ArrayList<Double> mejoresDesempenios;
     private ArrayList<HashSet<String>> arrayHashsPersonajes;
 
@@ -48,9 +50,11 @@ public class Poblacion {
             arrayHashsPersonajes.get(0).add(aux.toHash());
         }
 
-        recalcularMejorDesempenio();
+        recalcularDesempenios();
         mejoresDesempenios = new ArrayList<>();
         mejoresDesempenios.add(mejorDesempenio);
+
+        System.out.println("Se terminó de inicializar la población\n");
     }
 
     public ArrayList<Personaje> getPersonajes() {
@@ -73,7 +77,7 @@ public class Poblacion {
             while ((line = buffer.readLine()) != null) {
 
                 datos = line.split("\t");
-                armas.add(Integer.parseInt(datos[0]), new Arma(Double.parseDouble(datos[1]),
+                armas.add(new Arma(Integer.parseInt(datos[0]), Double.parseDouble(datos[1]),
                         Double.parseDouble(datos[2]), Double.parseDouble(datos[3]), Double.parseDouble(datos[4]),
                         Double.parseDouble(datos[5])));
                 this.cantidadPersonajes++;
@@ -95,7 +99,7 @@ public class Poblacion {
             while ((line = buffer.readLine()) != null) {
 
                 datos = line.split("\t");
-                botas.add(Integer.parseInt(datos[0]), new Bota(Double.parseDouble(datos[1]),
+                botas.add(new Bota(Integer.parseInt(datos[0]), Double.parseDouble(datos[1]),
                         Double.parseDouble(datos[2]), Double.parseDouble(datos[3]), Double.parseDouble(datos[4]),
                         Double.parseDouble(datos[5])));
             }
@@ -116,7 +120,7 @@ public class Poblacion {
             while ((line = buffer.readLine()) != null) {
 
                 datos = line.split("\t");
-                cascos.add(Integer.parseInt(datos[0]), new Casco(Double.parseDouble(datos[1]),
+                cascos.add(new Casco(Integer.parseInt(datos[0]), Double.parseDouble(datos[1]),
                         Double.parseDouble(datos[2]), Double.parseDouble(datos[3]), Double.parseDouble(datos[4]),
                         Double.parseDouble(datos[5])));
             }
@@ -137,7 +141,7 @@ public class Poblacion {
             while ((line = buffer.readLine()) != null) {
 
                 datos = line.split("\t");
-                guantes.add(Integer.parseInt(datos[0]), new Guante(Double.parseDouble(datos[1]),
+                guantes.add(new Guante(Integer.parseInt(datos[0]), Double.parseDouble(datos[1]),
                         Double.parseDouble(datos[2]), Double.parseDouble(datos[3]), Double.parseDouble(datos[4]),
                         Double.parseDouble(datos[5])));
             }
@@ -158,7 +162,7 @@ public class Poblacion {
             while ((line = buffer.readLine()) != null) {
 
                 datos = line.split("\t");
-                pecheras.add(Integer.parseInt(datos[0]), new Pechera(Double.parseDouble(datos[1]),
+                pecheras.add(new Pechera(Integer.parseInt(datos[0]), Double.parseDouble(datos[1]),
                         Double.parseDouble(datos[2]), Double.parseDouble(datos[3]), Double.parseDouble(datos[4]),
                         Double.parseDouble(datos[5])));
             }
@@ -184,15 +188,25 @@ public class Poblacion {
         return mejorDesempenio;
     }
 
-    public void recalcularMejorDesempenio() {
+    public void recalcularDesempenios() {
         double mejorDesempenio = 0;
+        double peorDesempenio = personajes.get(0).getDesempenio();
+        double sumaDesempenios = 0;
         for (Personaje personaje : personajes) {
             if (personaje.getDesempenio() > mejorDesempenio) {
                 mejorDesempenio = personaje.getDesempenio();
             }
+
+            if (personaje.getDesempenio() < peorDesempenio) {
+                peorDesempenio = personaje.getDesempenio();
+            }
+
+            sumaDesempenios += personaje.getDesempenio();
         }
 
         this.mejorDesempenio = mejorDesempenio;
+        this.peorDesempenio = peorDesempenio;
+        this.desempenioPromedio = sumaDesempenios / personajes.size();
     }
 
     public ArrayList<Double> getMejoresDesempenios() {
@@ -200,7 +214,7 @@ public class Poblacion {
     }
 
     public void agregarMejorDesempenio() {
-        recalcularMejorDesempenio();
+        recalcularDesempenios();
         mejoresDesempenios.add(mejorDesempenio);
     }
 
@@ -217,5 +231,13 @@ public class Poblacion {
         for (Personaje personaje : personajes) {
             arrayHashsPersonajes.get(numeroDeGeneracion - 1).add(personaje.toHash());
         }
+    }
+
+    public double getPeorDesempenio() {
+        return peorDesempenio;
+    }
+
+    public double getDesempenioPromedio() {
+        return desempenioPromedio;
     }
 }

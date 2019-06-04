@@ -7,17 +7,18 @@
     "resistencia": 1.2,
     "vida": 1.1,
 
+
     "metodo_cruce": "dos puntos",
     "locus1": 1,
     "locus2": 3,
     "segmento": 1,
     "probabilidad_cruce_uniforme": 0.5,
 
-    "metodo_corte": "estructura",
+    "metodo_corte": "maxima cantidad",
     "optimo": 15.1,
     "generaciones_a_verificar": 2,
-    "porcentaje": 1.0,
-    "mutacion_uniforme": false,
+    "porcentaje": 0.5,
+    "mutacion_uniforme": true,
     "generaciones": 2,
 
     "metodo_seleccion_1": "elite",

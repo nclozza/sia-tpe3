@@ -4,10 +4,7 @@ import com.sia.tp3.Personaje;
 import com.sia.tp3.cruce.InterfazCruce;
 import com.sia.tp3.seleccion.InterfazSeleccion;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Reemplazo {
 
@@ -63,6 +60,7 @@ public class Reemplazo {
         ArrayList<Personaje> nuevaGeneracion = new ArrayList<>();
 
         Random r = new Random();
+        r.setSeed(System.currentTimeMillis());
 
         boolean par = true;
         int size = individuosParaCruzar.size();
@@ -82,7 +80,7 @@ public class Reemplazo {
                 individuo1 = r.nextInt(individuosParaCruzar.size());
                 individuo2 = r.nextInt(individuosParaCruzar.size());
 
-                if (!parejas.contains(Objects.hash(individuo1, individuo2))
+                if (individuo1 != individuo2 && !parejas.contains(Objects.hash(individuo1, individuo2))
                         && !parejas.contains(Objects.hash(individuo2, individuo1))) {
                     parejas.add(Objects.hash(individuo1, individuo2));
                     break;

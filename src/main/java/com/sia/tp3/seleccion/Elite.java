@@ -38,7 +38,7 @@ public class Elite implements InterfazSeleccion {
         priorityQueue.addAll(aux);
 
         for (int i = 0; i < cantidad; i++) {
-            ret.add(priorityQueue.poll());
+            ret.add(priorityQueue.remove());
         }
 
         return ret;

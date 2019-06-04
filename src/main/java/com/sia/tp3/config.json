@@ -7,23 +7,23 @@
     "resistencia": 1.2,
     "vida": 1.1,
 
-    "datos": "src/main/java/com/sia/tp3/testdata/",
+    "datos": "src/main/java/com/sia/tp3/fulldata/",
     "generar_graficos": false,
     "metodo_cruce": "dos puntos",
-    "locus1": 1,
-    "locus2": 3,
+    "locus1": 0,
+    "locus2": 4,
     "segmento": 1,
     "probabilidad_cruce_uniforme": 0.5,
 
     "metodo_corte": "maxima cantidad",
     "optimo": 15.1,
     "generaciones_a_verificar": 2,
-    "porcentaje": 0.5,
+    "porcentaje": 0.1,
     "mutacion_uniforme": true,
-    "generaciones": 100,
+    "generaciones": 10,
 
     "metodo_seleccion_1": "elite",
-    "seleccion1_usa_boltzman": true,
+    "seleccion1_usa_boltzman": false,
     "metodo_seleccion_2": "elite",
     "seleccion2_usa_boltzman": false,
     "metodo_seleccion_3": "elite",
@@ -38,6 +38,6 @@
 
     "metodo_mutacion": "multigen",
     "gen_a_mutar": 2,
-    "probabilidad_de_mutacion": 0.01
+    "probabilidad_de_mutacion": 0.0
   }
 ]

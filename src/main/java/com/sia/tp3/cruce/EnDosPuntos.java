@@ -23,26 +23,15 @@ public class EnDosPuntos implements InterfazCruce {
 
     @Override
     public void hacer(final Personaje personaje1, final Personaje personaje2) {
-        for (int i = locus1; i < locus2; i++) {
-            if (i != Genes.ALTURA) {
-                cambiar(personaje1.getGenes()[i], personaje2.getGenes()[i], Genes.CANTIDAD_CARACTERISTICAS);
 
-            } else {
-                cambiar(personaje1.getGenes()[i], personaje2.getGenes()[i], 1);
-            }
+        double[][] aux = new double[Genes.CANTIDAD_GENES][Genes.CANTIDAD_CARACTERISTICAS];
+        for (int i = locus1; i < locus2; i++) {
+            aux[i] = personaje1.getGenes()[i];
+            personaje1.getGenes()[i] = personaje2.getGenes()[i];
+            personaje2.getGenes()[i] = aux[i];
         }
 
         personaje1.recalcularDesempenio();
         personaje2.recalcularDesempenio();
-    }
-
-    private static void cambiar(final double[] gen1, final double[] gen2, final int largoGen) {
-
-        double aux;
-        for (int i = 0; i < largoGen; i++) {
-            aux = gen1[i];
-            gen1[i] = gen2[i];
-            gen2[i] = aux;
-        }
     }
 }

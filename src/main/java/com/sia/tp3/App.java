@@ -44,7 +44,7 @@ public class App {
         for (Personaje personaje : poblacion.getPersonajes()) {
             original.add(personaje.copy());
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
 
             ArrayList<Personaje> aux = new ArrayList<>();
             for (Personaje personaje : original) {

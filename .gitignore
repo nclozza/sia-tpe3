@@ -16,3 +16,7 @@ hs_err_pid*
 # IntelliJ IDEA Files #
 .idea
 /target
+
+.classpath
+.project
+.settings/

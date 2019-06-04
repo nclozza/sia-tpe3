@@ -18,7 +18,7 @@ public class Poblacion {
     private ArrayList<Double> mejoresDesempenios;
     private ArrayList<HashSet<String>> arrayHashsPersonajes;
 
-    private static final String path = "src/main/java/com/sia/tp3/testdata/";
+    private static final String path = "src/main/java/com/sia/tp3/fulldata/";
 
     public Poblacion(String personaje, Multiplicador multiplicador) {
         this.numeroDeGeneracion = 1;

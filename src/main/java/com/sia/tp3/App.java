@@ -45,7 +45,7 @@ public class App {
             original.add(personaje.copy());
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
 
             ArrayList<Personaje> aux = new ArrayList<>();
             for (Personaje personaje : original) {
@@ -54,14 +54,13 @@ public class App {
 
             poblacion.setPersonajes(aux);
             poblacion.resetNumeroDeGeneracion();
-            motor.correr(poblacion);
+            motor.correr(poblacion, true);
 
             System.out.println("MEJOR DESEMPENIO: " + poblacion.getMejorDesempenio());
             System.out.println("PEOR DESEMPENIO: " + poblacion.getPeorDesempenio());
             System.out.println("DESEMPENIO PROMEDIO: " + poblacion.getDesempenioPromedio());
             System.out.println();
         }
-
     }
 
     private static InterfazCorte obtenerCorte(Configuracion configuracion) {

@@ -19,7 +19,7 @@
     "generaciones_a_verificar": 2,
     "porcentaje": 0.5,
     "mutacion_uniforme": true,
-    "generaciones": 2,
+    "generaciones": 5,
 
     "metodo_seleccion_1": "elite",
     "seleccion1_usa_boltzman": true,

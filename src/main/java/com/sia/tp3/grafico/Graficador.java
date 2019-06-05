@@ -19,32 +19,46 @@ import java.util.List;
 
 public class Graficador extends JFrame {
 
-    public void initUI(final List<Punto2D> lista, final String nombre, final String titulo, final String x,
-                       final String y) {
+    public static final String DESEMPENIO_PROMEDIO_TITULO = "Desempeño Promedio",
+            MEJOR_DESEMPENIO_TITULO = "Mejor Desempeño", PEOR_DESEMPENIO_TITULO= "Peor Desempeño",
+            GRAFICO_TITULO = "Gráfico de Desempeño", X_TITULO = "Generación",
+            Y_TITULO= "Desempeño";
 
-        XYDataset dataset = createDataset(lista, nombre);
-        JFreeChart chart = createChart(dataset, titulo, x, y);
+    public void initUI(final List<Punto2D> mejoresDesempenios, final List<Punto2D> peoresDesempenios, final List<Punto2D> desempenioPromedio) {
+
+        XYDataset dataset = createDataset(mejoresDesempenios, peoresDesempenios, desempenioPromedio);
+        JFreeChart chart = createChart(dataset, GRAFICO_TITULO, X_TITULO, Y_TITULO);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
         add(chartPanel);
 
         pack();
-        setTitle(titulo);
+        setTitle(GRAFICO_TITULO);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private XYDataset createDataset(final List<Punto2D> lista, final String nombre) {
+    private XYDataset createDataset(final List<Punto2D> mejoresDesempenios, final List<Punto2D> peoresDesempenios, final List<Punto2D> desempenioPromedio) {
 
-        XYSeries series = new XYSeries(nombre);
+        XYSeries mejores = new XYSeries(MEJOR_DESEMPENIO_TITULO);
+        XYSeries peores = new XYSeries(PEOR_DESEMPENIO_TITULO);
+        XYSeries promedios = new XYSeries(DESEMPENIO_PROMEDIO_TITULO);
 
-        for (Punto2D punto2D : lista) {
-            series.add(punto2D.getX(), punto2D.getY());
+        for (Punto2D punto2D : mejoresDesempenios) {
+            mejores.add(punto2D.getX(), punto2D.getY());
+        }
+        for (Punto2D punto2D : peoresDesempenios) {
+            peores.add(punto2D.getX(), punto2D.getY());
+        }
+        for (Punto2D punto2D : desempenioPromedio) {
+            promedios.add(punto2D.getX(), punto2D.getY());
         }
 
         XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
+        dataset.addSeries(mejores);
+        dataset.addSeries(peores);
+        dataset.addSeries(promedios);
 
         return dataset;
     }
@@ -76,26 +90,10 @@ public class Graficador extends JFrame {
         return chart;
     }
 
-    public static void mostrarGraficoMejoresDesempenios(LinkedList<Punto2D> mejoresDesempenios) {
+    public static void mostrarGraficoMejoresDesempenios(LinkedList<Punto2D> mejoresDesempenios, LinkedList<Punto2D> peoresDesempenios, LinkedList<Punto2D> promedioDesempenio) {
         SwingUtilities.invokeLater(() -> {
             Graficador graficador = new Graficador();
-            graficador.initUI(mejoresDesempenios, "Desempeño", "Mejor desempeño", "Generacion", "Desempeño");
-            graficador.setVisible(true);
-        });
-    }
-
-    public static void mostrarGraficoPeoresDesempenios(LinkedList<Punto2D> peoresDesempenios) {
-        SwingUtilities.invokeLater(() -> {
-            Graficador graficador = new Graficador();
-            graficador.initUI(peoresDesempenios, "Desempeño", "Peor desempeño", "Generacion", "Desempeño");
-            graficador.setVisible(true);
-        });
-    }
-
-    public static void mostrarGraficoPromedioDesempenios(LinkedList<Punto2D> promedioDesempenios) {
-        SwingUtilities.invokeLater(() -> {
-            Graficador graficador = new Graficador();
-            graficador.initUI(promedioDesempenios, "Desempeño", "Desempeño promedio", "Generacion", "Desempeño");
+            graficador.initUI(mejoresDesempenios, peoresDesempenios, promedioDesempenio);
             graficador.setVisible(true);
         });
     }

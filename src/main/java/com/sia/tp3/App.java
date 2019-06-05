@@ -25,13 +25,13 @@ public class App {
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion, poblacion);
         InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1(),
-                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2(),
-                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann());
         InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3(),
-                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann());
         InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4(),
-                configuracion.getCantidadDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann());
         InterfazCorte corte = obtenerCorte(configuracion);
 
         InterfazReemplazo reemplazo = obtenerReemplazo(configuracion.getMetodoReemplazo(), modificadorA, modificadorB,
@@ -166,7 +166,7 @@ public class App {
         return reemplazo;
     }
 
-    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion, Integer cantidadDePersonajesTorneos,
+    private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion, Double porcentajeDePersonajesTorneos,
                                                       Boolean usaBoltzmann) {
 
         InterfazSeleccion seleccion = new Elite(usaBoltzmann);
@@ -184,11 +184,11 @@ public class App {
                 break;
 
             case "torneos deterministica":
-                seleccion = new TorneosDeterministica(cantidadDePersonajesTorneos, usaBoltzmann);
+                seleccion = new TorneosDeterministica(porcentajeDePersonajesTorneos, usaBoltzmann);
                 break;
 
             case "torneos probabilistica":
-                seleccion = new TorneosProbabilistica(cantidadDePersonajesTorneos, usaBoltzmann);
+                seleccion = new TorneosProbabilistica(porcentajeDePersonajesTorneos, usaBoltzmann);
                 break;
 
             case "ranking":

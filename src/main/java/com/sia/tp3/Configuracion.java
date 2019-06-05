@@ -46,7 +46,7 @@ public class Configuracion {
     private Boolean seleccion4UsaBoltzmann;
     private String metodoReemplazo;
     private Integer cantidadDeReemplazo;
-    private Integer cantidadDePersonajesTorneos;
+    private Double porcentajeDePersonajesTorneos;
     private Double A;
     private Double B;
 
@@ -109,7 +109,7 @@ public class Configuracion {
 
             this.metodoReemplazo = (String) configuracion.get("metodo_reemplazo");
             this.cantidadDeReemplazo = ((Long) configuracion.get("cantidad_de_reemplazo")).intValue();
-            this.cantidadDePersonajesTorneos = ((Long) configuracion.get("cantidad_de_personajes_torneos")).intValue();
+            this.porcentajeDePersonajesTorneos = (Double) configuracion.get("porcentaje_de_personajes_torneos");
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
             this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
@@ -255,8 +255,8 @@ public class Configuracion {
         return B;
     }
 
-    public Integer getCantidadDePersonajesTorneos() {
-        return cantidadDePersonajesTorneos;
+    public Double getPorcentajeDePersonajesTorneos() {
+        return porcentajeDePersonajesTorneos;
     }
 
     public Boolean getSeleccion1UsaBoltzmann() {
@@ -380,6 +380,10 @@ public class Configuracion {
             if (baseExponencialMutacionNoUniforme < 0 || baseExponencialMutacionNoUniforme > 1)
                 throw new ConfiguracionIncorrectaExcepcion("Debe ingresar una base válida, comprendida entre [0, 1]");
         }
+
+        if (porcentajeDePersonajesTorneos <= 0 || porcentajeDePersonajesTorneos >= 1)
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un porcentaje de torneos válido, comprendido " +
+                    "entre (0, 1)");
     }
 }
 

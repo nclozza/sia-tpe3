@@ -9,16 +9,16 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TorneosProbabilistica implements InterfazSeleccion {
 
     private final static double PROBABILIDAD = 0.75;
-    private int cantidadDePersonajes;
+    private double porcentajeDePersonajes;
     private boolean usaBoltzmann;
 
-    public TorneosProbabilistica(final int cantidadDePersonajes, final boolean usaBoltzmann) {
-        this.cantidadDePersonajes = cantidadDePersonajes;
+    public TorneosProbabilistica(final double porcentajeDePersonajes, final boolean usaBoltzmann) {
+        this.porcentajeDePersonajes = porcentajeDePersonajes;
         this.usaBoltzmann = usaBoltzmann;
     }
 
-    public int getCantidadDePersonajes() {
-        return cantidadDePersonajes;
+    public double getPorcentajeDePersonajes() {
+        return porcentajeDePersonajes;
     }
 
     @Override
@@ -37,7 +37,8 @@ public class TorneosProbabilistica implements InterfazSeleccion {
             boltzmann.hacer(aux, numeroDeGeneracion);
         }
 
-        ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(aux, cantidadDePersonajes);
+        ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(aux,
+                ((Double) (personajes.size() * porcentajeDePersonajes)).intValue());
 
         return seleccionarGanadores(personajesSeleccionados, cantidad);
     }

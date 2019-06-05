@@ -11,10 +11,13 @@ public class TorneosProbabilistica implements InterfazSeleccion {
     private final static double PROBABILIDAD = 0.75;
     private double porcentajeDePersonajes;
     private boolean usaBoltzmann;
+    private int generaciones;
 
-    public TorneosProbabilistica(final double porcentajeDePersonajes, final boolean usaBoltzmann) {
+    public TorneosProbabilistica(final double porcentajeDePersonajes, final boolean usaBoltzmann,
+                                 final int generaciones) {
         this.porcentajeDePersonajes = porcentajeDePersonajes;
         this.usaBoltzmann = usaBoltzmann;
+        this.generaciones = generaciones;
     }
 
     public double getPorcentajeDePersonajes() {
@@ -33,7 +36,7 @@ public class TorneosProbabilistica implements InterfazSeleccion {
                 aux.add(personaje.copy());
             }
 
-            Boltzmann boltzmann = new Boltzmann();
+            Boltzmann boltzmann = new Boltzmann(generaciones);
             boltzmann.hacer(aux, numeroDeGeneracion);
         }
 

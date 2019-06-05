@@ -6,6 +6,12 @@ import java.util.ArrayList;
 
 public class Boltzmann {
 
+    private int generaciones;
+
+    public Boltzmann(final int generaciones) {
+        this.generaciones = generaciones;
+    }
+
     public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, final int generacion) {
 
         double temperatura = temperatura((double) generacion);
@@ -28,7 +34,7 @@ public class Boltzmann {
     }
 
     private double temperatura(final double generacion) {
-        return 1 / generacion;
+        return generaciones / generacion;
     }
 
     private void recalcularDesempenio(final ArrayList<Personaje> personajes, final double temperatura,

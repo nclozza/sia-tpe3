@@ -10,9 +10,11 @@ import java.util.Random;
 public class Ranking implements InterfazSeleccion {
 
     private boolean usaBoltzmann;
+    private int generaciones;
 
-    public Ranking(final boolean usaBoltzmann) {
+    public Ranking(final boolean usaBoltzmann, final int generaciones) {
         this.usaBoltzmann = usaBoltzmann;
+        this.generaciones = generaciones;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class Ranking implements InterfazSeleccion {
                 aux.add(personaje.copy());
             }
 
-            Boltzmann boltzmann = new Boltzmann();
+            Boltzmann boltzmann = new Boltzmann(generaciones);
             boltzmann.hacer(aux, numeroDeGeneracion);
         }
 

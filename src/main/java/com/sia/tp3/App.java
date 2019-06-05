@@ -25,13 +25,17 @@ public class App {
         InterfazCruce cruce = obtenerCruce(configuracion);
         InterfazMutacion mutacion = obtenerMutacion(configuracion, poblacion);
         InterfazSeleccion seleccion1 = obtenerSeleccion(configuracion.getMetodoSeleccion1(),
-                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion1UsaBoltzmann(),
+                configuracion.getGeneraciones());
         InterfazSeleccion seleccion2 = obtenerSeleccion(configuracion.getMetodoSeleccion2(),
-                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion2UsaBoltzmann(),
+                configuracion.getGeneraciones());
         InterfazSeleccion seleccion3 = obtenerSeleccion(configuracion.getMetodoSeleccion3(),
-                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion3UsaBoltzmann(),
+                configuracion.getGeneraciones());
         InterfazSeleccion seleccion4 = obtenerSeleccion(configuracion.getMetodoSeleccion4(),
-                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann());
+                configuracion.getPorcentajeDePersonajesTorneos(), configuracion.getSeleccion4UsaBoltzmann(),
+                configuracion.getGeneraciones());
         InterfazCorte corte = obtenerCorte(configuracion);
 
         InterfazReemplazo reemplazo = obtenerReemplazo(configuracion.getMetodoReemplazo(), modificadorA, modificadorB,
@@ -63,7 +67,7 @@ public class App {
             System.out.println("PEOR DESEMPENIO: " + poblacion.getPeorDesempenio());
             System.out.println("DESEMPENIO PROMEDIO: " + poblacion.getDesempenioPromedio());
             System.out.println("NÚMERO DE GENERACIÓN: " + poblacion.getNumeroDeGeneracion());
-            System.out.println("TIEMPO: " + totalTime  + "s");
+            System.out.println("TIEMPO: " + totalTime + "s");
             System.out.println();
         }
     }
@@ -167,32 +171,32 @@ public class App {
     }
 
     private static InterfazSeleccion obtenerSeleccion(String metodoSeleccion, Double porcentajeDePersonajesTorneos,
-                                                      Boolean usaBoltzmann) {
+                                                      Boolean usaBoltzmann, final int generaciones) {
 
-        InterfazSeleccion seleccion = new Elite(usaBoltzmann);
+        InterfazSeleccion seleccion = new Elite(usaBoltzmann, generaciones);
 
         switch (metodoSeleccion) {
             case "elite":
                 break;
 
             case "ruleta":
-                seleccion = new Ruleta(usaBoltzmann);
+                seleccion = new Ruleta(usaBoltzmann, generaciones);
                 break;
 
             case "universal":
-                seleccion = new Universal(usaBoltzmann);
+                seleccion = new Universal(usaBoltzmann, generaciones);
                 break;
 
             case "torneos deterministica":
-                seleccion = new TorneosDeterministica(porcentajeDePersonajesTorneos, usaBoltzmann);
+                seleccion = new TorneosDeterministica(porcentajeDePersonajesTorneos, usaBoltzmann, generaciones);
                 break;
 
             case "torneos probabilistica":
-                seleccion = new TorneosProbabilistica(porcentajeDePersonajesTorneos, usaBoltzmann);
+                seleccion = new TorneosProbabilistica(porcentajeDePersonajesTorneos, usaBoltzmann, generaciones);
                 break;
 
             case "ranking":
-                seleccion = new Ranking(usaBoltzmann);
+                seleccion = new Ranking(usaBoltzmann, generaciones);
                 break;
         }
 

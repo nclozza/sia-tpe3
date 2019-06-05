@@ -9,9 +9,11 @@ import java.util.Random;
 public class Ruleta implements InterfazSeleccion {
 
     private boolean usaBoltzmann;
+    private int generaciones;
 
-    public Ruleta(final boolean usaBoltzmann) {
+    public Ruleta(final boolean usaBoltzmann, final int generaciones) {
         this.usaBoltzmann = usaBoltzmann;
+        this.generaciones = generaciones;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class Ruleta implements InterfazSeleccion {
                 aux.add(personaje.copy());
             }
 
-            Boltzmann boltzmann = new Boltzmann();
+            Boltzmann boltzmann = new Boltzmann(generaciones);
             boltzmann.hacer(aux, numeroDeGeneracion);
         }
 

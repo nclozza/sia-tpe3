@@ -8,9 +8,11 @@ import java.util.PriorityQueue;
 public class Elite implements InterfazSeleccion {
 
     private boolean usaBoltzmann;
+    private int generaciones;
 
-    public Elite(final boolean usaBoltzmann) {
+    public Elite(final boolean usaBoltzmann, final int generaciones) {
         this.usaBoltzmann = usaBoltzmann;
+        this.generaciones = generaciones;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class Elite implements InterfazSeleccion {
                 aux.add(personaje.copy());
             }
 
-            Boltzmann boltzmann = new Boltzmann();
+            Boltzmann boltzmann = new Boltzmann(generaciones);
             boltzmann.hacer(aux, numeroDeGeneracion);
         }
 

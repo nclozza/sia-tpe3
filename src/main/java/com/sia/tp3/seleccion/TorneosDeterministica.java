@@ -9,10 +9,13 @@ public class TorneosDeterministica implements InterfazSeleccion {
 
     private double porcentajeDePersonajes;
     private boolean usaBoltzmann;
+    private int generaciones;
 
-    public TorneosDeterministica(final double porcentajeDePersonajes, final boolean usaBoltzmann) {
+    public TorneosDeterministica(final double porcentajeDePersonajes, final boolean usaBoltzmann,
+                                 final int generaciones) {
         this.porcentajeDePersonajes = porcentajeDePersonajes;
         this.usaBoltzmann = usaBoltzmann;
+        this.generaciones = generaciones;
     }
 
     public double getPorcentajeDePersonajes() {
@@ -31,7 +34,7 @@ public class TorneosDeterministica implements InterfazSeleccion {
                 aux.add(personaje.copy());
             }
 
-            Boltzmann boltzmann = new Boltzmann();
+            Boltzmann boltzmann = new Boltzmann(generaciones);
             boltzmann.hacer(aux, numeroDeGeneracion);
         }
 

@@ -177,7 +177,7 @@ public class Poblacion {
     }
 
     public void resetNumeroDeGeneracion() {
-        numeroDeGeneracion = 0;
+        numeroDeGeneracion = 1;
     }
 
     public void aumentarGeneracion() {

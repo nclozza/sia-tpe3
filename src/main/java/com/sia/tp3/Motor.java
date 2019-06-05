@@ -38,9 +38,7 @@ public class Motor {
         }
 
         if (mostrarGraficos) {
-            Graficador.mostrarGraficoMejoresDesempenios(mejoresDesempenios);
-            Graficador.mostrarGraficoPeoresDesempenios(peoresDesempenios);
-            Graficador.mostrarGraficoPromedioDesempenios(promedioDesempenios);
+            Graficador.mostrarGraficoMejoresDesempenios(mejoresDesempenios, peoresDesempenios, promedioDesempenios);
         }
     }
 

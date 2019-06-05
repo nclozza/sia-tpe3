@@ -58,16 +58,13 @@ public class App {
 
             poblacion.setPersonajes(aux);
             poblacion.resetNumeroDeGeneracion();
-            long startTime = System.currentTimeMillis();
+
             motor.correr(poblacion, configuracion.getGenerarGraficos());
-            long endTime = System.currentTimeMillis();
-            long totalTime = (endTime - startTime) / 1000;
 
             System.out.println("MEJOR DESEMPENIO: " + poblacion.getMejorDesempenio());
             System.out.println("PEOR DESEMPENIO: " + poblacion.getPeorDesempenio());
             System.out.println("DESEMPENIO PROMEDIO: " + poblacion.getDesempenioPromedio());
             System.out.println("NÚMERO DE GENERACIÓN: " + poblacion.getNumeroDeGeneracion());
-            System.out.println("TIEMPO: " + totalTime + "s");
             System.out.println();
         }
     }

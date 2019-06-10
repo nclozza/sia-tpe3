@@ -24,9 +24,10 @@ public class Poblacion {
     private List<Guante> guantes;
     private List<Pechera> pecheras;
 
-    public Poblacion(String personaje, Multiplicador multiplicador, final String path, final int cantidadDePoblacion) {
-        this.numeroDeGeneracion = 1;
+    public Poblacion(final String personaje, final Multiplicador multiplicador, final String path, final int cantidadDePoblacion, final boolean repetirPoblacionInicial) {
 
+        System.out.println("Inicializando población...");
+        this.numeroDeGeneracion = 1;
         this.path = path;
 
         armas = leerArmas();
@@ -38,7 +39,12 @@ public class Poblacion {
         personajes = new ArrayList<>();
         hashSetPersonajes = new HashSet<>();
 
-        Random r = new Random(System.currentTimeMillis());
+        Random r;
+        if (repetirPoblacionInicial) {
+            r = new Random(1);
+        } else {
+            r = new Random(System.currentTimeMillis());
+        }
 
         Personaje aux;
         for (int i = 0; i < cantidadPersonajes; i++) {
@@ -54,7 +60,7 @@ public class Poblacion {
         mejoresDesempenios = new ArrayList<>();
         mejoresDesempenios.add(mejorDesempenio);
 
-        System.out.println("Se terminó de inicializar la población\n");
+        System.out.println("Se terminó de inicializar la población.\n");
     }
 
     public ArrayList<Personaje> getPersonajes() {

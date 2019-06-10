@@ -6,29 +6,27 @@ import com.sia.tp3.Poblacion;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Gen implements InterfazMutacion {
 
     private InterfazProbabilidad probabilidadDeMutacion;
-    private int genAMutar;
     private Poblacion poblacion;
 
-    public Gen(final InterfazProbabilidad probabilidadDeMutacion, final int genAMutar, Poblacion poblacion) {
+    public Gen(final InterfazProbabilidad probabilidadDeMutacion, Poblacion poblacion) {
         this.probabilidadDeMutacion = probabilidadDeMutacion;
-        this.genAMutar = genAMutar;
         this.poblacion = poblacion;
-    }
-
-    public int getGenAMutar() {
-        return genAMutar;
     }
 
     @Override
     public void hacer(final ArrayList<Personaje> personajes, final int numeroDeGeneracion) {
         Random r = new Random();
 
+        int genAMutar;
+
         for (final Personaje personaje : personajes) {
             if (probabilidadDeMutacion.obtenerProbabilidad(numeroDeGeneracion) >= (1.0) * r.nextDouble()) {
+                genAMutar = ThreadLocalRandom.current().nextInt(0, Genes.CANTIDAD_GENES);
                 switch (genAMutar) {
                     case Genes.ARMA:
                         mutarGen(personaje.getGenes()[genAMutar],

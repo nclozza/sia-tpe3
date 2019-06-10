@@ -17,7 +17,7 @@ public class App {
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, configuracion.getPath(),
-                configuracion.getPoblacion());
+                configuracion.getPoblacion(), configuracion.getRepetirPoblacionInicial());
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();
@@ -96,20 +96,20 @@ public class App {
 
     private static InterfazCruce obtenerCruce(Configuracion configuracion) {
 
-        InterfazCruce cruce = new EnUnPunto(configuracion.getLocus1());
+        InterfazCruce cruce = new EnUnPunto();
 
         switch (configuracion.getMetodoCruce()) {
             case "un punto":
                 break;
             case "dos puntos":
-                cruce = new EnDosPuntos(Math.toIntExact(configuracion.getLocus1()), configuracion.getLocus2());
+                cruce = new EnDosPuntos();
                 break;
 
             case "uniforme":
                 cruce = new Uniforme(configuracion.getProbabilidadCruceUniforme());
                 break;
             case "anular":
-                cruce = new Anular(configuracion.getLocus1(), configuracion.getSegmento());
+                cruce = new Anular();
                 break;
         }
 
@@ -124,7 +124,7 @@ public class App {
             probabilidad = new MutacionNoUniforme(configuracion.getBaseExponencialMutacionNoUniforme());
         }
 
-        InterfazMutacion mutacion = new Gen(probabilidad, configuracion.getGenAMutar(), poblacion);
+        InterfazMutacion mutacion = new Gen(probabilidad, poblacion);
 
         switch (configuracion.getMetodoReemplazo()) {
             case "gen":

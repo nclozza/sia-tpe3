@@ -14,6 +14,8 @@ public class Configuracion {
     private String path;
     private Boolean generarGraficos;
     private Integer poblacion;
+    private Boolean repetirPoblacionInicial;
+
     private String personaje;
     private Double fuerza;
     private Double agilidad;
@@ -22,9 +24,6 @@ public class Configuracion {
     private Double vida;
 
     private String metodoCruce;
-    private Integer locus1;
-    private Integer locus2;
-    private Integer segmento;
     private Double probabilidadCruceUniforme;
 
     private String metodoCorte;
@@ -33,7 +32,6 @@ public class Configuracion {
     private Double porcentaje;
     private String metodoMutacion;
     private Double probabilidadDeMutacion;
-    private Integer genAMutar;
     private Boolean mutacionUniforme;
     private Double baseExponencialMutacionNoUniforme;
     private String metodoSeleccion1;
@@ -72,6 +70,7 @@ public class Configuracion {
             JSONObject configuracion = (JSONObject) o;
 
             this.generarGraficos = (Boolean) configuracion.get("generar_graficos");
+            this.repetirPoblacionInicial = (Boolean) configuracion.get("repetir_poblacion_inicial");
             this.path = (String) configuracion.get("datos");
             this.poblacion = ((Long) configuracion.get("poblacion")).intValue();
             this.personaje = (String) configuracion.get("personaje");
@@ -88,9 +87,6 @@ public class Configuracion {
             this.vida = (Double) configuracion.get("vida");
 
             this.metodoCruce = (String) configuracion.get("metodo_cruce");
-            this.locus1 = ((Long) configuracion.get("locus1")).intValue();
-            this.locus2 = ((Long) configuracion.get("locus2")).intValue();
-            this.segmento = ((Long) configuracion.get("segmento")).intValue();
             this.probabilidadCruceUniforme = (Double) configuracion.get("probabilidad_cruce_uniforme");
 
             this.metodoCorte = (String) configuracion.get("metodo_corte");
@@ -112,7 +108,6 @@ public class Configuracion {
             this.porcentajeDePersonajesTorneos = (Double) configuracion.get("porcentaje_de_personajes_torneos");
 
             this.metodoMutacion = (String) configuracion.get("metodo_mutacion");
-            this.genAMutar = ((Long) configuracion.get("gen_a_mutar")).intValue();
             this.probabilidadDeMutacion = (Double) configuracion.get("probabilidad_de_mutacion");
             this.mutacionUniforme = (Boolean) configuracion.get("mutacion_uniforme");
             this.baseExponencialMutacionNoUniforme = (Double) configuracion.get(
@@ -215,18 +210,6 @@ public class Configuracion {
         return probabilidadDeMutacion;
     }
 
-    public Integer getLocus1() {
-        return locus1;
-    }
-
-    public Integer getLocus2() {
-        return locus2;
-    }
-
-    public Integer getSegmento() {
-        return segmento;
-    }
-
     public String getMetodoSeleccion1() {
         return metodoSeleccion1;
     }
@@ -241,10 +224,6 @@ public class Configuracion {
 
     public String getMetodoSeleccion4() {
         return metodoSeleccion4;
-    }
-
-    public Integer getGenAMutar() {
-        return genAMutar;
     }
 
     public Double getA() {
@@ -307,6 +286,10 @@ public class Configuracion {
         return poblacion;
     }
 
+    public Boolean getRepetirPoblacionInicial() {
+        return repetirPoblacionInicial;
+    }
+
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {
         public ConfiguracionIncorrectaExcepcion(String msg) {
             super(msg);
@@ -319,15 +302,6 @@ public class Configuracion {
         ) && !metodoCruce.equals("anular"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodoCruce valido");
 
-        if (locus1 < 0 || locus1 >= Genes.CANTIDAD_GENES)
-            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus1 valido");
-
-        if (locus2 < 0 || locus2 < locus1)
-            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un locus2 valido");
-
-        if (segmento < 1 || segmento > Genes.CANTIDAD_GENES / 2)
-            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un segmento valido");
-
         if (!metodoCorte.equals("maxima cantidad") && !metodoCorte.equals("estructura") && !metodoCorte.equals(
                 "contenido") && !metodoCorte.equals("optimo"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de corte valido");
@@ -338,9 +312,6 @@ public class Configuracion {
 
         if (!metodoMutacion.equals("gen") && !metodoMutacion.equals("multigen"))
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un metodo de mutacion valido");
-
-        if (this.genAMutar < 0 || this.genAMutar >= Genes.CANTIDAD_GENES)
-            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un gen a mutar valido [0, 5]");
 
         if (!metodoSeleccion1.equals("elite") && !metodoSeleccion1.equals("ruleta")
                 && !metodoSeleccion1.equals("universal")

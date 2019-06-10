@@ -91,14 +91,10 @@ public class Reemplazo {
             nuevaGeneracion.add(individuosParaCruzar.get(individuo1).copy());
             nuevaGeneracion.add(individuosParaCruzar.get(individuo2).copy());
 
-
             if (probabilidadCruce >= (1.0) * r.nextDouble()){
 
                 cruce.hacer(nuevaGeneracion.get(contadorNuevaGeneracion),
                         nuevaGeneracion.get(contadorNuevaGeneracion + 1));
-            }
-            else{
-                System.out.println();
             }
 
             contadorNuevaGeneracion += 2;

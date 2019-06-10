@@ -11,7 +11,7 @@
     "generar_graficos": true,
     "repetir_poblacion_inicial": false,
     "poblacion": 500,
-    "probabilidad_cruce": 1.0,
+    "probabilidad_cruce": 0.7,
     "metodo_cruce": "dos puntos",
     "probabilidad_cruce_uniforme": 0.6,
 

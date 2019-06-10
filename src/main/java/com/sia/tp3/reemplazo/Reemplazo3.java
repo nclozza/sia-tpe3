@@ -13,17 +13,19 @@ public class Reemplazo3 extends Reemplazo implements InterfazReemplazo {
     private double modificadorB;
     private int k;
     private InterfazMutacion mutacion;
+    private Double probabilidadCruce;
 
     public Reemplazo3(final InterfazSeleccion seleccion1, final InterfazSeleccion seleccion2,
                       final InterfazSeleccion seleccion3, final InterfazSeleccion seleccion4,
                       final InterfazCruce cruce, final double modificadorA, final double modificadorB, final int k,
-                      final InterfazMutacion mutacion) {
+                      final InterfazMutacion mutacion, final Double probabilidadCruce) {
         super(seleccion1, seleccion2, seleccion3, seleccion4, cruce);
         this.modificadorA = modificadorA;
         this.modificadorB = modificadorB;
         this.k = k;
         this.cruce = cruce;
         this.mutacion = mutacion;
+        this.probabilidadCruce = probabilidadCruce;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class Reemplazo3 extends Reemplazo implements InterfazReemplazo {
         ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
                 cantidadSeleccion2, numeroDeGeneracion);
 
-        ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar);
+        ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar, probabilidadCruce);
         mutacion.hacer(individuosCruzados, numeroDeGeneracion);
 
         recalcularTodosLosDesempenios(individuosCruzados);

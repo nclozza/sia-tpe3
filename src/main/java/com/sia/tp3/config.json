@@ -9,8 +9,9 @@
 
     "datos": "src/main/java/com/sia/tp3/fulldata/",
     "generar_graficos": true,
-    "repetir_poblacion_inicial": true,
+    "repetir_poblacion_inicial": false,
     "poblacion": 500,
+    "probabilidad_cruce": 1.0,
     "metodo_cruce": "dos puntos",
     "probabilidad_cruce_uniforme": 0.6,
 
@@ -22,20 +23,20 @@
 
     "metodo_seleccion_1": "elite",
     "seleccion1_usa_boltzman": false,
-    "metodo_seleccion_2": "ruleta",
+    "metodo_seleccion_2": "elite",
     "seleccion2_usa_boltzman": false,
     "metodo_seleccion_3": "elite",
     "seleccion3_usa_boltzman": false,
-    "metodo_seleccion_4": "ruleta",
+    "metodo_seleccion_4": "elite",
     "seleccion4_usa_boltzman": false,
-     "metodo_reemplazo": "reemplazo 2",
+     "metodo_reemplazo": "reemplazo 1",
     "cantidad_de_reemplazo": 200,
     "porcentaje_de_personajes_torneos": 0.6,
     "A": 0.1,
     "B": 0.1,
 
     "metodo_mutacion": "multigen",
-    "probabilidad_de_mutacion": 0.1,
+    "probabilidad_de_mutacion": 0.0,
     "mutacion_uniforme": true,
     "base_exponencial_mutacion_no_uniforme": 0.5
   }

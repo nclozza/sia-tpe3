@@ -23,6 +23,7 @@ public class Configuracion {
     private Double resistencia;
     private Double vida;
 
+    private Double probabilidadCruce;
     private String metodoCruce;
     private Double probabilidadCruceUniforme;
 
@@ -86,6 +87,7 @@ public class Configuracion {
             this.resistencia = (Double) configuracion.get("resistencia");
             this.vida = (Double) configuracion.get("vida");
 
+            this.probabilidadCruce = (Double) configuracion.get("probabilidad_cruce");
             this.metodoCruce = (String) configuracion.get("metodo_cruce");
             this.probabilidadCruceUniforme = (Double) configuracion.get("probabilidad_cruce_uniforme");
 
@@ -286,6 +288,10 @@ public class Configuracion {
         return poblacion;
     }
 
+    public Double getProbabilidadCruce() {
+        return probabilidadCruce;
+    }
+
     public Boolean getRepetirPoblacionInicial() {
         return repetirPoblacionInicial;
     }
@@ -297,6 +303,9 @@ public class Configuracion {
     }
 
     private void validarConfig() {
+
+        if(probabilidadCruce<0 || probabilidadCruce>1)
+            throw new ConfiguracionIncorrectaExcepcion("Debe ingresar una probabilidad de cruce valido");
 
         if (!metodoCruce.equals("un punto") && !metodoCruce.equals("dos puntos") && !metodoCruce.equals("uniforme"
         ) && !metodoCruce.equals("anular"))

@@ -38,7 +38,16 @@ public class Ranking implements InterfazSeleccion {
 
         calcularDesempenioAcumulado(aux, (double) (aux.size() * (aux.size() + 1)) / 2);
 
-        return seleccionarPersonajes(aux, numerosAleatorios);
+        ArrayList<Personaje> ret = seleccionarPersonajes(aux, numerosAleatorios);
+
+        if (usaBoltzmann) {
+
+            for (Personaje p : ret) {
+                p.recalcularDesempenio();
+            }
+        }
+
+        return ret;
     }
 
     private void ordenarPersonajes(final ArrayList<Personaje> personajes) {

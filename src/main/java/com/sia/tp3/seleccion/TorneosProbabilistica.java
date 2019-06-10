@@ -43,7 +43,16 @@ public class TorneosProbabilistica implements InterfazSeleccion {
         ArrayList<Personaje> personajesSeleccionados = seleccionarPersonajes(aux,
                 ((Double) (personajes.size() * porcentajeDePersonajes)).intValue());
 
-        return seleccionarGanadores(personajesSeleccionados, cantidad);
+        ArrayList<Personaje> ret = seleccionarGanadores(personajesSeleccionados, cantidad);
+
+        if (usaBoltzmann) {
+
+            for (Personaje p : ret) {
+                p.recalcularDesempenio();
+            }
+        }
+
+        return ret;
     }
 
 

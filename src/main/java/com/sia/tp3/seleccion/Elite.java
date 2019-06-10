@@ -43,6 +43,13 @@ public class Elite implements InterfazSeleccion {
             ret.add(priorityQueue.remove());
         }
 
+        if (usaBoltzmann) {
+
+            for (Personaje p : ret) {
+                p.recalcularDesempenio();
+            }
+        }
+
         return ret;
     }
 }

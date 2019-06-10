@@ -38,7 +38,16 @@ public class Universal implements InterfazSeleccion {
             calcularDesempenioRelativoYAcumulado(aux, sumaDesempenio(aux));
         }
 
-        return seleccionarPersonajes(aux, numerosAleatorios);
+        ArrayList<Personaje> ret = seleccionarPersonajes(aux, numerosAleatorios);
+
+        if (usaBoltzmann) {
+
+            for (Personaje p : ret) {
+                p.recalcularDesempenio();
+            }
+        }
+
+        return ret;
     }
 
     private PriorityQueue<Double> generarAleatorios(final int cantidad) {

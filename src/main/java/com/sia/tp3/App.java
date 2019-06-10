@@ -40,7 +40,7 @@ public class App {
 
         InterfazReemplazo reemplazo = obtenerReemplazo(configuracion.getMetodoReemplazo(), modificadorA, modificadorB,
                 configuracion.getCantidadDeReemplazo(), poblacion.getPersonajes().size(), seleccion1, seleccion2,
-                seleccion3, seleccion4, cruce, mutacion);
+                seleccion3, seleccion4, cruce, mutacion, configuracion.getProbabilidadCruce());
 
         Motor motor = new Motor(reemplazo, corte);
 
@@ -144,10 +144,10 @@ public class App {
                                                       final InterfazSeleccion seleccion2,
                                                       final InterfazSeleccion seleccion3,
                                                       final InterfazSeleccion seleccion4, final InterfazCruce cruce,
-                                                      final InterfazMutacion mutacion) {
+                                                      final InterfazMutacion mutacion, final Double probabilidadCruce) {
 
         InterfazReemplazo reemplazo = new Reemplazo1(seleccion1, seleccion2, seleccion3, seleccion4, cruce,
-                modificadorA, modificadorB, poblacionTotal, mutacion);
+                modificadorA, modificadorB, poblacionTotal, mutacion, probabilidadCruce);
 
         switch (metodoReemplazo) {
             case "reemplazo 1":
@@ -155,12 +155,12 @@ public class App {
 
             case "reemplazo 2":
                 reemplazo = new Reemplazo2(seleccion1, seleccion2, seleccion3, seleccion4, cruce, modificadorA,
-                        modificadorB, k, mutacion);
+                        modificadorB, k, mutacion, probabilidadCruce);
                 break;
 
             case "reemplazo 3":
                 reemplazo = new Reemplazo3(seleccion1, seleccion2, seleccion3, seleccion4, cruce, modificadorA,
-                        modificadorB, k, mutacion);
+                        modificadorB, k, mutacion, probabilidadCruce);
                 break;
         }
 

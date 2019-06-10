@@ -32,4 +32,9 @@ public class Contenido implements InterfazCorte {
 
         return true;
     }
+
+    @Override
+    public int getGeneracionesAVerificar() {
+        return cantidadGeneracionesAVerificar;
+    }
 }

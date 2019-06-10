@@ -17,7 +17,7 @@ public class Poblacion {
     private double peorDesempenio;
     private double desempenioPromedio;
     private ArrayList<Double> mejoresDesempenios;
-    private HashSet<String> hashSetPersonajes;
+    private ArrayList<HashSet<String>> listHashSetPersonajes;
     private List<Arma> armas;
     private List<Bota> botas;
     private List<Casco> cascos;
@@ -37,7 +37,7 @@ public class Poblacion {
         pecheras = leerPecheras();
         cantidadPersonajes = cantidadDePoblacion;
         personajes = new ArrayList<>();
-        hashSetPersonajes = new HashSet<>();
+        listHashSetPersonajes = new ArrayList<>();
 
         Random r;
         if (repetirPoblacionInicial) {
@@ -223,14 +223,15 @@ public class Poblacion {
         mejoresDesempenios.add(mejorDesempenio);
     }
 
-    public HashSet<String> getHashSetPersonajes() {
-        return hashSetPersonajes;
+    public ArrayList<HashSet<String>> getListHashSetPersonajes() {
+        return listHashSetPersonajes;
     }
 
-    public void aniadirTodosLosPersonajesAlHashSet() {
-        hashSetPersonajes = new HashSet<>();
+    public void aniadirTodosLosPersonajesAListHashSet() {
+        listHashSetPersonajes.add(new HashSet<>());
+
         for (Personaje personaje : personajes) {
-            hashSetPersonajes.add(personaje.toHash());
+            listHashSetPersonajes.get(listHashSetPersonajes.size() - 1).add(personaje.toHash());
         }
     }
 
@@ -260,5 +261,11 @@ public class Poblacion {
 
     public List<Pechera> getPecheras() {
         return pecheras;
+    }
+
+    public void eliminarHashesNoUtilizados(final int generacionesAVerificar) {
+        if (generacionesAVerificar < listHashSetPersonajes.size()) {
+            listHashSetPersonajes.remove(0);
+        }
     }
 }

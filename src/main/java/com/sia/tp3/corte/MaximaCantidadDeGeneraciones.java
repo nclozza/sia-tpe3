@@ -18,4 +18,9 @@ public class MaximaCantidadDeGeneraciones implements InterfazCorte {
     public boolean evaluar(final Poblacion poblacion) {
         return maximaCantidadDeGeneraciones == poblacion.getNumeroDeGeneracion();
     }
+
+    @Override
+    public int getGeneracionesAVerificar() {
+        return 0;
+    }
 }

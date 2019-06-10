@@ -9,17 +9,17 @@
 
     "datos": "src/main/java/com/sia/tp3/fulldata/",
     "generar_graficos": true,
-    "repetir_poblacion_inicial": false,
+    "repetir_poblacion_inicial": true,
     "poblacion": 500,
     "probabilidad_cruce": 0.7,
     "metodo_cruce": "dos puntos",
     "probabilidad_cruce_uniforme": 0.6,
 
-    "metodo_corte": "optimo",
+    "metodo_corte": "maxima cantidad",
     "optimo": 59.0,
-    "generaciones_a_verificar": 100,
+    "generaciones_a_verificar": 10,
     "porcentaje": 0.75,
-    "generaciones": 10000,
+    "generaciones": 5000,
 
     "metodo_seleccion_1": "elite",
     "seleccion1_usa_boltzman": false,
@@ -32,8 +32,8 @@
      "metodo_reemplazo": "reemplazo 2",
     "cantidad_de_reemplazo": 200,
     "porcentaje_de_personajes_torneos": 0.6,
-    "A": 0.2,
-    "B": 0.2,
+    "A": 0.5,
+    "B": 1.0,
 
     "metodo_mutacion": "multigen",
     "probabilidad_de_mutacion": 0.2,

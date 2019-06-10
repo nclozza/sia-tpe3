@@ -26,7 +26,12 @@ public class Motor {
 
         while (!corte.evaluar(poblacion)) {
 
-            poblacion.aniadirTodosLosPersonajesAlHashSet();
+            poblacion.aniadirTodosLosPersonajesAListHashSet();
+
+            if (corte.getGeneracionesAVerificar() != 0) {
+                poblacion.eliminarHashesNoUtilizados(corte.getGeneracionesAVerificar());
+            }
+
             ArrayList<Personaje> nuevaGeneracion = nuevaGeneracion(poblacion);
             poblacion.setPersonajes(nuevaGeneracion);
             poblacion.aumentarGeneracion();

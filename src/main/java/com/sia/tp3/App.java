@@ -78,7 +78,7 @@ public class App {
                 break;
 
             case "estructura":
-                corte = new Estructura(configuracion.getPorcentaje());
+                corte = new Estructura(configuracion.getPorcentaje(), configuracion.getGeneracionesAVerificar());
                 break;
 
             case "contenido":

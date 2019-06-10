@@ -304,7 +304,7 @@ public class Configuracion {
 
     private void validarConfig() {
 
-        if(probabilidadCruce<0 || probabilidadCruce>1)
+        if (probabilidadCruce < 0 || probabilidadCruce > 1)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar una probabilidad de cruce valido");
 
         if (!metodoCruce.equals("un punto") && !metodoCruce.equals("dos puntos") && !metodoCruce.equals("uniforme"
@@ -364,6 +364,11 @@ public class Configuracion {
         if (porcentajeDePersonajesTorneos <= 0 || porcentajeDePersonajesTorneos >= 1)
             throw new ConfiguracionIncorrectaExcepcion("Debe ingresar un porcentaje de torneos válido, comprendido " +
                     "entre (0, 1)");
+
+        if (metodoCorte.equals("estructura") || metodoCorte.equals("contenido")) {
+            if (generacionesAVerificar <= 0)
+                throw new ConfiguracionIncorrectaExcepcion("Está utilizando el método de corte 'estructura' o 'contenido', debe ingresar una cantidad de generaciones a verificar mayor a 0");
+        }
     }
 }
 

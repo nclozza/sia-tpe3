@@ -14,4 +14,9 @@ public class Optimo implements InterfazCorte {
     public boolean evaluar(final Poblacion poblacion) {
         return poblacion.getMejorDesempenio() >= solucionOptima;
     }
+
+    @Override
+    public int getGeneracionesAVerificar() {
+        return 0;
+    }
 }

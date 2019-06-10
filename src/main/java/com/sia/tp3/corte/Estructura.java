@@ -24,6 +24,6 @@ public class Estructura implements InterfazCorte {
             }
         }
 
-        return contador / poblacion.getPersonajes().size() >= porcentaje;
+        return (1.0 * contador) / poblacion.getPersonajes().size() >= porcentaje;
     }
 }

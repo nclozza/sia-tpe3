@@ -26,10 +26,10 @@ public class Motor {
 
         while (!corte.evaluar(poblacion)) {
 
+            poblacion.aniadirTodosLosPersonajesAlHashSet();
             ArrayList<Personaje> nuevaGeneracion = nuevaGeneracion(poblacion);
             poblacion.setPersonajes(nuevaGeneracion);
             poblacion.aumentarGeneracion();
-            poblacion.aniadirTodosLosPersonajesAlHashSet();
             poblacion.agregarMejorDesempenio();
 
             mejoresDesempenios.add(new Punto2D(poblacion.getNumeroDeGeneracion(), poblacion.getMejorDesempenio()));

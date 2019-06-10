@@ -53,7 +53,6 @@ public class Poblacion {
                     guantes.get(r.nextInt(guantes.size())), pecheras.get(r.nextInt(pecheras.size())));
 
             personajes.add(aux);
-            hashSetPersonajes.add(aux.toHash());
         }
 
         recalcularDesempenios();

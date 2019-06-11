@@ -50,7 +50,7 @@ public class Poblacion {
         for (int i = 0; i < cantidadPersonajes; i++) {
             aux = new Personaje(personaje, multiplicador, armas.get(r.nextInt(armas.size())),
                     botas.get(r.nextInt(botas.size())), cascos.get(r.nextInt(cascos.size())),
-                    guantes.get(r.nextInt(guantes.size())), pecheras.get(r.nextInt(pecheras.size())));
+                    guantes.get(r.nextInt(guantes.size())), pecheras.get(r.nextInt(pecheras.size())), 1.3 + (2.0 - 1.3) * r.nextDouble());
 
             personajes.add(aux);
         }

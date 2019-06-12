@@ -16,8 +16,10 @@ public class App {
         Configuracion configuracion = new Configuracion();
         Multiplicador multiplicador = new Multiplicador(configuracion.getFuerza(), configuracion.getAgilidad(),
                 configuracion.getPericia(), configuracion.getResistencia(), configuracion.getVida());
+
+        long semillaPoblacionInicial = configuracion.getRepetirPoblacionInicial() ? configuracion.getSemillaPoblacionInicial() : System.currentTimeMillis();
         Poblacion poblacion = new Poblacion(configuracion.getPersonaje(), multiplicador, configuracion.getPath(),
-                configuracion.getPoblacion(), configuracion.getRepetirPoblacionInicial());
+                configuracion.getPoblacion(), semillaPoblacionInicial);
 
         double modificadorA = configuracion.getA();
         double modificadorB = configuracion.getB();

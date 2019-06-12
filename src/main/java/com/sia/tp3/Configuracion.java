@@ -15,6 +15,7 @@ public class Configuracion {
     private Boolean generarGraficos;
     private Integer poblacion;
     private Boolean repetirPoblacionInicial;
+    private Long semillaPoblacionInicial;
 
     private String personaje;
     private Double fuerza;
@@ -72,6 +73,7 @@ public class Configuracion {
 
             this.generarGraficos = (Boolean) configuracion.get("generar_graficos");
             this.repetirPoblacionInicial = (Boolean) configuracion.get("repetir_poblacion_inicial");
+            this.semillaPoblacionInicial = (Long) configuracion.get("semilla_poblacion_inicial");
             this.path = (String) configuracion.get("datos");
             this.poblacion = ((Long) configuracion.get("poblacion")).intValue();
             this.personaje = (String) configuracion.get("personaje");
@@ -294,6 +296,10 @@ public class Configuracion {
 
     public Boolean getRepetirPoblacionInicial() {
         return repetirPoblacionInicial;
+    }
+
+    public Long getSemillaPoblacionInicial() {
+        return semillaPoblacionInicial;
     }
 
     private class ConfiguracionIncorrectaExcepcion extends RuntimeException {

@@ -24,7 +24,7 @@ public class Poblacion {
     private List<Guante> guantes;
     private List<Pechera> pecheras;
 
-    public Poblacion(final String personaje, final Multiplicador multiplicador, final String path, final int cantidadDePoblacion, final boolean repetirPoblacionInicial) {
+    public Poblacion(final String personaje, final Multiplicador multiplicador, final String path, final int cantidadDePoblacion, final long semillaPoblacionInicial) {
 
         System.out.println("Inicializando población...");
         this.numeroDeGeneracion = 1;
@@ -39,12 +39,7 @@ public class Poblacion {
         personajes = new ArrayList<>();
         listHashSetPersonajes = new ArrayList<>();
 
-        Random r;
-        if (repetirPoblacionInicial) {
-            r = new Random(1);
-        } else {
-            r = new Random(System.currentTimeMillis());
-        }
+        Random r = new Random(semillaPoblacionInicial);
 
         Personaje aux;
         for (int i = 0; i < cantidadPersonajes; i++) {

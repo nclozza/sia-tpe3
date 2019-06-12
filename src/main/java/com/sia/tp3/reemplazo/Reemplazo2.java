@@ -30,7 +30,30 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
     @Override
     public ArrayList<Personaje> hacer(final ArrayList<Personaje> personajes, int numeroDeGeneracion) {
 
-        int cantidadSeleccion1 = new Double(k * modificadorA).intValue();
+    	int cantidadSeleccion1 = new Double(k * modificadorA).intValue();
+        int cantidadSeleccion2 = k - cantidadSeleccion1;
+
+        ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
+                cantidadSeleccion2, numeroDeGeneracion);
+
+        ArrayList<Personaje> individuosCruzados = cruzarIndividuos(individuosParaCruzar, probabilidadCruce);
+        mutacion.hacer(individuosCruzados, numeroDeGeneracion);
+
+        recalcularTodosLosDesempenios(individuosCruzados);
+        
+        ArrayList<Personaje> ret = new ArrayList<>();
+        ret.addAll(individuosCruzados);
+        
+        cantidadSeleccion1 = new Double((personajes.size() - k) * modificadorB).intValue();
+        cantidadSeleccion2 = (personajes.size() - k) - cantidadSeleccion1;
+        
+        ArrayList<Personaje> padresSeleccionados = seleccionarNuevaGeneracion(personajes, cantidadSeleccion1,
+                cantidadSeleccion2, numeroDeGeneracion);
+        
+        ret.addAll(padresSeleccionados);
+        return ret;
+    	
+    	/*int cantidadSeleccion1 = new Double(k * modificadorA).intValue();
         int cantidadSeleccion2 = k - cantidadSeleccion1;
 
         ArrayList<Personaje> individuosParaCruzar = seleccionarPadres(personajes, cantidadSeleccion1,
@@ -52,6 +75,6 @@ public class Reemplazo2 extends Reemplazo implements InterfazReemplazo {
         cantidadSeleccion2 = k - cantidadSeleccion1;
         ret.addAll(seleccionarNuevaGeneracion(individuosCruzados, cantidadSeleccion1, cantidadSeleccion2, numeroDeGeneracion));
 
-        return ret;
+        return ret;*/
     }
 }

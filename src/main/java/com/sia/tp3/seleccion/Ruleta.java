@@ -34,9 +34,7 @@ public class Ruleta implements InterfazSeleccion {
 
         PriorityQueue<Double> numerosAleatorios = generarAleatorios(cantidad);
 
-        if (aux.get(0).getDesempenioRelativo() == 0.0) {
-            calcularDesempenioRelativoYAcumulado(aux, sumaDesempenio(aux));
-        }
+        calcularDesempenioRelativoYAcumulado(aux, sumaDesempenio(aux));
 
         ArrayList<Personaje> ret = seleccionarPersonajes(aux, numerosAleatorios);
 

@@ -9,7 +9,7 @@
 
     "datos": "src/main/java/com/sia/tp3/fulldata/",
     "generar_graficos": true,
-    "repetir_poblacion_inicial": false,
+    "repetir_poblacion_inicial": true,
     "semilla_poblacion_inicial": 10,
     "poblacion": 500,
     "probabilidad_cruce": 0.7,
@@ -22,11 +22,11 @@
     "porcentaje": 0.75,
     "generaciones": 1000,
 
-    "metodo_seleccion_1": "torneos deterministica",
+    "metodo_seleccion_1": "elite",
     "seleccion1_usa_boltzman": false,
-    "metodo_seleccion_2": "ruleta",
+    "metodo_seleccion_2": "elite",
     "seleccion2_usa_boltzman": false,
-    "metodo_seleccion_3": "ruleta",
+    "metodo_seleccion_3": "universal",
     "seleccion3_usa_boltzman": false,
     "metodo_seleccion_4": "elite",
     "seleccion4_usa_boltzman": false,

@@ -12,6 +12,9 @@ public class Motor {
 
     private InterfazReemplazo reemplazo;
     private InterfazCorte corte;
+    
+    //TODO: Parámetro
+    private final int periodoGrafico = 10;
 
     public Motor(final InterfazReemplazo reemplazo, final InterfazCorte corte) {
         this.reemplazo = reemplazo;
@@ -24,6 +27,11 @@ public class Motor {
         LinkedList<Punto2D> peoresDesempenios = new LinkedList<>();
         LinkedList<Punto2D> promedioDesempenios = new LinkedList<>();
 
+        int i = 0;
+        Graficador graficador = new Graficador();
+        if(mostrarGraficos) {
+        	graficador.setVisible(true);
+        }
         while (!corte.evaluar(poblacion)) {
 
             poblacion.aniadirTodosLosPersonajesAListHashSet();
@@ -40,11 +48,18 @@ public class Motor {
             mejoresDesempenios.add(new Punto2D(poblacion.getNumeroDeGeneracion(), poblacion.getMejorDesempenio()));
             peoresDesempenios.add(new Punto2D(poblacion.getNumeroDeGeneracion(), poblacion.getPeorDesempenio()));
             promedioDesempenios.add(new Punto2D(poblacion.getNumeroDeGeneracion(), poblacion.getDesempenioPromedio()));
+        
+
+            if(mostrarGraficos && i % periodoGrafico == 0) {
+            	graficador.initUI(mejoresDesempenios, peoresDesempenios, promedioDesempenios);
+            }
+            
+            i++;
         }
 
-        if (mostrarGraficos) {
+        /*if (mostrarGraficos) {
             Graficador.mostrarGraficoMejoresDesempenios(mejoresDesempenios, peoresDesempenios, promedioDesempenios);
-        }
+        }*/
     }
 
     private ArrayList<Personaje> nuevaGeneracion(Poblacion poblacion) {

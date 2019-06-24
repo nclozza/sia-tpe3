@@ -12,8 +12,7 @@ public class Motor {
 
     private InterfazReemplazo reemplazo;
     private InterfazCorte corte;
-    
-    //TODO: Parámetro
+
     private final int periodoGrafico = 10;
 
     public Motor(final InterfazReemplazo reemplazo, final InterfazCorte corte) {

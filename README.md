@@ -41,20 +41,17 @@ Path a los datos de los items
 * generar_graficos: boolean
 Mostrar o no los gráficos
  
+ * repetir_poblacion_inicial: boolean
+ Utilizar o no la misma poblacion
+ 
+ * semilla_poblacion_inicial: int
+ Semilla a utilizar para la poblacion
+ 
 * poblacion: int
 Cantidad N de individuos en la población
  
 * metodo_cruce: string
 Método de cruce ("un punto", "dos puntos", "uniforme" o "anular")
- 
-* locus1: int
-Locus 1, perteneciente a [0, CANTIDAD_DE_GENES)
- 
-* locus2: int
-Locus 2, perteneciente a [locus1, CANTIDAD_DE_GENES)
- 
-* segmento: int
-Segmento utilizado en el cruce anular, perteneciente a [1, CANTIDAD_DE_GENES / 2]
  
 * probabilidad_cruce_uniforme: double
 Probabilidad de que se realice un cruce uniforme [0, 1]

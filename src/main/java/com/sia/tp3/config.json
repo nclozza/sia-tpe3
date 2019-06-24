@@ -33,7 +33,7 @@
     "metodo_reemplazo": "reemplazo 2",
     "cantidad_de_reemplazo": 200,
     "porcentaje_de_personajes_torneos": 0.6,
-    "A": 0.5,
+    "A": 0.1,
     "B": 0.1,
 
     "metodo_mutacion": "gen",

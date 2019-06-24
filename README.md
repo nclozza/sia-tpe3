@@ -113,9 +113,6 @@ Modificador B para los algoritmos de selección 3 y 4 [0, 1]
 * metodo_mutacion: string
 Método de mutación ("gen" o "multigen")
  
-* gen_a_mutar: int
-El gen que se mutará en el método de mutación "gen" [0, CANTIDAD_DE_GENES)
- 
 * probabilidad_de_mutacion: double
 Probabilidad de mutación [0, 1]
  
